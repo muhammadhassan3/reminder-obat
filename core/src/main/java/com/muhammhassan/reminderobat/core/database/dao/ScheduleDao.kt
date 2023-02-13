@@ -14,4 +14,7 @@ interface ScheduleDao {
 
     @Delete
     fun delete(data: ScheduleEntity)
+
+    @Query("select * from schedule")
+    fun getAll(): Flow<List<ScheduleEntity>>
 }
