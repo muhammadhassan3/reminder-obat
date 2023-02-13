@@ -1,5 +1,6 @@
 package com.muhammhassan.reminderobat.ui.view.home
 
+import android.widget.Space
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -28,14 +29,14 @@ fun HomeView(modifier: Modifier = Modifier, navController: NavHostController? = 
                 text = "Halo User",
                 fontWeight = FontWeight.Bold,
                 fontSize = 24.sp,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
             )
             Text(
                 text = date,
                 Modifier.align(Alignment.CenterHorizontally),
                 style = MaterialTheme.typography.body1
             )
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(text = "Alarm akan datang")
         }
     }
 }
