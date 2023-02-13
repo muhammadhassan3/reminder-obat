@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface HistoryDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun addDrugs(data: HistoryEntity): Flow<Int>
+    fun addDrugs(data: HistoryEntity)
 
     @Update
     fun editDrugs(data: HistoryEntity)

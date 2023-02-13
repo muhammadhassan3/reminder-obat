@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface ScheduleDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun addDrugs(data: ScheduleEntity): Flow<Int>
+    fun addDrugs(data: ScheduleEntity)
 
     @Update
     fun editDrugs(data: ScheduleEntity)
