@@ -19,19 +19,25 @@ class LocalDatasourceImpl(private val db: DrugsReminderDatabase) : LocalDatasour
     }
 
     override fun addDrugs(data: DrugsEntity) {
-        TODO("Not yet implemented")
+        executor.execute{
+            drugsDao.addDrugs(data)
+        }
     }
 
     override fun editDrugs(data: DrugsEntity) {
-        TODO("Not yet implemented")
+        executor.execute{
+            drugsDao.editDrugs(data)
+        }
     }
 
     override fun deleteDrugs(data: DrugsEntity) {
-        TODO("Not yet implemented")
+        executor.execute{
+            drugsDao.delete(data)
+        }
     }
 
     override fun getSchedule(drugId: Int): Flow<List<ScheduleEntity>> {
-        TODO("Not yet implemented")
+        return scheduleDao.getAll()
     }
 
     override fun addSchedule(data: ScheduleEntity) {
