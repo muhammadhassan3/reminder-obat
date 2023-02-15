@@ -1,4 +1,4 @@
-package com.muhammhassan.remainderobat.domain.model
+package com.muhammhassan.reminderobat.domain.model
 
 data class DrugItem(
     val title: String,

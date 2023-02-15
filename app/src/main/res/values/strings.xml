@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Reminder Obat</string>
     <string name="app_icon_desc">Application Icon</string>
+    <string name="next">Selanjutnya</string>
 </resources>

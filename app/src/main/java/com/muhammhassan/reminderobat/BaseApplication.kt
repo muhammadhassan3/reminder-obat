@@ -1,7 +1,7 @@
-package com.muhammhassan.reminderobat.ui
+package com.muhammhassan.reminderobat
 
 import android.app.Application
-import com.muhammhassan.reminderobat.ui.di.Module.viewModelModule
+import com.muhammhassan.reminderobat.di.Module.viewModelModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 

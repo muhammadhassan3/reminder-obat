@@ -1,10 +1,11 @@
 plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-parcelize'
 }
 apply from:'../shared_dependencies.gradle'
 android {
-    namespace 'com.muhammhassan.remainderobat.domain'
+    namespace 'com.muhammhassan.reminderobat.domain'
     compileSdk 33
 
     defaultConfig {
