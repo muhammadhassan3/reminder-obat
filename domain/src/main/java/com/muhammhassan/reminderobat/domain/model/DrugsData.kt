@@ -3,6 +3,7 @@ package com.muhammhassan.reminderobat.domain.model
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 import java.util.*
+
 @Parcelize
 data class DrugsData(
     val name: String? = null,
@@ -15,4 +16,19 @@ data class DrugsData(
     val endDate: Date? = null,
     val condition: String? = null,
     val stock: Int = 0
-): Parcelable
+) : Parcelable {
+    fun isPropertiesValid(): Boolean {
+        return !listOf(
+            name,
+            weight,
+            type,
+            hour,
+            day,
+            afterEat,
+            startDate,
+            endDate,
+            condition,
+            stock
+        ).any { it == null } && (day?.size!! > 0) && (hour?.size!! > 0)
+    }
+}
