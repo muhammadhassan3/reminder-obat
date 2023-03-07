@@ -1,23 +1,24 @@
 package com.muhammhassan.reminderobat.ui.view.add.schedule
 
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import com.muhammhassan.reminderobat.core.utils.Utils.parseDateWithoutDayName
+import com.muhammhassan.reminderobat.core.utils.Utils.parseStringWithoutDayToDate
 import com.muhammhassan.reminderobat.domain.model.DrugsData
-import com.muhammhassan.reminderobat.utils.Utils.parseDate
-import com.muhammhassan.reminderobat.utils.Utils.parseStringToDate
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import java.util.*
 
 class AddReminderViewModel: ViewModel() {
     private var data = DrugsData()
-    val totalReminder = mutableStateOf(0)
-    val hours = mutableListOf<String>()
-    val days = mutableSetOf<Int>()
-    val startDate = mutableStateOf("")
-    val endDate = mutableStateOf("")
+    private val _totalReminder = MutableStateFlow(0)
+    val totalReminder = _totalReminder.asStateFlow()
+    private val hours = mutableListOf<String>()
+    private val days = mutableSetOf<Int>()
+    private val _startDate = MutableStateFlow(parseDateWithoutDayName(Calendar.getInstance().time))
+    val startDate = _startDate.asStateFlow()
+    private val _endDate = MutableStateFlow(parseDateWithoutDayName(Calendar.getInstance().time))
+    val endDate = _endDate.asStateFlow()
 
-    init {
-
-    }
 
     fun setData(data: DrugsData){
         this.data = data
@@ -28,7 +29,7 @@ class AddReminderViewModel: ViewModel() {
         calendar.set(Calendar.YEAR, year)
         calendar.set(Calendar.MONTH, month)
         calendar.set(Calendar.DAY_OF_MONTH, day)
-        startDate.value = parseDate(calendar.time)
+        _startDate.value = parseDateWithoutDayName(calendar.time)
     }
 
     fun setEndDate(year: Int, month: Int, day: Int){
@@ -36,23 +37,21 @@ class AddReminderViewModel: ViewModel() {
         calendar.set(Calendar.YEAR, year)
         calendar.set(Calendar.MONTH, month)
         calendar.set(Calendar.DAY_OF_MONTH, day)
-        endDate.value = parseDate(calendar.time)
+        _endDate.value = parseDateWithoutDayName(calendar.time)
     }
 
     fun increaseReminder(){
         hours.add("08:00")
-        totalReminder.value++
+        _totalReminder.value++
     }
 
     fun decreaseReminder(){
         hours.removeAt(hours.size-1)
-        totalReminder.value--
+        _totalReminder.value--
     }
 
-    fun setHour(position: Int, value: String?){
-        if(value != null) {
-            hours[position] = value
-        }else hours.removeAt(position)
+    fun setHour(position: Int, value: String){
+        hours[position] = value
     }
 
     fun setDay(day: Int, selected: Boolean){
@@ -66,9 +65,9 @@ class AddReminderViewModel: ViewModel() {
         weight = data.weight,
         type = data.type,
         afterEat = data.afterEat,
-        hour = hours.subList(0, totalReminder.value - 1),
+        hour = hours,
         day = days,
-        startDate = parseStringToDate(startDate.value),
-        endDate = parseStringToDate(endDate.value)
+        startDate = parseStringWithoutDayToDate(_startDate.value),
+        endDate = parseStringWithoutDayToDate(_endDate.value)
     )
 }
