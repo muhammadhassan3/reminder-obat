@@ -6,13 +6,13 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "drugs")
 data class DrugsEntity(
     @PrimaryKey(autoGenerate = true)
-    val id: Int?,
+    val id: Long?,
     val drugsName: String,
     val drugsWeight: String,
     val afterEat: Int,
     val drugsType: String,
-    val startDate: Int,
-    val endDate: Int,
+    val startDate: String,
+    val endDate: String,
     val condition: String,
-    val stock: Int,
+    var stock: Int,
 )
