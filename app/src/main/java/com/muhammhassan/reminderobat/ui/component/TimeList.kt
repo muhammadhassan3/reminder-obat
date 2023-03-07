@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
+import com.muhammhassan.reminderobat.core.utils.Utils.parseTimeToString
 import java.util.*
 
 @Composable
@@ -23,7 +24,7 @@ fun TimeList(
     onTimeChanged: (value: String) -> Unit,
     position: Int = 0
 ) {
-    val timeSelected = remember { mutableStateOf("00:00") }
+    val timeSelected = remember { mutableStateOf("08:00") }
     Row(modifier = modifier.fillMaxWidth()) {
         Text(
             modifier = Modifier
@@ -39,7 +40,7 @@ fun TimeList(
                     val hour = calendar[Calendar.HOUR_OF_DAY]
                     val minute = calendar[Calendar.MINUTE]
                     val timeDialog = TimePickerDialog(context, { _, selectedHour, selectedMinute ->
-                        val text = "${if(selectedHour < 10) "0$selectedHour" else selectedHour}:${if(selectedMinute < 10) "0$selectedMinute" else selectedMinute}"
+                        val text = parseTimeToString(selectedHour, selectedMinute)
                         onTimeChanged.invoke(text)
                         timeSelected.value =
                             text
