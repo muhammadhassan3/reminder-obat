@@ -6,8 +6,8 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "schedule")
 data class ScheduleEntity(
     @PrimaryKey(autoGenerate = true)
-    val id: Int,
-    val time: Long,
-    val drugId: Int,
-
+    val id: Long?,
+    val time: String,
+    val drugId: Long,
+    val days: String,
 )
