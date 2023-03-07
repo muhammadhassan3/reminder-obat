@@ -10,6 +10,9 @@ dependencies {
     implementation "io.insert-koin:koin-core:3.3.2"
     implementation "io.insert-koin:koin-android:3.3.2"
 
+    //Timber
+    implementation "com.jakewharton.timber:timber:4.7.1"
+
     //canary
     debugImplementation "com.squareup.leakcanary:leakcanary-android:2.4"
 }
