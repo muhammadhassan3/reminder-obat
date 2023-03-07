@@ -7,17 +7,16 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.muhammhassan.reminderobat.domain.model.Articles
 import com.muhammhassan.reminderobat.R
+import com.muhammhassan.reminderobat.domain.model.Articles
 
 @Composable
-fun Articles(modifier: Modifier = Modifier, list: SnapshotStateList<Articles>) {
+fun Articles(modifier: Modifier = Modifier, list: List<Articles>) {
     val stateList = rememberLazyListState()
     Column(modifier = modifier) {
         Text(text = "Articles", fontWeight = FontWeight.Bold)
