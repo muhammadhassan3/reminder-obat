@@ -1,35 +1,40 @@
 package com.muhammhassan.reminderobat.ui.view.add.drug
 
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.muhammhassan.reminderobat.domain.model.DrugsData
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
 class AddDrugViewModel : ViewModel() {
-    val title = mutableStateOf("")
-    val weight = mutableStateOf("")
-    val type = mutableStateOf("")
-    val afterEat = mutableStateOf(0)
+    private val _title = MutableStateFlow<String?>(null)
+    val title = _title.asStateFlow()
+    private val _weight = MutableStateFlow<String?>(null)
+    val weight = _weight.asStateFlow()
+    private val _type = MutableStateFlow<String?>(null)
+    val type = _type.asStateFlow()
+    private val _afterEat = MutableStateFlow(0)
+    val afterEat = _afterEat.asStateFlow()
 
     fun setTitle(title: String) {
-        this.title.value = title
+        this._title.value = title
     }
 
     fun setWeight(weight: String) {
-        this.weight.value = weight
+        this._weight.value = weight
     }
 
     fun setType(type: String) {
-        this.type.value = type
+        this._type.value = type
     }
 
     fun setAfterEat(value: Int){
-        this.afterEat.value = value
+        this._afterEat.value = value
     }
 
     fun convertToData(): DrugsData = DrugsData(
-        name = title.value,
-        weight = weight.value,
-        type = type.value,
-        afterEat = afterEat.value
+        name = _title.value,
+        weight = _weight.value,
+        type = _type.value,
+        afterEat = _afterEat.value
     )
 }
