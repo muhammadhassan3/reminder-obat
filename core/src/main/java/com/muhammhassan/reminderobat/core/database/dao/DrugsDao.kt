@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface DrugsDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun addDrugs(data: DrugsEntity)
+    fun addDrugs(data: DrugsEntity): Long
 
     @Update
     fun editDrugs(data: DrugsEntity)
@@ -20,6 +20,9 @@ interface DrugsDao {
     fun getAll(): Flow<List<DrugsEntity>>
 
     @Transaction
-    @Query("select * from drugs drug where drug.id = :drugId")
-    fun getDetail(drugId: Int): Flow<DrugsAndSchedule>
+    @Query(value = "select * from drugs drug where drug.id = :drugId")
+    fun getDetail(drugId: Long): Flow<DrugsAndSchedule>
+
+    @Query("select * from drugs where id = :drugId")
+    fun getDataSync(drugId: Long): DrugsEntity
 }
