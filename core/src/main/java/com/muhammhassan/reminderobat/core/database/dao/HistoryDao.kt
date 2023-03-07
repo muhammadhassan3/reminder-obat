@@ -7,12 +7,11 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface HistoryDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun addDrugs(data: HistoryEntity)
-
-    @Update
-    fun editDrugs(data: HistoryEntity)
+    fun addHistory(data: HistoryEntity): Long
 
     @Delete
     fun delete(data: HistoryEntity)
 
+    @Query("select * from alarm_history")
+    fun getAll(): Flow<List<HistoryEntity>>
 }
