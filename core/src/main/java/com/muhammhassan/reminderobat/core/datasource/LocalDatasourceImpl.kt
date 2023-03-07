@@ -5,58 +5,93 @@ import com.muhammhassan.reminderobat.core.database.entity.DrugsEntity
 import com.muhammhassan.reminderobat.core.database.entity.HistoryEntity
 import com.muhammhassan.reminderobat.core.database.entity.ScheduleEntity
 import com.muhammhassan.reminderobat.core.database.relation.DrugsAndSchedule
+import com.muhammhassan.reminderobat.core.database.relation.ScheduleAndDrug
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
+import timber.log.Timber
 import java.util.concurrent.Executors
 
-class LocalDatasourceImpl(private val db: DrugsReminderDatabase) : LocalDatasource {
+class LocalDatasourceImpl(db: DrugsReminderDatabase) : LocalDatasource {
     private val executor = Executors.newSingleThreadExecutor()
     private val drugsDao = db.drugsDao()
     private val scheduleDao = db.scheduleDao()
     private val historyDao = db.historyDao()
 
-    override fun getDrugs(): Flow<List<DrugsEntity>> {
+    override fun getAllDrugs(): Flow<List<DrugsEntity>> {
         return drugsDao.getAll()
     }
 
-    override fun addDrugs(data: DrugsEntity) {
-        executor.execute{
-            drugsDao.addDrugs(data)
-        }
+    override suspend fun addDrugs(data: DrugsEntity): Long {
+        return drugsDao.addDrugs(data)
+    }
+
+    override fun reduceStock(drugsId: Long) {
+        val drug = drugsDao.getDataSync(drugsId)
+        if (drug.stock > 0) {
+            drug.stock = drug.stock - 1
+        } else Timber.i("Stock empty")
+        drugsDao.editDrugs(drug)
     }
 
     override fun editDrugs(data: DrugsEntity) {
-        executor.execute{
+        executor.execute {
             drugsDao.editDrugs(data)
         }
     }
 
     override fun deleteDrugs(data: DrugsEntity) {
-        executor.execute{
+        executor.execute {
             drugsDao.delete(data)
         }
     }
 
-    override fun getSchedule(drugId: Int): Flow<List<ScheduleEntity>> {
-        return scheduleDao.getAll()
+    override fun getSpecificSchedule(day: Int, time: String): Flow<List<ScheduleAndDrug>> {
+        return scheduleDao.getListSchedule(day, time)
     }
 
-    override fun addSchedule(data: ScheduleEntity) {
-        TODO("Not yet implemented")
+    override fun getSchedule(id: Long): Flow<ScheduleAndDrug> {
+        return scheduleDao.getSchedule(id)
     }
 
-    override fun editSchedule(data: ScheduleEntity) {
-        TODO("Not yet implemented")
+    override fun getNearestSchedule(
+        day: Int, time: String, date: String
+    ): Flow<List<ScheduleAndDrug>> {
+        return scheduleDao.getNearestSchedule("%$day%", time).map { data ->
+            data.filter { item ->
+                item.drugs.startDate <= date && item.drugs.endDate >= date
+            }
+        }
+    }
+
+    override suspend fun addAllSchedule(data: List<ScheduleEntity>) {
+        executor.execute {
+            scheduleDao.addAllSchedule(data)
+        }
     }
 
     override fun deleteSchedule(data: ScheduleEntity) {
-        TODO("Not yet implemented")
+        executor.execute {
+            scheduleDao.delete(data)
+        }
     }
 
     override fun addHistory(data: HistoryEntity) {
-        TODO("Not yet implemented")
+        executor.execute {
+            historyDao.addHistory(data)
+        }
     }
 
-    override fun getDetail(drugId: Int): Flow<DrugsAndSchedule> {
-        TODO("Not yet implemented")
+    override fun deleteHistory(data: HistoryEntity) {
+        executor.execute {
+            historyDao.delete(data)
+        }
+    }
+
+    override fun getAllHistory(): Flow<List<HistoryEntity>> {
+        return historyDao.getAll()
+    }
+
+    override fun getDetail(drugId: Long): Flow<DrugsAndSchedule> {
+        return drugsDao.getDetail(drugId)
     }
 }
