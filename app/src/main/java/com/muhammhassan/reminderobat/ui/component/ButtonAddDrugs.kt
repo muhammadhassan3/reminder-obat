@@ -4,8 +4,12 @@ import androidx.compose.animation.*
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.OutlinedButton
@@ -37,13 +41,18 @@ fun ButtonAddDrug(modifier: Modifier = Modifier, onClick: () -> Unit) {
         ) {
             Column(modifier = Modifier) {
 
-                OutlinedButton(modifier = Modifier
-                    .size(55.dp),
+                OutlinedButton(
+                    modifier = Modifier
+                        .size(55.dp),
                     border = BorderStroke(1.dp, Color.Gray),
                     shape = CircleShape,
                     onClick = {
                         onClick.invoke()
-                    }) {
+                    },
+                    colors = ButtonDefaults.outlinedButtonColors(
+                        contentColor = Color.White
+                    )
+                ) {
                     Image(
                         modifier = Modifier,
                         painter = painterResource(id = com.muhammhassan.reminderobat.R.drawable.pill),
@@ -51,8 +60,8 @@ fun ButtonAddDrug(modifier: Modifier = Modifier, onClick: () -> Unit) {
                     )
                 }
             }
-            Spacer(modifier = Modifier.height(4.dp))
         }
+        if (isButtonShowed.value) Spacer(modifier = Modifier.height(8.dp))
         IconButton(modifier = Modifier
             .size(55.dp)
             .clip(CircleShape)
@@ -60,13 +69,13 @@ fun ButtonAddDrug(modifier: Modifier = Modifier, onClick: () -> Unit) {
             isButtonShowed.value = !isButtonShowed.value
         }) {
             Crossfade(targetState = isButtonShowed.value) { isShow ->
-                if(isShow){
+                if (isShow) {
                     Icon(
                         imageVector = Icons.Default.Close,
                         contentDescription = "Tampilkan menu",
                         tint = Purple500
                     )
-                }else{
+                } else {
                     Icon(
                         imageVector = Icons.Default.Add,
                         contentDescription = "Tampilkan menu",
