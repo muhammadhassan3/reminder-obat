@@ -1,4 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    
+    <application>
+        <receiver android:name=".service.receiver.DrugsReminder"
+            android:enabled="true"
+            android:exported="true"/>
+        <receiver android:name=".service.receiver.StartReminder"
+            android:enabled="true"
+            android:exported="true"/>
+        <receiver android:name=".service.receiver.StopReminder"
+            android:enabled="true"
+            android:exported="true"/>
+    </application>
 </manifest>
