@@ -47,7 +47,13 @@ fun DrugItemView(modifier: Modifier = Modifier, drugItem: DrugItem) {
         shape = RoundedCornerShape(4.dp)
     ) {
         Column(modifier = Modifier.padding(8.dp)) {
-            Text(text = drugItem.title)
+            Row(modifier = Modifier){
+                Text(text = drugItem.time, fontWeight = FontWeight.Bold)
+                Spacer(modifier = Modifier.width(4.dp))
+                Text(text = "-")
+                Spacer(modifier = Modifier.width(4.dp))
+                Text(text = drugItem.title)
+            }
             Spacer(modifier = Modifier.height(4.dp))
             Text(text = drugItem.type)
         }
@@ -58,7 +64,7 @@ fun DrugItemView(modifier: Modifier = Modifier, drugItem: DrugItem) {
 @Composable
 fun DrugItemPreview() {
     ReminderObatTheme {
-        DrugItemView(drugItem = DrugItem(title = "Obat 1", type = "1 Pill"))
+        DrugItemView(drugItem = DrugItem(title = "Obat 1", type = "1 Pill", time = "09:35"))
     }
 }
 
@@ -69,7 +75,7 @@ fun AlarmGroupPreview() {
         AlarmGroup(
             item = GroupedDrugItem(
                 id = 0,
-                title = "08:00", item = listOf(DrugItem(title = "Obat 1", type = "1 Pill"))
+                title = "Hari ini", item = listOf(DrugItem(title = "Obat 1", type = "1 Pill", time = "08:45"))
             )
         )
     }
