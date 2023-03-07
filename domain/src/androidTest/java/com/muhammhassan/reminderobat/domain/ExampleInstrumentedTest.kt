@@ -1,4 +1,4 @@
-package com.muhammhassan.remainderobat.domain
+package com.muhammhassan.reminderobat.domain
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

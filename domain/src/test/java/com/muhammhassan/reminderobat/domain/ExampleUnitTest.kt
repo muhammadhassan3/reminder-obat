@@ -1,4 +1,4 @@
-package com.muhammhassan.remainderobat.domain
+package com.muhammhassan.reminderobat.domain
 
 import org.junit.Test
 
