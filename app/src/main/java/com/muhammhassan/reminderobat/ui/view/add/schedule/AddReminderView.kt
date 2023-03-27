@@ -11,7 +11,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -22,16 +21,17 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.muhammhassan.reminderobat.R
-import com.muhammhassan.reminderobat.core.utils.Day
 import com.muhammhassan.reminderobat.domain.model.DrugsData
 import com.muhammhassan.reminderobat.ui.component.*
 import org.koin.androidx.compose.koinViewModel
 import java.util.*
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun AddReminderView(
-    modifier: Modifier = Modifier, onBackPressed:() -> Unit, onNextPressed: (data: DrugsData) -> Unit, data: DrugsData
+    modifier: Modifier = Modifier,
+    onBackPressed: () -> Unit,
+    onNextPressed: (data: DrugsData) -> Unit,
+    data: DrugsData
 ) {
     val viewModel: AddReminderViewModel = koinViewModel()
     val context = LocalContext.current
@@ -123,16 +123,25 @@ fun AddReminderView(
                 modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceAround
             ) {
                 DaySelector(
-                    onItemSelected = { viewModel.setDay(Day.Sunday, it) },
+                    onItemSelected = { viewModel.setDay(Calendar.SUNDAY, it) },
                     text = "M",
                     baseColor = Color.Red
                 )
-                DaySelector(onItemSelected = { viewModel.setDay(Day.Monday, it) }, text = "S")
-                DaySelector(onItemSelected = { viewModel.setDay(Day.Tuesday, it) }, text = "S")
-                DaySelector(onItemSelected = { viewModel.setDay(Day.Wednesday, it) }, text = "R")
-                DaySelector(onItemSelected = { viewModel.setDay(Day.Thursday, it) }, text = "K")
-                DaySelector(onItemSelected = { viewModel.setDay(Day.Friday, it) }, text = "J")
-                DaySelector(onItemSelected = { viewModel.setDay(Day.Saturday, it) }, text = "S")
+                DaySelector(onItemSelected = { viewModel.setDay(Calendar.MONDAY, it) }, text = "S")
+                DaySelector(onItemSelected = { viewModel.setDay(Calendar.TUESDAY, it) }, text = "S")
+                DaySelector(
+                    onItemSelected = { viewModel.setDay(Calendar.WEDNESDAY, it) },
+                    text = "R"
+                )
+                DaySelector(
+                    onItemSelected = { viewModel.setDay(Calendar.THURSDAY, it) },
+                    text = "K"
+                )
+                DaySelector(onItemSelected = { viewModel.setDay(Calendar.FRIDAY, it) }, text = "J")
+                DaySelector(
+                    onItemSelected = { viewModel.setDay(Calendar.SATURDAY, it) },
+                    text = "S"
+                )
             }
             Spacer(modifier = Modifier.height(8.dp))
             Row(
