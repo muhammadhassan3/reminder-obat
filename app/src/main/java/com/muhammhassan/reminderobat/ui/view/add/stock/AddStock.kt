@@ -1,5 +1,6 @@
 package com.muhammhassan.reminderobat.ui.view.add.stock
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
@@ -129,6 +130,7 @@ fun AddStockView(
             }, onClick = {
             viewModel.save(context = context) {
                 onDataSaved.invoke()
+                Toast.makeText(context, "Pengingat berhasil diatur", Toast.LENGTH_SHORT).show()
             }
         }) {
             Text(text = "Simpan")

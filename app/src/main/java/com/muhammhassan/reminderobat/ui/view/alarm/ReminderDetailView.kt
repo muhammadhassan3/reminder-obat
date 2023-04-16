@@ -1,18 +1,36 @@
 package com.muhammhassan.reminderobat.ui.view.alarm
 
+import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
+import androidx.compose.material.Card
+import androidx.compose.material.Divider
+import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.OutlinedButton
+import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Close
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
@@ -29,10 +47,11 @@ import com.muhammhassan.reminderobat.utils.DialogData
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun ReminderDetailView(modifier: Modifier = Modifier, onNavigateUp: () -> Unit, id: Int) {
+fun ReminderDetailView(modifier: Modifier = Modifier, onFinished: () -> Unit, id: Int) {
     val viewModel: ReminderDetailViewModel = koinViewModel()
     val data by viewModel.data.collectAsState()
     val isDialogshow by viewModel.isDialogShow.collectAsState()
+    val context = LocalContext.current
 
     val dialog = remember {
         mutableStateOf(
@@ -55,7 +74,7 @@ fun ReminderDetailView(modifier: Modifier = Modifier, onNavigateUp: () -> Unit, 
                 title = "Pemberitahuan",
                 message = "Item yang diberikan tidak valid",
                 buttonType = ButtonType.NEUTRAL,
-                onNeutralAction = onNavigateUp
+                onNeutralAction = onFinished
             )
             viewModel.showDialog()
         }
@@ -109,7 +128,11 @@ fun ReminderDetailView(modifier: Modifier = Modifier, onNavigateUp: () -> Unit, 
                     height = Dimension.preferredWrapContent
                 }, backgroundColor = Color.White, shape = RoundedCornerShape(16.dp)
             ) {
-                ConstraintLayout(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
+                ConstraintLayout(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp)
+                ) {
                     val (
                         tagWeight, weight, tagType, type, tagAfterEat, afterEat, divider1,
                         tagStartDate, startDate, tagEndDate, endDate, divider2
@@ -214,7 +237,7 @@ fun ReminderDetailView(modifier: Modifier = Modifier, onNavigateUp: () -> Unit, 
                             onCancelAction = viewModel::hideDialog,
                             onConfirmAction = {
                                 viewModel.confirm(it.id)
-                                onNavigateUp.invoke()
+                                onFinished.invoke()
                             })
                         viewModel.showDialog()
                     },
@@ -246,7 +269,7 @@ fun ReminderDetailView(modifier: Modifier = Modifier, onNavigateUp: () -> Unit, 
                 OutlinedButton(
                     modifier = Modifier.size(75.dp), onClick = {
                         viewModel.dismiss()
-                        onNavigateUp.invoke()
+                        onFinished.invoke()
                     }, shape = CircleShape, border = BorderStroke(1.dp, Color.Gray)
                 ) {
                     Icon(
@@ -273,7 +296,14 @@ fun ReminderDetailView(modifier: Modifier = Modifier, onNavigateUp: () -> Unit, 
             }) {
                 OutlinedButton(
                     modifier = Modifier.size(75.dp),
-                    onClick = { viewModel.reschedule() },
+                    onClick = {
+                        viewModel.reschedule(context, id)
+                        Toast.makeText(
+                            context,
+                            "Kamu akan diingatkan kembali dalam 5 menit",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    },
                     shape = CircleShape,
                     border = BorderStroke(1.dp, Color.Gray)
                 ) {
@@ -298,6 +328,6 @@ fun ReminderDetailView(modifier: Modifier = Modifier, onNavigateUp: () -> Unit, 
 @Composable
 fun ReminderDetailPreview() {
     ReminderObatTheme {
-        ReminderDetailView(onNavigateUp = {}, id = 0)
+        ReminderDetailView(onFinished = {}, id = 0)
     }
 }

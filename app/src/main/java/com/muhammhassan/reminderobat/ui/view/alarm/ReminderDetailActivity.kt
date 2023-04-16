@@ -21,8 +21,8 @@ class ReminderDetailActivity : ComponentActivity() {
                         .fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    ReminderDetailView(onNavigateUp = {
-                        finish()
+                    ReminderDetailView(onFinished = {
+                        finishAffinity()
                     }, id = id)
                 }
             }

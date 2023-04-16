@@ -78,6 +78,26 @@ class AndroidAlarmScheduler(private val context: Context) : AlarmScheduler {
         Timber.i("Schedule Start Date")
     }
 
+    override fun rescheduleAlarm(id: Int) {
+        val calendar  = Calendar.getInstance()
+        calendar.add(Calendar.MINUTE, 5)
+
+        val intent = Intent(context, DrugsReminder::class.java)
+        intent.putExtra(Constant.id, id)
+        val pendingIntent = PendingIntent.getBroadcast(
+            context,
+            id,
+            intent,
+            PendingIntent.FLAG_IMMUTABLE
+        )
+
+        alarmManager.setExact(
+            AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent
+        )
+
+        Timber.d("Alarm rescheduled")
+    }
+
     override fun cancelScheduleStart(drugsId: Int) {
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val intent = Intent(context, StartReminder::class.java)
