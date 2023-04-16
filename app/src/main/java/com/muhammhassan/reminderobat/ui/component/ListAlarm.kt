@@ -1,6 +1,7 @@
 package com.muhammhassan.reminderobat.ui.component
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
@@ -21,7 +22,7 @@ import com.muhammhassan.reminderobat.domain.model.GroupedDrugItem
 import com.muhammhassan.reminderobat.ui.theme.ReminderObatTheme
 
 @Composable
-fun AlarmGroup(modifier: Modifier = Modifier, item: GroupedDrugItem) {
+fun AlarmGroup(modifier: Modifier = Modifier, item: GroupedDrugItem, onItemClick: (id: Long) -> Unit) {
     val list = remember{ mutableStateListOf<DrugItem>() }
     LaunchedEffect(key1 = true){
         list.addAll(item.item)
@@ -30,23 +31,24 @@ fun AlarmGroup(modifier: Modifier = Modifier, item: GroupedDrugItem) {
         Text(modifier = Modifier, text = item.title, fontWeight = FontWeight.Bold, fontSize = 16.sp)
         Spacer(modifier = Modifier.height(8.dp))
         item.item.forEach {
-            DrugItemView(drugItem = it)
+            DrugItemView(drugItem = it, onItemClick = onItemClick)
         }
     }
 }
 
 @Composable
-fun DrugItemView(modifier: Modifier = Modifier, drugItem: DrugItem) {
+fun DrugItemView(modifier: Modifier = Modifier, drugItem: DrugItem, onItemClick: (id: Long) -> Unit) {
     Card(
         modifier = modifier
             .fillMaxWidth()
             .wrapContentHeight()
-            .padding(8.dp),
+            .padding(start = 8.dp, end = 8.dp, top = 4.dp, bottom = 4.dp)
+            .clickable { onItemClick.invoke(drugItem.id) },
         border = BorderStroke(1.dp, Color.Gray),
-        backgroundColor = MaterialTheme.colors.background,
+        backgroundColor = Color.White,
         shape = RoundedCornerShape(4.dp)
     ) {
-        Column(modifier = Modifier.padding(8.dp)) {
+        Column(modifier = Modifier.padding(8.dp).fillMaxWidth()) {
             Row(modifier = Modifier){
                 Text(text = drugItem.time, fontWeight = FontWeight.Bold)
                 Spacer(modifier = Modifier.width(4.dp))
@@ -64,7 +66,7 @@ fun DrugItemView(modifier: Modifier = Modifier, drugItem: DrugItem) {
 @Composable
 fun DrugItemPreview() {
     ReminderObatTheme {
-        DrugItemView(drugItem = DrugItem(title = "Obat 1", type = "1 Pill", time = "09:35"))
+        DrugItemView(drugItem = DrugItem(title = "Obat 1", type = "1 Pill", time = "09:35", id=0), onItemClick = {})
     }
 }
 
@@ -75,8 +77,9 @@ fun AlarmGroupPreview() {
         AlarmGroup(
             item = GroupedDrugItem(
                 id = 0,
-                title = "Hari ini", item = listOf(DrugItem(title = "Obat 1", type = "1 Pill", time = "08:45"))
-            )
+                title = "Hari ini", item = listOf(DrugItem(title = "Obat 1", type = "1 Pill", time = "08:45", id = 0))
+            ),
+            onItemClick = {}
         )
     }
 }

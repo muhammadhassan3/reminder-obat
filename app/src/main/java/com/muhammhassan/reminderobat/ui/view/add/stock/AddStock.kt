@@ -1,21 +1,25 @@
 package com.muhammhassan.reminderobat.ui.view.add.stock
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
+import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.Dimension
 import com.muhammhassan.reminderobat.domain.model.DrugsData
 import com.muhammhassan.reminderobat.ui.component.ButtonBack
 import com.muhammhassan.reminderobat.ui.component.ButtonType
@@ -58,38 +62,72 @@ fun AddStockView(
                 })
         }
     }
+    ConstraintLayout(modifier = modifier.fillMaxSize()) {
+        val (title, subtitle, content, btnNavUp, btnSave) = createRefs()
 
-    Column(modifier = Modifier.fillMaxSize()) {
-        Column(
-            modifier = modifier
-                .fillMaxWidth()
-                .weight(1f)
-        ) {
-            ButtonBack(modifier = Modifier) {
-                onBackPressed.invoke()
-            }
-            Text(
-                modifier = Modifier.align(Alignment.CenterHorizontally),
-                text = "Kondisi dan stok obat",
-                style = MaterialTheme.typography.h1
-            )
-            Text(
-                modifier = Modifier.align(Alignment.CenterHorizontally),
-                text = "atur kondisi dan stok obat",
-                style = MaterialTheme.typography.body1
-            )
-            Spacer(modifier = Modifier.height(16.dp))
-            InputField(title = "Kondisi tubuh", onTextChanged = {
-                viewModel.setCondition(it)
-            }, value = condition ?: "")
-            Spacer(modifier = Modifier.height(8.dp))
-            InputField(title = "Stok obat", onTextChanged = {
-                viewModel.setStock(it)
-            }, value = stock.toString(), inputType = KeyboardType.Number)
+        ButtonBack(modifier = Modifier.constrainAs(btnNavUp) {
+            top.linkTo(parent.top)
+            start.linkTo(parent.start)
+        }) {
+            onBackPressed.invoke()
         }
-        Button(modifier = Modifier
-            .fillMaxWidth()
-            .height(45.dp), onClick = {
+        Text(
+            modifier = Modifier.constrainAs(title) {
+                top.linkTo(btnNavUp.bottom)
+                start.linkTo(parent.start)
+                end.linkTo(parent.end)
+
+            }, text = "Kondisi dan stok obat", style = MaterialTheme.typography.h1
+        )
+        Text(
+            modifier = Modifier.constrainAs(subtitle) {
+                top.linkTo(title.bottom)
+                start.linkTo(parent.start)
+                end.linkTo(parent.end)
+            }, text = "atur kondisi dan stok obat", style = MaterialTheme.typography.body1
+        )
+
+        Card(modifier = Modifier.constrainAs(content) {
+            top.linkTo(subtitle.bottom, 16.dp)
+            start.linkTo(parent.start)
+            end.linkTo(parent.end)
+            width = Dimension.fillToConstraints
+            height = Dimension.preferredWrapContent
+        }, backgroundColor = Color.White, shape = RoundedCornerShape(16.dp)) {
+            ConstraintLayout(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp)
+            ) {
+                val (edtCondition, edtStock) = createRefs()
+                InputField(title = "Kondisi tubuh", onTextChanged = {
+                    viewModel.setCondition(it)
+                }, value = condition ?: "", modifier = Modifier.constrainAs(edtCondition) {
+                    top.linkTo(parent.top)
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                    width = Dimension.fillToConstraints
+                    height = Dimension.preferredWrapContent
+                })
+                InputField(title = "Stok obat", onTextChanged = {
+                    viewModel.setStock(it)
+                }, value = stock.toString(), modifier = Modifier.constrainAs(edtStock) {
+                    top.linkTo(edtCondition.bottom, 8.dp)
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                    width = Dimension.fillToConstraints
+                    height = Dimension.preferredWrapContent
+                }, inputType = KeyboardType.Number)
+            }
+        }
+
+        Button(modifier = Modifier.constrainAs(btnSave) {
+                start.linkTo(parent.start)
+                end.linkTo(parent.end)
+                bottom.linkTo(parent.bottom)
+                width = Dimension.fillToConstraints
+                height = Dimension.value(45.dp)
+            }, onClick = {
             viewModel.save(context = context) {
                 onDataSaved.invoke()
             }

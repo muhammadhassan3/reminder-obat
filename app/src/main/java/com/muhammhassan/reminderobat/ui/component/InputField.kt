@@ -19,7 +19,8 @@ fun InputField(
     title: String,
     onTextChanged: (text: String) -> Unit,
     value: String,
-    inputType: KeyboardType = KeyboardType.Text
+    inputType: KeyboardType = KeyboardType.Text,
+    singleLine: Boolean = true,
 ) {
     Column(modifier = modifier.fillMaxWidth()) {
         Text(
@@ -31,8 +32,8 @@ fun InputField(
         OutlinedTextField(modifier = Modifier.fillMaxWidth(),
             value = value,
             onValueChange = { onTextChanged.invoke(it) },
-            maxLines = 1,
             keyboardOptions = KeyboardOptions(keyboardType = inputType),
+            singleLine = singleLine
         )
     }
 }

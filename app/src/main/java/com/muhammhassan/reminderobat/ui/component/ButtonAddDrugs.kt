@@ -4,15 +4,13 @@ import androidx.compose.animation.*
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.OutlinedButton
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Close
@@ -22,14 +20,20 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.muhammhassan.reminderobat.R
 import com.muhammhassan.reminderobat.ui.theme.Purple500
 import com.muhammhassan.reminderobat.ui.theme.ReminderObatTheme
 
 @Composable
-fun ButtonAddDrug(modifier: Modifier = Modifier, onClick: () -> Unit) {
+fun ButtonAddDrug(
+    modifier: Modifier = Modifier,
+    onAddButtonClicked: () -> Unit,
+    onProgressButtonClicked: () -> Unit
+) {
     val isButtonShowed = remember {
         mutableStateOf(false)
     }
@@ -40,14 +44,32 @@ fun ButtonAddDrug(modifier: Modifier = Modifier, onClick: () -> Unit) {
             exit = slideOutVertically(targetOffsetY = { it / 2 }) + fadeOut()
         ) {
             Column(modifier = Modifier) {
-
                 OutlinedButton(
-                    modifier = Modifier
-                        .size(55.dp),
-                    border = BorderStroke(1.dp, Color.Gray),
+                    modifier = Modifier.size(55.dp),
+                    border = BorderStroke(1.dp, MaterialTheme.colors.primary),
                     shape = CircleShape,
                     onClick = {
-                        onClick.invoke()
+                        onProgressButtonClicked.invoke()
+                    },
+                    colors = ButtonDefaults.outlinedButtonColors(
+                        contentColor = Color.White
+                    )
+                ) {
+                    Image(
+                        modifier = Modifier,
+                        contentDescription = "Lihat Progress",
+                        painter = painterResource(id = R.drawable.icon_progress),
+                        contentScale = ContentScale.Crop
+                    )
+                }
+                Spacer(modifier = Modifier.height(8.dp))
+
+                OutlinedButton(
+                    modifier = Modifier.size(55.dp),
+                    border = BorderStroke(1.dp, MaterialTheme.colors.primary),
+                    shape = CircleShape,
+                    onClick = {
+                        onAddButtonClicked.invoke()
                     },
                     colors = ButtonDefaults.outlinedButtonColors(
                         contentColor = Color.White
@@ -62,24 +84,27 @@ fun ButtonAddDrug(modifier: Modifier = Modifier, onClick: () -> Unit) {
             }
         }
         if (isButtonShowed.value) Spacer(modifier = Modifier.height(8.dp))
-        IconButton(modifier = Modifier
-            .size(55.dp)
-            .clip(CircleShape)
-            .background(Color.White), onClick = {
-            isButtonShowed.value = !isButtonShowed.value
-        }) {
+        OutlinedButton(
+            modifier = Modifier
+                .size(55.dp),
+            shape = CircleShape,
+            onClick = {
+                isButtonShowed.value = !isButtonShowed.value
+            }, colors = ButtonDefaults.outlinedButtonColors(
+                contentColor = Color.White
+            )) {
             Crossfade(targetState = isButtonShowed.value) { isShow ->
                 if (isShow) {
                     Icon(
                         imageVector = Icons.Default.Close,
                         contentDescription = "Tampilkan menu",
-                        tint = Purple500
+                        tint = MaterialTheme.colors.primary
                     )
                 } else {
                     Icon(
                         imageVector = Icons.Default.Add,
                         contentDescription = "Tampilkan menu",
-                        tint = Purple500
+                        tint = MaterialTheme.colors.primary
                     )
                 }
             }
@@ -91,8 +116,6 @@ fun ButtonAddDrug(modifier: Modifier = Modifier, onClick: () -> Unit) {
 @Composable
 fun ButtonAddDrugPreview() {
     ReminderObatTheme {
-        ButtonAddDrug {
-
-        }
+        ButtonAddDrug(onAddButtonClicked = {}, onProgressButtonClicked = {})
     }
 }
