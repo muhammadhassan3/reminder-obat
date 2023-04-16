@@ -1,7 +1,5 @@
 package com.muhammhassan.reminderobat.core.utils
 
-import java.util.*
-
 object Constant {
     const val dbName = "db_drugreminder"
     const val afterEat = 1

@@ -27,7 +27,6 @@ import com.muhammhassan.reminderobat.ui.component.DialogContent
 import com.muhammhassan.reminderobat.ui.component.InputField
 import org.koin.androidx.compose.koinViewModel
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun AddStockView(
     modifier: Modifier = Modifier,

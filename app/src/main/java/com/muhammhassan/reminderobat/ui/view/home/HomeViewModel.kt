@@ -11,8 +11,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.launchIn
-import timber.log.Timber
-import java.util.*
+import java.util.Calendar
+import java.util.Date
 
 class HomeViewModel(private val useCase: HomeUseCase) : ViewModel() {
     private val _date = MutableStateFlow("")

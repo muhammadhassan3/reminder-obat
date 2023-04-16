@@ -6,7 +6,6 @@ import com.muhammhassan.reminderobat.domain.model.HistoryModel
 import com.muhammhassan.reminderobat.domain.usecase.ProgressDetailUseCase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
