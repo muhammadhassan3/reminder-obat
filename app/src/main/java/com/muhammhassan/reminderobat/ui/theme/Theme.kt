@@ -13,18 +13,22 @@ private val DarkColorPalette = darkColors(
 )
 
 private val LightColorPalette = lightColors(
-    primary = Purple500,
-    primaryVariant = Purple700,
-    secondary = Teal200
+    primary = LightBlue,
+    primaryVariant = DarkBlue,
+    secondary = Teal200,
+    background = DarkBlue
 )
 
 @Composable
 fun ReminderObatTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
-    val colors = if (darkTheme) {
-        DarkColorPalette
-    } else {
-        LightColorPalette
-    }
+    //Disable Multi colorpalette
+//    val colors = if (darkTheme) {
+//        DarkColorPalette
+//    } else {
+//        LightColorPalette
+//    }
+
+    val colors = LightColorPalette
 
     MaterialTheme(
         colors = colors,
