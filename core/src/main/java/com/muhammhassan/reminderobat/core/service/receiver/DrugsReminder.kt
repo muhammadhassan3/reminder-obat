@@ -46,13 +46,13 @@ class DrugsReminder : BroadcastReceiver() {
 
         val builder = NotificationCompat.Builder(context, channelId).setContentIntent(pendingIntent)
             .setAutoCancel(true).setContentTitle(title).setContentText(message)
-            .setPriority(NotificationCompat.DEFAULT_ALL).setSound(alarmSound)
+            .setPriority(NotificationCompat.PRIORITY_MAX).setSound(alarmSound)
             .setVibrate(longArrayOf(1000, 1000, 1000, 1000))
-            .setSmallIcon(R.drawable.baseline_notifications_24)
+            .setSmallIcon(R.drawable.app_icon_monochrome)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
-                channelId, "Reminder Notification Channel", NotificationManager.IMPORTANCE_DEFAULT
+                channelId, "Reminder Notification Channel", NotificationManager.IMPORTANCE_HIGH
             ).also { channel ->
                 channel.enableVibration(true)
                 channel.vibrationPattern = longArrayOf(1000, 1000, 1000, 1000)
