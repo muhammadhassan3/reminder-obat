@@ -33,12 +33,17 @@ class ReminderDetailViewModel(private val useCase: ReminderDetailUseCase): ViewM
         }
     }
 
-    fun confirm(drugsId: Long, onProcessFinished: () -> Unit){
+    fun dismiss(){
+        viewModelScope.launch(Dispatchers.IO){
+            useCase.addHistory(data = data.value!!, "Dibatalkan")
+        }
+    }
+
+    fun confirm(drugsId: Long){
         viewModelScope.launch(Dispatchers.IO) {
             useCase.reduceStock(drugsId)
-            useCase.addHistory(data = data.value!!)
+            useCase.addHistory(data = data.value!!, "Selesai")
         }
-        onProcessFinished.invoke()
     }
 
     fun reschedule(){

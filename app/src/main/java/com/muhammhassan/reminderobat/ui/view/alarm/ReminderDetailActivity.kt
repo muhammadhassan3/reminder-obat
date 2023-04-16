@@ -20,8 +20,7 @@ class ReminderDetailActivity : ComponentActivity() {
             ReminderObatTheme {
                 Surface(
                     modifier = Modifier
-                        .fillMaxSize()
-                        .padding(16.dp),
+                        .fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
                     ReminderDetailView(onNavigateUp = {

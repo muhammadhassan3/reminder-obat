@@ -6,6 +6,5 @@ import kotlinx.coroutines.flow.Flow
 interface ReminderDetailUseCase {
     fun reduceStock(drugsId: Long)
     fun getData(scheduleId: Long): Flow<DrugsModel>
-
-    suspend fun addHistory(data: DrugsModel)
+    suspend fun addHistory(data: DrugsModel, status: String)
 }

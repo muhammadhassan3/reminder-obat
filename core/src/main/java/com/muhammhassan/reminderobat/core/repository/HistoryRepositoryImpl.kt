@@ -13,6 +13,10 @@ class HistoryRepositoryImpl(private val local: LocalDatasource): HistoryReposito
         local.deleteHistory(data)
     }
 
+    override fun getDetail(id: Long): Flow<HistoryEntity> {
+        return local.getDetailHistory(id)
+    }
+
     override fun getAll(): Flow<List<HistoryEntity>> {
         return local.getAllHistory()
     }

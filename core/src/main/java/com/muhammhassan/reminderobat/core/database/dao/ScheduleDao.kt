@@ -10,8 +10,8 @@ interface ScheduleDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun addAllSchedule(list: List<ScheduleEntity>)
-    @Delete
-    fun delete(data: ScheduleEntity)
+    @Query("delete from schedule where id = :id")
+    fun delete(id: Long)
 
     @Transaction
     @Query("select * from schedule where days like :day and time >= :time  order by time asc")

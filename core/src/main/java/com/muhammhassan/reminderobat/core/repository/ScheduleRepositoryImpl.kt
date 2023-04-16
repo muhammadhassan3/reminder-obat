@@ -10,8 +10,8 @@ class ScheduleRepositoryImpl(private val local: LocalDatasource) : ScheduleRepos
         local.addAllSchedule(data)
     }
 
-    override fun deleteSchedule(data: ScheduleEntity) {
-        local.deleteSchedule(data)
+    override fun deleteSchedule(id: Long) {
+        local.deleteSchedule(id)
     }
 
     override fun getNearestAlarm(

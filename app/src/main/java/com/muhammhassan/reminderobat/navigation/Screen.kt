@@ -5,8 +5,11 @@ sealed class Screen(val route: String){
     object AddDrugs: Screen("add_drugs")
     object AddReminder: Screen("add_reminder/{${ArgsName.data}}")
     object AddStock: Screen("add_stock")
-    object Detail: Screen("home/{${ArgsName.id}}"){
-        fun createRoute(id: Int) = "home/$id"
+    object DetailSchedule: Screen("home/{${ArgsName.id}}"){
+        fun createRoute(id: Long) = "home/$id"
+    }
+    object DetailProgress: Screen("progress/{${ArgsName.id}}"){
+        fun createRoute(id: Long) = "progress/$id"
     }
     object Progress: Screen("progress")
 }

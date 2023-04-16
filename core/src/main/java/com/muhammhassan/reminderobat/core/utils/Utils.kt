@@ -43,4 +43,22 @@ object Utils {
     fun parseDateToISO(date: Date): String{
         return parseDate("yyyy-MM-dd'T'HH:mm:ss.SSSZ", date)
     }
+
+    fun parseDateFromISO(date: String): Date{
+        return parseString("yyyy-MM-dd'T'HH:mm:ss.SSSZ", date)
+    }
+
+    fun parseDateWithTime(date: Date): String{
+        return parseDate("dd MMMM yyyy HH:mm ", date)
+    }
+    fun parseDayName(day: Int): String = when (day) {
+        Calendar.MONDAY -> "Senin"
+        Calendar.TUESDAY -> "Selasa"
+        Calendar.WEDNESDAY -> "Rabu"
+        Calendar.THURSDAY -> "Kamis"
+        Calendar.FRIDAY -> "Jum'at"
+        Calendar.SATURDAY -> "Sabtu"
+        Calendar.SUNDAY -> "Minggu"
+        else -> "Tidak terdefinisi"
+    }
 }

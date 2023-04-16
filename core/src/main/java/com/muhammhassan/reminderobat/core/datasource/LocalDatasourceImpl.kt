@@ -69,9 +69,9 @@ class LocalDatasourceImpl(db: DrugsReminderDatabase) : LocalDatasource {
         }
     }
 
-    override fun deleteSchedule(data: ScheduleEntity) {
+    override fun deleteSchedule(id: Long) {
         executor.execute {
-            scheduleDao.delete(data)
+            scheduleDao.delete(id)
         }
     }
 
@@ -93,5 +93,9 @@ class LocalDatasourceImpl(db: DrugsReminderDatabase) : LocalDatasource {
 
     override fun getDetail(drugId: Long): Flow<DrugsAndSchedule> {
         return drugsDao.getDetail(drugId)
+    }
+
+    override fun getDetailHistory(id: Long): Flow<HistoryEntity> {
+        return historyDao.getDetail(id)
     }
 }

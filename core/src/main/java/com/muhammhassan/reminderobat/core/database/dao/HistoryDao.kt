@@ -14,4 +14,7 @@ interface HistoryDao {
 
     @Query("select * from alarm_history")
     fun getAll(): Flow<List<HistoryEntity>>
+
+    @Query("select * from alarm_history where id = :id")
+    fun getDetail(id: Long): Flow<HistoryEntity>
 }

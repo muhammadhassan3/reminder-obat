@@ -16,5 +16,6 @@ data class HistoryEntity(
     val condition: String,
     val stock: Int,
     val day: Int,
+    val status: String,
     val createdAt: String,
 )
