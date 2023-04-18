@@ -6,15 +6,16 @@ import androidx.lifecycle.viewModelScope
 import com.muhammhassan.reminderobat.core.service.alarm.AndroidAlarmScheduler
 import com.muhammhassan.reminderobat.domain.model.ScheduleModel
 import com.muhammhassan.reminderobat.domain.usecase.ScheduleDetailUseCase
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-class DetailScheduleViewModel(private val useCase: ScheduleDetailUseCase): ViewModel() {
+class DetailScheduleViewModel(private val useCase: ScheduleDetailUseCase) : ViewModel() {
     private val data = MutableStateFlow<ScheduleModel?>(null)
 
-    fun getSchedule(id: Long): Flow<ScheduleModel?>{
+    fun getSchedule(id: Long): Flow<ScheduleModel?> {
         viewModelScope.launch {
             useCase.getDetail(id).collectLatest {
                 data.value = it
@@ -23,9 +24,11 @@ class DetailScheduleViewModel(private val useCase: ScheduleDetailUseCase): ViewM
         return data
     }
 
-    fun deleteSchedule(id: Long, context: Context){
-        val scheduler = AndroidAlarmScheduler(context)
-        useCase.delete(id)
-        scheduler.cancelSchedule(id.toInt())
+    fun deleteSchedule(id: Long, context: Context) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val scheduler = AndroidAlarmScheduler(context)
+            scheduler.cancelSchedule(id.toInt())
+            useCase.delete(id)
+        }
     }
 }

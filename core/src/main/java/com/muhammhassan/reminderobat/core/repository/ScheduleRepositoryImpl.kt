@@ -24,7 +24,7 @@ class ScheduleRepositoryImpl(private val local: LocalDatasource) : ScheduleRepos
         return local.getSpecificSchedule(day, time)
     }
 
-    override fun getSchedule(id: Long): Flow<ScheduleAndDrug> {
+    override fun getSchedule(id: Long): Flow<ScheduleAndDrug?> {
         return local.getSchedule(id)
     }
 }

@@ -23,5 +23,5 @@ interface ScheduleDao {
 
     @Transaction
     @Query("select * from schedule where id = :id")
-    fun getSchedule(id: Long): Flow<ScheduleAndDrug>
+    fun getSchedule(id: Long): Flow<ScheduleAndDrug?>
 }

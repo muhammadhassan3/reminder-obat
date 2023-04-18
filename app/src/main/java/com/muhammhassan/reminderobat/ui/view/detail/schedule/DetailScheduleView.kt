@@ -42,8 +42,8 @@ fun DetailScheduleView(modifier: Modifier = Modifier, onNavigateUp: () -> Unit, 
                     top.linkTo(parent.top)
                     end.linkTo(parent.end)
                 }, onClick = {
-                viewModel.deleteSchedule(id, context)
                 onNavigateUp.invoke()
+                viewModel.deleteSchedule(id, context)
             }) {
                 Icon(imageVector = Icons.Default.Delete, contentDescription = "Hapus pengingat")
             }

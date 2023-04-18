@@ -49,7 +49,7 @@ class LocalDatasourceImpl(db: DrugsReminderDatabase) : LocalDatasource {
         return scheduleDao.getListSchedule(day, time)
     }
 
-    override fun getSchedule(id: Long): Flow<ScheduleAndDrug> {
+    override fun getSchedule(id: Long): Flow<ScheduleAndDrug?> {
         return scheduleDao.getSchedule(id)
     }
 

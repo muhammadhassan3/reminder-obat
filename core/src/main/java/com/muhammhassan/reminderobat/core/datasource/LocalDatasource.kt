@@ -17,7 +17,7 @@ interface LocalDatasource {
 
     fun getSpecificSchedule(day: Int, time: String): Flow<List<ScheduleAndDrug>>
 
-    fun getSchedule(id: Long): Flow<ScheduleAndDrug>
+    fun getSchedule(id: Long): Flow<ScheduleAndDrug?>
     fun getNearestSchedule(day: Int, time: String, date: String): Flow<List<ScheduleAndDrug>>
     suspend fun addAllSchedule(data: List<ScheduleEntity>)
     fun deleteSchedule(id: Long)

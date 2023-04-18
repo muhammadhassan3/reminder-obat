@@ -19,8 +19,8 @@ class ReminderDetailInteractor(
         drugRepository.reduceStock(drugsId)
     }
 
-    override fun getData(scheduleId: Long): Flow<DrugsModel> {
-        return scheduleRepository.getSchedule(scheduleId).map { it.mapToListModel() }
+    override fun getData(scheduleId: Long): Flow<DrugsModel?> {
+        return scheduleRepository.getSchedule(scheduleId).map { it?.mapToListModel() }
     }
 
     override suspend fun addHistory(data: DrugsModel, status: String) {

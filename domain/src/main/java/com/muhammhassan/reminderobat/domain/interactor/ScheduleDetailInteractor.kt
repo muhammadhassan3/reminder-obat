@@ -8,8 +8,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 class ScheduleDetailInteractor(private val scheduleRepository: ScheduleRepository): ScheduleDetailUseCase {
-    override fun getDetail(scheduleId: Long): Flow<ScheduleModel> {
-        return scheduleRepository.getSchedule(scheduleId).map { it.mapToModel() }
+    override fun getDetail(scheduleId: Long): Flow<ScheduleModel?> {
+        return scheduleRepository.getSchedule(scheduleId).map { it?.mapToModel() }
     }
 
     override fun delete(scheduleId: Long) {

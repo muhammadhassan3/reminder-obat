@@ -9,5 +9,5 @@ interface ScheduleRepository {
     fun deleteSchedule(id: Long)
     fun getNearestAlarm(day: Int, time: String = "00:00", date: String): Flow<List<ScheduleAndDrug>>
     fun getScheduleList(day: Int, time: String): Flow<List<ScheduleAndDrug>>
-    fun getSchedule(id: Long): Flow<ScheduleAndDrug>
+    fun getSchedule(id: Long): Flow<ScheduleAndDrug?>
 }
