@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "790397788670",
+    "project_id": "patuhi-com",
+    "storage_bucket": "patuhi-com.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:790397788670:android:110fa01d2338856656a0af",
+        "android_client_info": {
+          "package_name": "com.muhammhassan.reminderobat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "790397788670-dqo517gvi7cgilp7dkd7udjhdvrhva7m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC8jRTfm1GZoqXm1uy5whhzynE9ioI0w4s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "790397788670-dqo517gvi7cgilp7dkd7udjhdvrhva7m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
