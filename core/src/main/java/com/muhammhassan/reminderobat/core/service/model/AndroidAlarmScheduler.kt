@@ -1,4 +1,4 @@
-package com.muhammhassan.reminderobat.core.service.alarm
+package com.muhammhassan.reminderobat.core.service.model
 
 import android.app.AlarmManager
 import android.app.PendingIntent
