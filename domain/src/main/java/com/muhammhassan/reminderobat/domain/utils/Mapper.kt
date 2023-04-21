@@ -4,7 +4,7 @@ import com.muhammhassan.reminderobat.core.database.entity.DrugsEntity
 import com.muhammhassan.reminderobat.core.database.entity.HistoryEntity
 import com.muhammhassan.reminderobat.core.database.entity.ScheduleEntity
 import com.muhammhassan.reminderobat.core.database.relation.ScheduleAndDrug
-import com.muhammhassan.reminderobat.core.service.alarm.AlarmModel
+import com.muhammhassan.reminderobat.core.service.model.AlarmModel
 import com.muhammhassan.reminderobat.core.utils.Utils.parseDateFromISO
 import com.muhammhassan.reminderobat.core.utils.Utils.parseDateToISO
 import com.muhammhassan.reminderobat.core.utils.Utils.parseDateToString

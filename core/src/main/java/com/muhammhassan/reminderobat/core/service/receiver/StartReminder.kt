@@ -4,8 +4,8 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import com.muhammhassan.reminderobat.core.di.KoinHelper
-import com.muhammhassan.reminderobat.core.service.alarm.AlarmModel
-import com.muhammhassan.reminderobat.core.service.alarm.AndroidAlarmScheduler
+import com.muhammhassan.reminderobat.core.service.model.AlarmModel
+import com.muhammhassan.reminderobat.core.service.model.AndroidAlarmScheduler
 import com.muhammhassan.reminderobat.core.utils.Constant
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

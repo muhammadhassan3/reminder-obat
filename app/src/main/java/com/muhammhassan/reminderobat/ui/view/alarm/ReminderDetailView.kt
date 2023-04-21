@@ -303,6 +303,8 @@ fun ReminderDetailView(modifier: Modifier = Modifier, onFinished: () -> Unit, id
                             "Kamu akan diingatkan kembali dalam 5 menit",
                             Toast.LENGTH_SHORT
                         ).show()
+
+                        onFinished.invoke()
                     },
                     shape = CircleShape,
                     border = BorderStroke(1.dp, Color.Gray)

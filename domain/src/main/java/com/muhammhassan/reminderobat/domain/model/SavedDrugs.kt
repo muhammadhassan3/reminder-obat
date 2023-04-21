@@ -1,6 +1,6 @@
 package com.muhammhassan.reminderobat.domain.model
 
-import com.muhammhassan.reminderobat.core.service.alarm.AlarmModel
+import com.muhammhassan.reminderobat.core.service.model.AlarmModel
 
 data class SavedDrugs(
     val drugsId: Long,

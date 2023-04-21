@@ -3,8 +3,7 @@ package com.muhammhassan.reminderobat.ui.view.alarm
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.muhammhassan.reminderobat.core.service.alarm.AlarmModel
-import com.muhammhassan.reminderobat.core.service.alarm.AndroidAlarmScheduler
+import com.muhammhassan.reminderobat.core.service.model.AndroidAlarmScheduler
 import com.muhammhassan.reminderobat.domain.model.DrugsModel
 import com.muhammhassan.reminderobat.domain.usecase.ReminderDetailUseCase
 import kotlinx.coroutines.Dispatchers
