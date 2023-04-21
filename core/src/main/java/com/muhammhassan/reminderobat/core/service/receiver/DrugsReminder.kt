@@ -10,11 +10,10 @@ import android.content.Intent
 import android.media.RingtoneManager
 import android.net.Uri
 import android.os.Build
-import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import com.muhammhassan.reminderobat.core.R
+import com.muhammhassan.reminderobat.core.service.AlarmService
 import com.muhammhassan.reminderobat.core.utils.Constant
-import com.muhammhassan.reminderobat.core.utils.Constant.channelId
 import timber.log.Timber
 import java.util.*
 
@@ -26,9 +25,16 @@ class DrugsReminder : BroadcastReceiver() {
         val days = intent?.getStringExtra(Constant.days) ?: ""
 
         context?.let { ctx ->
-            Toast.makeText(ctx, "Alarm triggered", Toast.LENGTH_SHORT).show()
             if (isToday(days)) {
-                showNotification(ctx, title, message, id)
+                val intentService = Intent(ctx, AlarmService::class.java)
+                intentService.putExtra(Constant.id, id)
+                intentService.putExtra(Constant.title, title)
+                intentService.putExtra(Constant.message, message)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    ctx.startForegroundService(intentService)
+                }else{
+                    ctx.startService(intentService)
+                }
             }
         }
         Timber.i("Alarm $id Invoked")
@@ -44,7 +50,7 @@ class DrugsReminder : BroadcastReceiver() {
         val pendingIntent =
             PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
 
-        val builder = NotificationCompat.Builder(context, channelId).setContentIntent(pendingIntent)
+        val builder = NotificationCompat.Builder(context, Constant.channelId).setContentIntent(pendingIntent)
             .setAutoCancel(true).setContentTitle(title).setContentText(message)
             .setPriority(NotificationCompat.PRIORITY_MAX).setSound(alarmSound)
             .setVibrate(longArrayOf(1000, 1000, 1000, 1000))
@@ -52,13 +58,13 @@ class DrugsReminder : BroadcastReceiver() {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
-                channelId, "Reminder Notification Channel", NotificationManager.IMPORTANCE_HIGH
+                Constant.channelId, "Reminder Notification Channel", NotificationManager.IMPORTANCE_HIGH
             ).also { channel ->
                 channel.enableVibration(true)
                 channel.vibrationPattern = longArrayOf(1000, 1000, 1000, 1000)
             }
 
-            builder.setChannelId(channelId)
+            builder.setChannelId(Constant.channelId)
 
             notifManager.createNotificationChannel(channel)
         }
