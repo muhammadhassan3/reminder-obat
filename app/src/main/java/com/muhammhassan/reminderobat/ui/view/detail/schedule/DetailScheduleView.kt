@@ -69,7 +69,7 @@ fun DetailScheduleView(modifier: Modifier = Modifier, onNavigateUp: () -> Unit, 
                         .padding(16.dp)
                 ) {
                     val (tagWeight, weight, tagType, type, divider1, tagTime, time, tagAfterEat, afterEat, tagCondition, condition) = createRefs()
-                    Text(text = "Berat obat", modifier = Modifier.constrainAs(tagWeight) {
+                    Text(text = "Dosis Obat", modifier = Modifier.constrainAs(tagWeight) {
                         top.linkTo(parent.top)
                         start.linkTo(parent.start)
                     })

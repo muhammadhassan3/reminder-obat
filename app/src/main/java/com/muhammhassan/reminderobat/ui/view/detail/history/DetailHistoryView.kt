@@ -67,7 +67,7 @@ fun DetailHistoryView(
                 ConstraintLayout(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
                     val (tagWeight, weight, tagType, type, tagAfterEat, afterEat, divider1, tagCondition, condition, tagStock, stock, tagScheduledDay, scheduledDay) = createRefs()
                     val (divider2, tagScheduledTime, scheduledTime, tagStatus, status) = createRefs()
-                    Text(text = "Berat Obat", modifier = Modifier.constrainAs(tagWeight) {
+                    Text(text = "Dosis Obat", modifier = Modifier.constrainAs(tagWeight) {
                         top.linkTo(parent.top)
                         start.linkTo(parent.start)
                     })
