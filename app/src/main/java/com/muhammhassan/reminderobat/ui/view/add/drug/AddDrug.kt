@@ -79,7 +79,7 @@ fun AddDrugView(
                         width = Dimension.fillToConstraints
                         height = Dimension.preferredWrapContent
                     })
-                InputField(title = "Berat Obat",
+                InputField(title = "Dosis Obat",
                     onTextChanged = { viewModel.setWeight(it) },
                     value = weight ?: "",
                     modifier = Modifier.constrainAs(edtWeight) {
