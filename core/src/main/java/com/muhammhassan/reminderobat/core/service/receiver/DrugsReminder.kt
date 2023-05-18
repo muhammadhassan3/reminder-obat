@@ -23,6 +23,7 @@ class DrugsReminder : BroadcastReceiver() {
         val title = intent?.getStringExtra(Constant.title) ?: ""
         val message = intent?.getStringExtra(Constant.message) ?: ""
         val days = intent?.getStringExtra(Constant.days) ?: ""
+        Timber.i("Alarm $id Invoked")
 
         context?.let { ctx ->
             if (isToday(days)) {
@@ -37,7 +38,6 @@ class DrugsReminder : BroadcastReceiver() {
                 }
             }
         }
-        Timber.i("Alarm $id Invoked")
     }
 
     private fun showNotification(context: Context, title: String, message: String, id: Int) {
