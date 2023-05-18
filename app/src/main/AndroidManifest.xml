@@ -3,37 +3,42 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
     <application
+        android:name=".BaseApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/Theme.ReminderObat"
-        tools:targetApi="31"
-        android:name=".BaseApplication">
+        android:theme="@style/Theme.AppSplash"
+        tools:targetApi="31">
         <activity
-            android:name=".ui.view.main.MainActivity"
-            android:exported="false"/>
-        <activity android:name=".ui.view.alarm.ReminderDetailActivity"
-            android:exported="true"
-            android:excludeFromRecents="true">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-                <category android:name="android.intent.category.BROWSABLE"/>
-                <data android:scheme="reminderobat"
-                    android:host="alarm"/>
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".ui.view.splash.SplashActivity"
-            android:exported="true">
+            android:name=".ui.view.login.LoginActivity"
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.view.main.MainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.view.alarm.ReminderDetailActivity"
+            android:excludeFromRecents="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="alarm"
+                    android:scheme="reminderobat" />
             </intent-filter>
         </activity>
     </application>
