@@ -74,7 +74,7 @@ class AlarmService: Service() {
                 Constant.channelId, "Service Channel", NotificationManager.IMPORTANCE_HIGH
             ).also { channel ->
                 channel.enableVibration(true)
-                channel.vibrationPattern = longArrayOf(100, 300, 100, 300)
+                channel.vibrationPattern = longArrayOf(500, 500, 500, 500)
             }
 
             builder.setChannelId(Constant.channelId)
@@ -86,14 +86,14 @@ class AlarmService: Service() {
             mediaPlayer.start()
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val effect = VibrationEffect.createWaveform(longArrayOf(100,300,100,300), 0)
+            val effect = VibrationEffect.createWaveform(longArrayOf(500,500,500,500), 0)
 
             vibrator.vibrate(effect)
         } else {
             vibrator.vibrate(longArrayOf(500,500), 0)
         }
 
-        startForeground(1, builder.build())
+        startForeground(id, builder.build())
 
         return START_STICKY
     }
