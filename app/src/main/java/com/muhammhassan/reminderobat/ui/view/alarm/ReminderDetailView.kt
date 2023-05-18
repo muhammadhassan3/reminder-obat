@@ -143,7 +143,7 @@ fun ReminderDetailView(modifier: Modifier = Modifier, onFinished: () -> Unit, id
                     Text(modifier = Modifier.constrainAs(tagWeight) {
                         top.linkTo(parent.top)
                         start.linkTo(parent.start)
-                    }, text = "Berat Obat")
+                    }, text = "Dosis Obat")
                     Text(modifier = Modifier.constrainAs(weight) {
                         top.linkTo(parent.top)
                         end.linkTo(parent.end)
