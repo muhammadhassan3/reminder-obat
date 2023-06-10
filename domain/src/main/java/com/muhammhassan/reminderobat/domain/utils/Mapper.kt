@@ -1,5 +1,6 @@
 package com.muhammhassan.reminderobat.domain.utils
 
+import com.muhammhassan.reminderobat.core.api.ApiResponse
 import com.muhammhassan.reminderobat.core.database.entity.DrugsEntity
 import com.muhammhassan.reminderobat.core.database.entity.HistoryEntity
 import com.muhammhassan.reminderobat.core.database.entity.ScheduleEntity
@@ -17,6 +18,7 @@ import com.muhammhassan.reminderobat.domain.model.DrugsModel
 import com.muhammhassan.reminderobat.domain.model.HistoryListModel
 import com.muhammhassan.reminderobat.domain.model.HistoryModel
 import com.muhammhassan.reminderobat.domain.model.ScheduleModel
+import com.muhammhassan.reminderobat.domain.model.UiState
 import java.util.Calendar
 
 object Mapper {
@@ -111,5 +113,13 @@ object Mapper {
             drugName = title,
             status = status
         )
+    }
+
+    fun <T> ApiResponse<T>.mapToUi(): UiState<T>{
+        return when(this){
+            is ApiResponse.Error -> UiState.Error(message)
+            ApiResponse.Loading -> UiState.Loading
+            is ApiResponse.Success -> UiState.Success(data)
+        }
     }
 }

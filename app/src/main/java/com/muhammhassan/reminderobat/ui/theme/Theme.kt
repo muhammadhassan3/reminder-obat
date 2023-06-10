@@ -2,15 +2,17 @@ package com.muhammhassan.reminderobat.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
 
-//
-//private val DarkColorPalette = darkColors(
-//    primary = Purple200,
-//    primaryVariant = Purple700,
-//    secondary = Teal200
-//)
+
+private val DarkColorPalette = darkColors(
+    primary = LightBlue,
+    primaryVariant = DarkBlue,
+    secondary = Teal200,
+    background = DarkBlue
+)
 
 private val LightColorPalette = lightColors(
     primary = LightBlue,
@@ -21,14 +23,13 @@ private val LightColorPalette = lightColors(
 
 @Composable
 fun ReminderObatTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
-    //Disable Multi colorpalette
-//    val colors = if (darkTheme) {
-//        DarkColorPalette
-//    } else {
-//        LightColorPalette
-//    }
+    val colors = if (darkTheme) {
+        DarkColorPalette
+    } else {
+        LightColorPalette
+    }
 
-    val colors = LightColorPalette
+//    val colors = LightColorPalette
 
     MaterialTheme(
         colors = colors,
