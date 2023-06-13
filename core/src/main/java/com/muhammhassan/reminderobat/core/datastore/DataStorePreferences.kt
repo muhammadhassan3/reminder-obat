@@ -21,6 +21,11 @@ class DataStorePreferences (private val datastore: DataStore<Preferences>) {
         }
     }
 
+    suspend fun deleteToken(){
+        datastore.edit {
+            it.remove(AUTH_TOKEN)
+        }
+    }
     companion object {
         val AUTH_TOKEN = stringPreferencesKey("auth_token")
     }

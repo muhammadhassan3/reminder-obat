@@ -63,7 +63,7 @@ fun AddStockView(
                 })
         }
     }
-    ConstraintLayout(modifier = modifier.fillMaxSize()) {
+    ConstraintLayout(modifier = modifier.fillMaxSize().padding(16.dp)) {
         val (title, subtitle, content, btnNavUp, btnSave) = createRefs()
 
         ButtonBack(modifier = Modifier.constrainAs(btnNavUp) {

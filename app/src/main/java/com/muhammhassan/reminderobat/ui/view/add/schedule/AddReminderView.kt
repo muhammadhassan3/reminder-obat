@@ -82,7 +82,7 @@ fun AddReminderView(
         }
     }
 
-    ConstraintLayout(modifier = modifier.fillMaxSize()) {
+    ConstraintLayout(modifier = modifier.fillMaxSize().padding(16.dp)) {
         val (btnNavUp, btnNext, title, subtitle, content) = createRefs()
         ButtonBack(modifier = Modifier.constrainAs(btnNavUp) {
             top.linkTo(parent.top)

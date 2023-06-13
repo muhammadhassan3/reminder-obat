@@ -98,7 +98,7 @@ fun ReminderDetailView(modifier: Modifier = Modifier, onFinished: () -> Unit, id
             )
         }
     }
-    ConstraintLayout(modifier = modifier.fillMaxSize()) {
+    ConstraintLayout(modifier = modifier.fillMaxSize().padding(16.dp)) {
         val (
             title, subtitle, content, btnDismiss, btnConfirm, btnAturUlang
         ) = createRefs()

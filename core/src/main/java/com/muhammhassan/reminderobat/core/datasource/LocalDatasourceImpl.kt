@@ -6,12 +6,13 @@ import com.muhammhassan.reminderobat.core.database.entity.HistoryEntity
 import com.muhammhassan.reminderobat.core.database.entity.ScheduleEntity
 import com.muhammhassan.reminderobat.core.database.relation.DrugsAndSchedule
 import com.muhammhassan.reminderobat.core.database.relation.ScheduleAndDrug
+import com.muhammhassan.reminderobat.core.datastore.DataStorePreferences
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import timber.log.Timber
 import java.util.concurrent.Executors
 
-class LocalDatasourceImpl(db: DrugsReminderDatabase) : LocalDatasource {
+class LocalDatasourceImpl(db: DrugsReminderDatabase, private val datastore: DataStorePreferences) : LocalDatasource {
     private val executor = Executors.newSingleThreadExecutor()
     private val drugsDao = db.drugsDao()
     private val scheduleDao = db.scheduleDao()
@@ -97,5 +98,17 @@ class LocalDatasourceImpl(db: DrugsReminderDatabase) : LocalDatasource {
 
     override fun getDetailHistory(id: Long): Flow<HistoryEntity> {
         return historyDao.getDetail(id)
+    }
+
+    override suspend fun setToken(value: String) {
+        datastore.setToken(value)
+    }
+
+    override fun getToken(): Flow<String?> {
+        return datastore.getToken()
+    }
+
+    override suspend fun deleteToken() {
+        datastore.deleteToken()
     }
 }

@@ -3,7 +3,9 @@ package com.muhammhassan.reminderobat
 import android.app.Application
 import com.muhammhassan.reminderobat.core.di.Module.databaseModule
 import com.muhammhassan.reminderobat.core.di.Module.datasourceModule
+import com.muhammhassan.reminderobat.core.di.Module.datastoreModule
 import com.muhammhassan.reminderobat.core.di.Module.repositoryModule
+import com.muhammhassan.reminderobat.core.di.Module.retrofitModule
 import com.muhammhassan.reminderobat.di.Module.viewModelModule
 import com.muhammhassan.reminderobat.domain.di.Module.useCaseModule
 import org.koin.android.ext.koin.androidContext
@@ -24,6 +26,8 @@ class BaseApplication: Application() {
                 repositoryModule,
                 databaseModule,
                 datasourceModule,
+                retrofitModule,
+                datastoreModule
             ))
         }
     }

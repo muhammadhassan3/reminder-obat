@@ -32,7 +32,7 @@ fun DetailHistoryView(
         LaunchedEffect(key1 = true, block = {
             dayName.value = Utils.parseDayName(it.day)
         })
-        ConstraintLayout(modifier = modifier.fillMaxSize()) {
+        ConstraintLayout(modifier = modifier.fillMaxSize().padding(16.dp)) {
             val (btnNavUp, title, subtitle, content) = createRefs()
 
             ButtonBack(modifier = Modifier.constrainAs(btnNavUp) {

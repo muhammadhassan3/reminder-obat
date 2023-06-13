@@ -12,6 +12,8 @@ sealed class Screen(val route: String){
         fun createRoute(id: Long) = "progress/$id"
     }
     object Progress: Screen("progress")
+    object Register: Screen("register")
+    object Login: Screen("login")
 }
 
 object ArgsName{

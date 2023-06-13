@@ -14,7 +14,7 @@ class RegisterInteractor(private val repository: UserRepository): RegisterUseCas
         email: String,
         password: String
     ): Flow<UiState<String>> {
-        return repository.regiter(name, email, password).map{
+        return repository.register(name, email, password).map{
             it.mapToUi()
         }
     }

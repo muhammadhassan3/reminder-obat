@@ -30,7 +30,7 @@ fun DetailScheduleView(modifier: Modifier = Modifier, onNavigateUp: () -> Unit, 
     val context = LocalContext.current.applicationContext
 
     data?.let {
-        ConstraintLayout(modifier = modifier.fillMaxSize()) {
+        ConstraintLayout(modifier = modifier.fillMaxSize().padding(16.dp)) {
             val (btnNavUp, btnDelete, title, content) = createRefs()
             ButtonBack(onClick = onNavigateUp, modifier = Modifier.constrainAs(btnNavUp) {
                 top.linkTo(parent.top)

@@ -23,17 +23,19 @@ fun InputField(
     singleLine: Boolean = true,
 ) {
     Column(modifier = modifier.fillMaxWidth()) {
-        Text(
-            modifier = Modifier,
-            text = title,
-            style = MaterialTheme.typography.body1,
-            fontWeight = FontWeight.Bold
-        )
         OutlinedTextField(modifier = Modifier.fillMaxWidth(),
             value = value,
             onValueChange = { onTextChanged.invoke(it) },
             keyboardOptions = KeyboardOptions(keyboardType = inputType),
-            singleLine = singleLine
+            singleLine = singleLine,
+            label = {
+                Text(
+                    modifier = Modifier,
+                    text = title,
+                    style = MaterialTheme.typography.body1,
+                    fontWeight = FontWeight.Bold
+                )
+            }
         )
     }
 }

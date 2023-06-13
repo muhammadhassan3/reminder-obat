@@ -35,7 +35,7 @@ fun AddDrugView(
     val type by viewModel.type.collectAsState()
     val afterEat by viewModel.afterEat.collectAsState()
 
-    ConstraintLayout(modifier = modifier.fillMaxSize()) {
+    ConstraintLayout(modifier = modifier.fillMaxSize().padding(16.dp)) {
         val (btnNavUp, tvTitle, subtitle, content, btnNext) = createRefs()
         ButtonBack(modifier = Modifier.constrainAs(btnNavUp) {
             top.linkTo(parent.top)

@@ -1,5 +1,9 @@
 package com.muhammhassan.reminderobat.core.utils
 
+import okhttp3.ResponseBody
+import okio.IOException
+import org.json.JSONObject
+import retrofit2.Response
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -60,5 +64,17 @@ object Utils {
         Calendar.SATURDAY -> "Sabtu"
         Calendar.SUNDAY -> "Minggu"
         else -> "Tidak terdefinisi"
+    }
+
+    fun <T> Response<T>.parseError(key: String = "message"): String{
+        return try{
+            this.errorBody()?.string().runCatching {
+                this?.let{
+                    JSONObject(it).getString(key)
+                }
+            }.getOrNull() ?: this.message()
+        }catch (e: IOException){
+            e.message.toString()
+        }
     }
 }

@@ -20,14 +20,12 @@ class HomeViewModel(private val useCase: HomeUseCase) : ViewModel() {
     private val _data = MutableStateFlow(listOf<GroupedDrugItem>())
     val data = _data.asStateFlow()
 
-    private val _articleData = MutableStateFlow(listOf<Articles>())
-    val articleData = _articleData.asStateFlow()
-
     init {
         _date.value = parseDateWithDay(Date())
+        getData()
     }
 
-    fun getData() {
+    private fun getData() {
         val calendar = Calendar.getInstance()
         val hour =
             if (calendar[Calendar.HOUR_OF_DAY] < 10) "0${calendar[Calendar.HOUR_OF_DAY]}" else calendar[Calendar.HOUR_OF_DAY]
@@ -39,7 +37,6 @@ class HomeViewModel(private val useCase: HomeUseCase) : ViewModel() {
             useCase.getData(calendar[Calendar.DAY_OF_WEEK], time, parseDateToString(calendar.time))
         //set date for tomorrow
         calendar.add(Calendar.DAY_OF_MONTH, 1)
-//        calendar.add(Calendar.DAY_OF_WEEK, 1)
         calendar.set(Calendar.HOUR_OF_DAY, 0)
         calendar.set(Calendar.MINUTE, 0)
         calendar.set(Calendar.SECOND, 0)

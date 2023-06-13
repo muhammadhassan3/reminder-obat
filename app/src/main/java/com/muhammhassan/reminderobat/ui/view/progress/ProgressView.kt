@@ -42,7 +42,7 @@ fun ProgressView(
     val data by viewModel.data.collectAsState(initial = emptyList())
     val scrollState = rememberLazyListState()
 
-    ConstraintLayout(modifier = modifier.fillMaxSize()) {
+    ConstraintLayout(modifier = modifier.fillMaxSize().padding(16.dp)) {
         val (btnNavUp, title, subTitle, content) = createRefs()
         ButtonBack(modifier = Modifier.constrainAs(btnNavUp) {
             linkTo(

@@ -28,4 +28,8 @@ interface LocalDatasource {
 
     fun getDetail(drugId: Long): Flow<DrugsAndSchedule>
     fun getDetailHistory(id: Long): Flow<HistoryEntity>
+
+    suspend fun setToken(value: String)
+    fun getToken(): Flow<String?>
+    suspend fun deleteToken()
 }
