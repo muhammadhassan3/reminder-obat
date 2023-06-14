@@ -6,9 +6,6 @@ import com.muhammhassan.reminderobat.core.datasource.RemoteDatasource
 import kotlinx.coroutines.flow.Flow
 
 class UserRepositoryImpl(private val remote: RemoteDatasource, private val local: LocalDatasource): UserRepository {
-    override fun login(email: String, password: String): Flow<ApiResponse<String>> {
-        return remote.login(email, password)
-    }
 
     override fun register(
         name: String,
