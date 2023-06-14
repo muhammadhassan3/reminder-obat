@@ -1,5 +1,6 @@
 package com.muhammhassan.reminderobat.core.api
 
+import com.muhammhassan.reminderobat.core.api.response.Article
 import com.muhammhassan.reminderobat.core.api.response.BaseResponse
 import com.muhammhassan.reminderobat.core.api.response.LoginResponse
 import retrofit2.Response
@@ -13,7 +14,6 @@ interface ApiService {
     @POST("register")
     suspend fun register(@Field("name") name: String,@Field("email") email: String,@Field("password") password: String): Response<BaseResponse<Nothing>>
 
-    @GET("login")
-    @FormUrlEncoded
-    suspend fun login(@Field("email") email: String,@Field("password") password: String): Response<BaseResponse<LoginResponse>>
+    @GET("education")
+    suspend fun getEducation(): Response<BaseResponse<List<Article>>>
 }

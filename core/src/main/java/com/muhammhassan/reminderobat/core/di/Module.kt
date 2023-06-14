@@ -16,6 +16,8 @@ import com.muhammhassan.reminderobat.core.datasource.RemoteDatasourceImpl
 import com.muhammhassan.reminderobat.core.datastore.DataStorePreferences
 import com.muhammhassan.reminderobat.core.repository.DrugRepository
 import com.muhammhassan.reminderobat.core.repository.DrugRepositoryImpl
+import com.muhammhassan.reminderobat.core.repository.EducationRepository
+import com.muhammhassan.reminderobat.core.repository.EducationRepositoryImpl
 import com.muhammhassan.reminderobat.core.repository.HistoryRepository
 import com.muhammhassan.reminderobat.core.repository.HistoryRepositoryImpl
 import com.muhammhassan.reminderobat.core.repository.ScheduleRepository
@@ -37,7 +39,7 @@ object Module {
         fun apiInstance(dataStore: DataStorePreferences): Retrofit {
             val client = OkHttpClient.Builder().addInterceptor(HeaderInterceptor(dataStore))
 //            if (BuildConfig.DEBUG) {
-                client.addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
+            client.addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
 //            }
             return Retrofit.Builder().baseUrl(BuildConfig.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create()).client(client.build()).build()
@@ -59,14 +61,15 @@ object Module {
     }
 
     val datasourceModule = module {
-        single<LocalDatasource> { LocalDatasourceImpl(get(),get()) }
-        single<RemoteDatasource> {RemoteDatasourceImpl(get())}
+        single<LocalDatasource> { LocalDatasourceImpl(get(), get()) }
+        single<RemoteDatasource> { RemoteDatasourceImpl(get()) }
     }
 
     val repositoryModule = module {
         single<DrugRepository> { DrugRepositoryImpl(get()) }
         single<HistoryRepository> { HistoryRepositoryImpl(get()) }
         single<ScheduleRepository> { ScheduleRepositoryImpl(get()) }
-        single<UserRepository> {UserRepositoryImpl(get(), get())}
+        single<UserRepository> { UserRepositoryImpl(get(), get()) }
+        single<EducationRepository> { EducationRepositoryImpl(get()) }
     }
 }

@@ -115,11 +115,15 @@ object Mapper {
         )
     }
 
-    fun <T> ApiResponse<T>.mapToUi(): UiState<T>{
+    fun <T, R> ApiResponse<R>.mapToUi(transform: (sourceClass: R) -> T): UiState<T>{
         return when(this){
             is ApiResponse.Error -> UiState.Error(message)
             ApiResponse.Loading -> UiState.Loading
-            is ApiResponse.Success -> UiState.Success(data)
+            is ApiResponse.Success -> UiState.Success(transform.invoke(data))
         }
+    }
+
+    private fun mapArticleToArticles(){
+
     }
 }

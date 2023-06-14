@@ -2,6 +2,7 @@ package com.muhammhassan.reminderobat.domain.di
 
 import com.muhammhassan.reminderobat.domain.interactor.AddStockInteractor
 import com.muhammhassan.reminderobat.domain.interactor.AuthInterceptor
+import com.muhammhassan.reminderobat.domain.interactor.EducationInteractor
 import com.muhammhassan.reminderobat.domain.interactor.HomeInteractor
 import com.muhammhassan.reminderobat.domain.interactor.LoginInteractor
 import com.muhammhassan.reminderobat.domain.interactor.ProgressDetailInteractor
@@ -11,6 +12,7 @@ import com.muhammhassan.reminderobat.domain.interactor.ReminderDetailInteractor
 import com.muhammhassan.reminderobat.domain.interactor.ScheduleDetailInteractor
 import com.muhammhassan.reminderobat.domain.usecase.AddStockUseCase
 import com.muhammhassan.reminderobat.domain.usecase.AuthUseCase
+import com.muhammhassan.reminderobat.domain.usecase.EducationUseCase
 import com.muhammhassan.reminderobat.domain.usecase.HomeUseCase
 import com.muhammhassan.reminderobat.domain.usecase.LoginUseCase
 import com.muhammhassan.reminderobat.domain.usecase.ProgressDetailUseCase
@@ -31,5 +33,6 @@ object Module {
         single<RegisterUseCase> { RegisterInteractor(get()) }
         single<LoginUseCase> { LoginInteractor(get()) }
         single<AuthUseCase> { AuthInterceptor(get()) }
+        single<EducationUseCase> {EducationInteractor(get())}
     }
 }

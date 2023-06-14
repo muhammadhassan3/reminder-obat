@@ -23,6 +23,8 @@ import com.muhammhassan.reminderobat.ui.view.add.schedule.AddReminderView
 import com.muhammhassan.reminderobat.ui.view.add.stock.AddStockView
 import com.muhammhassan.reminderobat.ui.view.detail.history.DetailHistoryView
 import com.muhammhassan.reminderobat.ui.view.detail.schedule.DetailScheduleView
+import com.muhammhassan.reminderobat.ui.view.education.EducationView
+import com.muhammhassan.reminderobat.ui.view.education.EducationViewModel
 import com.muhammhassan.reminderobat.ui.view.home.HomeView
 import com.muhammhassan.reminderobat.ui.view.home.HomeViewModel
 import com.muhammhassan.reminderobat.ui.view.progress.ProgressView
@@ -129,6 +131,20 @@ fun MainView(
                 DetailHistoryView(onNavigateUp = {
                     navController.navigateUp()
                 }, drugsId = id)
+            }
+            
+            composable(
+                route = Screen.Education.route
+            ){
+                val viewModel = koinViewModel<EducationViewModel>()
+                val data by viewModel.uiState.collectAsState()
+                EducationView(
+                    onNavUp = { navController.navigateUp() },
+                    data = data,
+                    onItemClicked = {id ->
+
+                    },
+                    onErrorResponse = { /*TODO*/ })
             }
         }
     }
