@@ -8,11 +8,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 class LoginInteractor(private val user: UserRepository): LoginUseCase {
-    override fun login(email: String, password: String): Flow<UiState<String>> {
-        return user.login(email, password).map {
-            it.mapToUi()
-        }
-    }
 
     override suspend fun saveToken(value: String) {
         user.setToken(value)
