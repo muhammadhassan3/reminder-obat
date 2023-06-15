@@ -1,5 +1,6 @@
 package com.muhammhassan.reminderobat.ui.view.main
 
+import android.os.Build
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.FabPosition
 import androidx.compose.material.Scaffold
@@ -14,6 +15,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.muhammhassan.reminderobat.domain.model.Articles
 import com.muhammhassan.reminderobat.domain.model.DrugsData
 import com.muhammhassan.reminderobat.navigation.ArgsName
 import com.muhammhassan.reminderobat.navigation.Screen
@@ -23,6 +25,8 @@ import com.muhammhassan.reminderobat.ui.view.add.schedule.AddReminderView
 import com.muhammhassan.reminderobat.ui.view.add.stock.AddStockView
 import com.muhammhassan.reminderobat.ui.view.detail.history.DetailHistoryView
 import com.muhammhassan.reminderobat.ui.view.detail.schedule.DetailScheduleView
+import com.muhammhassan.reminderobat.ui.view.education.DetailEducationView
+import com.muhammhassan.reminderobat.ui.view.education.DetailEducationViewModel
 import com.muhammhassan.reminderobat.ui.view.education.EducationView
 import com.muhammhassan.reminderobat.ui.view.education.EducationViewModel
 import com.muhammhassan.reminderobat.ui.view.home.HomeView
@@ -57,20 +61,17 @@ fun MainView(
                 val date by viewModel.date.collectAsState()
                 val data by viewModel.data.collectAsState()
 
-                HomeView(
-                    onItemClick = { id ->
-                        navController.navigate(Screen.DetailSchedule.createRoute(id))
-                    }, date = date, data = data, onEducationClicked = {
+                HomeView(onItemClick = { id ->
+                    navController.navigate(Screen.DetailSchedule.createRoute(id))
+                }, date = date, data = data, onEducationClicked = {
 
-                    }, onConsultationClicked = {
+                }, onConsultationClicked = {
 
-                    }
-                )
+                })
             }
 
             composable(
-                route = Screen.DetailSchedule.route,
-                arguments = listOf(navArgument(ArgsName.id) {
+                route = Screen.DetailSchedule.route, arguments = listOf(navArgument(ArgsName.id) {
                     type = NavType.LongType
                 })
             ) {
@@ -100,7 +101,7 @@ fun MainView(
                     navController.currentBackStackEntry?.arguments?.putParcelable(
                         ArgsName.data, finalData
                     )
-                    navController.navigate(Screen.AddStock.route) {}
+                    navController.navigate(Screen.AddStock.route)
                 }, data = data)
             }
 
@@ -132,19 +133,57 @@ fun MainView(
                     navController.navigateUp()
                 }, drugsId = id)
             }
-            
+
             composable(
                 route = Screen.Education.route
-            ){
+            ) {
                 val viewModel = koinViewModel<EducationViewModel>()
                 val data by viewModel.uiState.collectAsState()
-                EducationView(
-                    onNavUp = { navController.navigateUp() },
+                val dialogData by viewModel.dialogData.collectAsState()
+                val isDialogShow by viewModel.isDialogShow.collectAsState()
+                EducationView(onNavUp = { navController.navigateUp() },
                     data = data,
-                    onItemClicked = {id ->
-
+                    onItemClicked = { data ->
+                        navController.currentBackStackEntry?.arguments?.putParcelable(
+                            ArgsName.data, data
+                        )
+                        navController.navigate(Screen.DetailEducation.route)
                     },
-                    onErrorResponse = { /*TODO*/ })
+                    onErrorResponse = {
+                        viewModel.setError(it, action = {
+                            navController.navigateUp()
+                        })
+                    },
+                    dialogData = dialogData,
+                    isDialogShow = isDialogShow
+                )
+            }
+
+            composable(
+                route = Screen.DetailEducation.route
+            ) {
+                val data = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    navController.previousBackStackEntry?.arguments?.getParcelable(
+                        ArgsName.data, Articles::class.java
+                    )
+                } else {
+                    navController.previousBackStackEntry?.arguments?.getParcelable(ArgsName.data)
+                }
+                val viewModel = koinViewModel<DetailEducationViewModel>()
+                val dialogData by viewModel.dialogData.collectAsState()
+                val isDialogShow by viewModel.isDialogShow.collectAsState()
+
+                DetailEducationView(onNavUp = {
+                    navController.navigateUp()
+                },
+                    data = data,
+                    dialogData = dialogData,
+                    isDialogShow = isDialogShow,
+                    onErrorResponse = {
+                        viewModel.setError(message = it, action = {
+                            navController.navigateUp()
+                        })
+                    })
             }
         }
     }

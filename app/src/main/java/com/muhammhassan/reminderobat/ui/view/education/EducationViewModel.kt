@@ -25,13 +25,14 @@ class EducationViewModel(private val useCase: EducationUseCase) : ViewModel() {
         getData()
     }
 
-    fun setError(message: String){
+    fun setError(message: String, action: () -> Unit){
         _dialogData.value = DialogData(
             title = "Pemebritahuan",
             message = message,
             buttonType = ButtonType.NEUTRAL,
             onNeutralAction = {
                 _isDialogShow.value = false
+                action.invoke()
             }
         )
         _isDialogShow.value = true
