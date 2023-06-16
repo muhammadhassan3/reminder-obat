@@ -2,6 +2,7 @@ package com.muhammhassan.reminderobat.ui.view.home
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -139,7 +140,9 @@ fun HomeView(
 @Composable
 fun MenuItem(icon: ImageVector, title: String, modifier: Modifier = Modifier, onItemClick: () -> Unit) {
     Card(
-        modifier = modifier,
+        modifier = modifier.clickable{
+                                     onItemClick.invoke()
+        },
         backgroundColor = Color.White,
         border = BorderStroke(width = 1.dp, color = Color.Gray),
         shape = RoundedCornerShape(8.dp)
@@ -148,15 +151,13 @@ fun MenuItem(icon: ImageVector, title: String, modifier: Modifier = Modifier, on
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            IconButton(onClick = onItemClick, modifier = Modifier.size(65.dp)) {
                 Icon(
                     imageVector = icon,
                     contentDescription = title,
                     modifier = Modifier
-                        .fillMaxSize()
+                        .size(65.dp)
                         .padding(16.dp)
                 )
-            }
             Spacer(modifier = Modifier.width(8.dp))
 
             Text(

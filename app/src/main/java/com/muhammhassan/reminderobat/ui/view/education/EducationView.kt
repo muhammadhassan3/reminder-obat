@@ -10,6 +10,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -20,6 +21,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -102,7 +104,7 @@ fun EducationView(
                 end.linkTo(parent.end)
                 top.linkTo(parent.top)
                 bottom.linkTo(parent.bottom)
-            })
+            }, color = Color.White)
         } else {
             LazyColumn(modifier = Modifier.constrainAs(content) {
                 top.linkTo(btnBack.bottom, 8.dp)
@@ -137,23 +139,47 @@ fun ArticlesItem(
                 .padding(8.dp)
         ) {
             val (image, tvTitle, tvSummary) = createRefs()
-            AsyncImage(
-                model = item.image, contentDescription = item.title, error = rememberVectorPainter(
-                    image = Octicons.X24
-                ), modifier = Modifier.constrainAs(image) {
-                    start.linkTo(parent.start)
-                    top.linkTo(parent.top)
-                    bottom.linkTo(parent.bottom)
-                    width = Dimension.value(85.dp)
-                    height = Dimension.value(85.dp)
-                }, placeholder = rememberVectorPainter(image = Octicons.Image24)
+            if (item.image != null) {
+                AsyncImage(
+                    model = item.image,
+                    contentDescription = item.title,
+                    error = rememberVectorPainter(
+                        image = Octicons.X24
+                    ),
+                    modifier = Modifier.constrainAs(image) {
+                        start.linkTo(parent.start)
+                        top.linkTo(parent.top)
+                        bottom.linkTo(parent.bottom)
+                        width = Dimension.value(65.dp)
+                        height = Dimension.value(65.dp)
+                    },
+                    placeholder = rememberVectorPainter(image = Octicons.Image24)
+                )
+            } else {
+                Icon(
+                    imageVector = Octicons.X24,
+                    contentDescription = "No image found",
+                    modifier = Modifier.constrainAs(image) {
+                        start.linkTo(parent.start)
+                        top.linkTo(parent.top)
+                        bottom.linkTo(parent.bottom)
+                        width = Dimension.value(65.dp)
+                        height = Dimension.value(65.dp)
+                    })
+            }
+            Text(
+                text = item.title,
+                modifier = Modifier.constrainAs(tvTitle) {
+                    start.linkTo(image.end, 8.dp)
+                    top.linkTo(image.top)
+                    end.linkTo(parent.end)
+                    width = Dimension.fillToConstraints
+                },
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
             )
-            Text(text = item.title, modifier = Modifier.constrainAs(tvTitle) {
-                start.linkTo(image.end, 8.dp)
-                top.linkTo(image.top)
-                end.linkTo(parent.end)
-                width = Dimension.fillToConstraints
-            }, style = MaterialTheme.typography.h1, maxLines = 1, overflow = TextOverflow.Ellipsis)
             Text(
                 text = item.content,
                 modifier = Modifier.constrainAs(tvSummary) {
@@ -170,7 +196,6 @@ fun ArticlesItem(
             )
         }
     }
-
 }
 
 @Preview
@@ -178,10 +203,23 @@ fun ArticlesItem(
 fun ArticleItemPreview() {
     ReminderObatTheme {
         ArticlesItem(item = Articles(
-            id = 0,
+            id = "",
             title = "Title",
             content = "lajh fashdf asdfh lskdajf halsdiufhu sdkjf ahlsd fh asldja sjn daljfd asdljf alfjna slirufh",
             ""
+        ), onItemClicked = {})
+    }
+}
+
+@Preview(name = "No Image")
+@Composable
+fun ArticleItemPreviewWithNoIcon() {
+    ReminderObatTheme {
+        ArticlesItem(item = Articles(
+            id = "",
+            title = "Title",
+            content = "lajh fashdf asdfh lskdajf halsdiufhu sdkjf ahlsd fh asldja sjn daljfd asdljf alfjna slirufh",
+            null
         ), onItemClicked = {})
     }
 }
@@ -193,7 +231,7 @@ fun EducationPreview() {
         EducationView(
             onNavUp = { /*TODO*/ },
             data = UiState.Success(
-                listOf(Articles(1L, "Title", "Content", ""))
+                listOf(Articles("1L", "Title", "Content", ""))
             ),
             onItemClicked = {},
             modifier = Modifier.background(MaterialTheme.colors.primaryVariant),

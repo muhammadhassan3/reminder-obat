@@ -29,6 +29,6 @@ object Module {
         viewModel { LoginViewModel(get(), androidContext()) }
         viewModel { RegisterViewModel(get()) }
         viewModel { AuthViewModel(get()) }
-        viewModel {EducationViewModel(get())}
+        viewModel { EducationViewModel(get()) }
     }
 }

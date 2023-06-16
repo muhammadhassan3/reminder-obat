@@ -122,8 +122,4 @@ object Mapper {
             is ApiResponse.Success -> UiState.Success(transform.invoke(data))
         }
     }
-
-    private fun mapArticleToArticles(){
-
-    }
 }

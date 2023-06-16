@@ -15,13 +15,16 @@ sealed class Screen(val route: String){
     object Register: Screen("register")
     object Login: Screen("login")
     object Education: Screen("education")
-    object DetailEducation: Screen("education/${ArgsName.id}"){
-        fun createRoute(id: Long) = "education/$id"
+    object DetailEducation: Screen("education/{${ArgsName.id}}?title={${ArgsName.title}}&image={${ArgsName.imageUrl}}&content={${ArgsName.content}}"){
+        fun createRoute(id: String, title: String, image: String?, content: String) = "education/${id}?title=${title}&image=${image}&content=${content}"
     }
 }
 
 object ArgsName{
     const val data = "data"
     const val id = "id"
+    const val title = "title"
+    const val imageUrl = "image"
+    const val content = "content"
 }
 
