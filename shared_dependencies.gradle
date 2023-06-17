@@ -1,5 +1,5 @@
 dependencies {
-    implementation 'androidx.core:core-ktx:1.10.0'
+    implementation 'androidx.core:core-ktx:1.10.1'
     implementation 'androidx.compose.material:material:1.4.3'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
@@ -7,12 +7,12 @@ dependencies {
 
 
     //koin
-    implementation "io.insert-koin:koin-core:3.3.2"
-    implementation "io.insert-koin:koin-android:3.3.2"
+    implementation "io.insert-koin:koin-core:3.4.0"
+    implementation "io.insert-koin:koin-android:3.4.0"
 
     //Timber
     implementation "com.jakewharton.timber:timber:5.0.1"
 
     //canary
-    debugImplementation "com.squareup.leakcanary:leakcanary-android:2.10"
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.11'
 }
