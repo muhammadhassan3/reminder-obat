@@ -38,19 +38,23 @@ import org.koin.androidx.compose.koinViewModel
 fun MainView(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
-    onNavBarChangeColor: (color: Color) ->Unit = {}
+    onNavBarChangeColor: (color: Color) -> Unit = {}
 ) {
     val backStackEntry by navController.currentBackStackEntryAsState()
     val route = backStackEntry?.destination?.route
-    Scaffold(modifier = modifier, floatingActionButton = {
-        if (route == Screen.Home.route) {
-            ButtonAddDrug(modifier = Modifier, onAddButtonClicked = {
-                navController.navigate(Screen.AddDrugs.route)
-            }, onProgressButtonClicked = {
-                navController.navigate(Screen.Progress.route)
-            })
-        }
-    }, floatingActionButtonPosition = FabPosition.End) { padding ->
+    Scaffold(
+        modifier = modifier,
+        floatingActionButton = {
+            if (route == Screen.Home.route) {
+                ButtonAddDrug(modifier = Modifier, onAddButtonClicked = {
+                    navController.navigate(Screen.AddDrugs.route)
+                }, onProgressButtonClicked = {
+                    navController.navigate(Screen.Progress.route)
+                })
+            }
+        },
+        floatingActionButtonPosition = FabPosition.End,
+    ) { padding ->
         NavHost(
             modifier = modifier.padding(padding),
             navController = navController,
