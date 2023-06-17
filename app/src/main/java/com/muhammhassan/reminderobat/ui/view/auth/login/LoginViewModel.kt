@@ -85,7 +85,16 @@ class LoginViewModel(private val useCase: LoginUseCase, context: Context): ViewM
         }
         _uiState.value = UiState.Loading
         firebase.signInWithEmailAndPassword(_email.value, _password.value).addOnSuccessListener {
-            _uiState.value = UiState.Success(Any())
+            it.user?.getIdToken(false)?.addOnSuccessListener {
+                viewModelScope.launch {
+                    if(it.token ==null){
+                        UiState.Error("Gagal mendapatkan token")
+                    }else {
+                        useCase.saveToken(it.token!!)
+                        _uiState.value = UiState.Success(Any())
+                    }
+                }
+            }
         }.addOnFailureListener {
             _uiState.value = UiState.Error(it.message.toString())
         }
