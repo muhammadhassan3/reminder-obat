@@ -7,12 +7,12 @@ import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
 
 
-private val DarkColorPalette = darkColors(
-    primary = LightBlue,
-    primaryVariant = DarkBlue,
-    secondary = Teal200,
-    background = DarkBlue
-)
+//private val DarkColorPalette = darkColors(
+//    primary = LightBlue,
+//    primaryVariant = DarkBlue,
+//    secondary = Teal200,
+//    background = DarkBlue
+//)
 
 private val LightColorPalette = lightColors(
     primary = LightBlue,
@@ -23,13 +23,13 @@ private val LightColorPalette = lightColors(
 
 @Composable
 fun ReminderObatTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
-    val colors = if (darkTheme) {
-        DarkColorPalette
-    } else {
-        LightColorPalette
-    }
+//    val colors = if (darkTheme) {
+//        DarkColorPalette
+//    } else {
+//        LightColorPalette
+//    }
 
-//    val colors = LightColorPalette
+    val colors = LightColorPalette
 
     MaterialTheme(
         colors = colors,
