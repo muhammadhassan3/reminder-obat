@@ -25,8 +25,8 @@ class AuthViewModel(private val useCase: AuthUseCase) : ViewModel() {
         if (user.currentUser == null) {
             _token.value = null
         } else {
-            user.currentUser?.getIdToken(false)?.addOnCompleteListener {
-                Timber.e("Token achieved")
+            user.currentUser?.getIdToken(true)?.addOnCompleteListener {
+                Timber.e("Token achieved: ${it.result.token}")
                 if (it.isSuccessful) {
                     _token.postValue(it.result.token)
                 } else {
