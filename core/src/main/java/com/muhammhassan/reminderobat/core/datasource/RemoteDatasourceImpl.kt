@@ -33,9 +33,14 @@ class RemoteDatasourceImpl(private val api: ApiService) : RemoteDatasource {
         val response = api.getEducation()
         val body = response.body()
         if(response.isSuccessful){
-            emit(ApiResponse.Success(body?.data ?: emptyList()))
+            body?.data?.let {
+                emit(ApiResponse.Success(it))
+            }
         }else{
             emit(ApiResponse.Error(response.parseError()))
         }
+    }.catch {
+        it.printStackTrace()
+        emit(ApiResponse.Error("Jaringan yang kamu gunakan bermasalah, silahkan coba lagi dalam beberapa saat.."))
     }
 }
