@@ -19,7 +19,6 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -36,16 +35,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
-import com.muhammhassan.reminderobat.domain.model.Articles
 import com.muhammhassan.reminderobat.domain.model.GroupedDrugItem
 import com.muhammhassan.reminderobat.ui.component.AlarmGroup
 import com.muhammhassan.reminderobat.ui.theme.ReminderObatTheme
 import compose.icons.Octicons
 import compose.icons.octicons.Book24
 import compose.icons.octicons.CommentDiscussion24
-import compose.icons.octicons.Eye24
 import compose.icons.octicons.Person24
-import compose.icons.octicons.Telescope16
 
 @Composable
 fun HomeView(
@@ -76,26 +72,39 @@ fun HomeView(
                 end.linkTo(parent.end)
             }, style = MaterialTheme.typography.body1
         )
-        MenuItem(icon = Octicons.CommentDiscussion24, title = "Konsultasi", modifier.constrainAs(consultation){
-            start.linkTo(parent.start, 16.dp)
-            end.linkTo(dividerGuideline, 8.dp)
-            top.linkTo(subTitle.bottom, 16.dp)
-            width = Dimension.fillToConstraints
-        }, onItemClick = onConsultationClicked)
-        MenuItem(icon = Octicons.Book24, title = "Edukasi", modifier.constrainAs(education){
+        MenuItem(
+            icon = Octicons.CommentDiscussion24,
+            title = "Konsultasi",
+            modifier.constrainAs(consultation) {
+                start.linkTo(parent.start, 16.dp)
+                end.linkTo(dividerGuideline, 8.dp)
+                top.linkTo(subTitle.bottom, 16.dp)
+                width = Dimension.fillToConstraints
+            },
+            onItemClick = onConsultationClicked
+        )
+        MenuItem(icon = Octicons.Book24, title = "Edukasi", modifier.constrainAs(education) {
             start.linkTo(dividerGuideline, 8.dp)
             end.linkTo(parent.end, 16.dp)
             top.linkTo(subTitle.bottom, 16.dp)
             width = Dimension.fillToConstraints
         }, onItemClick = onEducationClicked)
-        Card(modifier = Modifier.constrainAs(alarmList) {
-            top.linkTo(consultation.bottom, 8.dp)
-            bottom.linkTo(parent.bottom)
-            start.linkTo(parent.start, 16.dp)
-            end.linkTo(parent.end, 16.dp)
-            width = Dimension.fillToConstraints
-            height = Dimension.fillToConstraints
-        }, shape = RoundedCornerShape(bottomStart = 0.dp, bottomEnd = 0.dp, topEnd = 16.dp, topStart = 16.dp)) {
+        Card(
+            modifier = Modifier.constrainAs(alarmList) {
+                top.linkTo(consultation.bottom, 8.dp)
+                bottom.linkTo(parent.bottom)
+                start.linkTo(parent.start, 16.dp)
+                end.linkTo(parent.end, 16.dp)
+                width = Dimension.fillToConstraints
+                height = Dimension.fillToConstraints
+            },
+            shape = RoundedCornerShape(
+                bottomStart = 0.dp,
+                bottomEnd = 0.dp,
+                topEnd = 16.dp,
+                topStart = 16.dp
+            )
+        ) {
             ConstraintLayout(modifier = Modifier.fillMaxSize()) {
                 val (content) = createRefs()
 
@@ -138,10 +147,15 @@ fun HomeView(
 }
 
 @Composable
-fun MenuItem(icon: ImageVector, title: String, modifier: Modifier = Modifier, onItemClick: () -> Unit) {
+fun MenuItem(
+    icon: ImageVector,
+    title: String,
+    modifier: Modifier = Modifier,
+    onItemClick: () -> Unit
+) {
     Card(
-        modifier = modifier.clickable{
-                                     onItemClick.invoke()
+        modifier = modifier.clickable {
+            onItemClick.invoke()
         },
         backgroundColor = Color.White,
         border = BorderStroke(width = 1.dp, color = Color.Gray),
@@ -151,13 +165,13 @@ fun MenuItem(icon: ImageVector, title: String, modifier: Modifier = Modifier, on
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
-                Icon(
-                    imageVector = icon,
-                    contentDescription = title,
-                    modifier = Modifier
-                        .size(65.dp)
-                        .padding(16.dp)
-                )
+            Icon(
+                imageVector = icon,
+                contentDescription = title,
+                modifier = Modifier
+                    .size(65.dp)
+                    .padding(16.dp)
+            )
             Spacer(modifier = Modifier.width(8.dp))
 
             Text(
@@ -180,7 +194,7 @@ fun MenuItemPreview() {
     }
 }
 
-@Preview(showSystemUi = true)
+@Preview(showSystemUi = true, apiLevel = 30, )
 @Composable
 fun HomePreview() {
     ReminderObatTheme {
