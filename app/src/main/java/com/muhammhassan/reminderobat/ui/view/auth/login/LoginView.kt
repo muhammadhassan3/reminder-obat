@@ -125,7 +125,7 @@ fun LoginView(
                 end.linkTo(parent.end, 16.dp)
                 width = Dimension.fillToConstraints
                 height = Dimension.preferredWrapContent
-            }, shape = RoundedCornerShape(16.dp)) {
+            }, shape = RoundedCornerShape(16.dp), backgroundColor = Color.White) {
                 ConstraintLayout(
                     modifier = Modifier
                         .padding(16.dp)
