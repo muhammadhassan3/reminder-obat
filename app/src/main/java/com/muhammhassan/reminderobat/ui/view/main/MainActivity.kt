@@ -18,7 +18,7 @@ class MainActivity : ComponentActivity() {
             ReminderObatTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colors.background
+                    color = MaterialTheme.colors.background,
                 ) {
                     MainView(onNavBarChangeColor = {color ->
                         setNavColor(color)
