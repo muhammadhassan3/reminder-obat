@@ -7,4 +7,6 @@ import kotlinx.coroutines.flow.Flow
 interface RemoteDatasource {
     fun register(name: String, email: String, password: String): Flow<ApiResponse<String>>
     fun getData(): Flow<ApiResponse<List<Article>>>
+
+    fun sendMessage(message: String): Flow<ApiResponse<String>>
 }

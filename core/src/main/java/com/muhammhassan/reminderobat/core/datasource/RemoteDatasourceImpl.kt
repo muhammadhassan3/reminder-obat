@@ -43,4 +43,19 @@ class RemoteDatasourceImpl(private val api: ApiService) : RemoteDatasource {
         it.printStackTrace()
         emit(ApiResponse.Error("Jaringan yang kamu gunakan bermasalah, silahkan coba lagi dalam beberapa saat.."))
     }
+
+    override fun sendMessage(message: String): Flow<ApiResponse<String>> = flow<ApiResponse<String>> {
+        emit(ApiResponse.Loading)
+        val response = api.sendMessage(message)
+        val body = response.body()
+        if(response.isSuccessful){
+            body?.message?.let {
+                emit(ApiResponse.Success(it))
+            }
+        }else{
+            emit(ApiResponse.Error(response.parseError()))
+        }
+    }.catch {
+        emit(ApiResponse.Error("Gagal mengirim pesan. Silahkan coba lagi dalam beberapa saat"))
+    }
 }
