@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.CircularProgressIndicator
@@ -51,6 +52,7 @@ fun EducationView(
     dialogData: DialogData,
     modifier: Modifier = Modifier
 ) {
+    val scrollState = rememberLazyListState()
     val isLoading = remember {
         mutableStateOf(false)
     }
@@ -113,7 +115,7 @@ fun EducationView(
                 bottom.linkTo(parent.bottom, 16.dp)
                 width = Dimension.fillToConstraints
                 height = Dimension.fillToConstraints
-            }) {
+            }, state = scrollState) {
                 items(contentData, key = { it.id }) {
                     ArticlesItem(
                         item = it, onItemClicked = onItemClicked
