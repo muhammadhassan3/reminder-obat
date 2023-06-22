@@ -8,24 +8,48 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.muhammhassan.reminderobat.navigation.Screen
+import com.muhammhassan.reminderobat.ui.component.DialogContent
 import com.muhammhassan.reminderobat.ui.view.auth.login.LoginView
 import com.muhammhassan.reminderobat.ui.view.auth.login.LoginViewModel
 import com.muhammhassan.reminderobat.ui.view.auth.register.RegisterView
 import com.muhammhassan.reminderobat.ui.view.auth.register.RegisterViewModel
+import com.muhammhassan.reminderobat.utils.DialogData
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun AuthView(
     navigateToMainActivity: () -> Unit,
-    modifier: Modifier = Modifier, navController: NavHostController = rememberNavController()
+    containerDialogShow: Boolean,
+    containerDialogData: DialogData,
+    modifier: Modifier = Modifier,
+    navController: NavHostController = rememberNavController()
 ) {
 
     val context = LocalContext.current
+
+    if (containerDialogShow) {
+        Dialog(
+            properties = DialogProperties(
+                dismissOnBackPress = false,
+                dismissOnClickOutside = false
+            ), content = {
+                DialogContent(
+                    message = containerDialogData.message,
+                    title = containerDialogData.title,
+                    buttonType = containerDialogData.buttonType,
+                    onNeutralClicked = containerDialogData.onNeutralAction
+                )
+            }, onDismissRequest = containerDialogData.onNeutralAction
+        )
+    }
+
     NavHost(
         navController = navController,
         startDestination = Screen.Login.route,
@@ -54,7 +78,8 @@ fun AuthView(
                 dialogData = dialogData,
                 data = data,
                 isDialogShow = isDialogShow,
-                onSuccessResponse = navigateToMainActivity, onErrorResponse = viewModel::setErrorMessage
+                onSuccessResponse = navigateToMainActivity,
+                onErrorResponse = viewModel::setErrorMessage
             )
         }
 
