@@ -14,6 +14,8 @@ import com.muhammhassan.reminderobat.core.datasource.LocalDatasourceImpl
 import com.muhammhassan.reminderobat.core.datasource.RemoteDatasource
 import com.muhammhassan.reminderobat.core.datasource.RemoteDatasourceImpl
 import com.muhammhassan.reminderobat.core.datastore.DataStorePreferences
+import com.muhammhassan.reminderobat.core.repository.ConsultationRepository
+import com.muhammhassan.reminderobat.core.repository.ConsultationRepositoryImpl
 import com.muhammhassan.reminderobat.core.repository.DrugRepository
 import com.muhammhassan.reminderobat.core.repository.DrugRepositoryImpl
 import com.muhammhassan.reminderobat.core.repository.EducationRepository
@@ -38,9 +40,9 @@ object Module {
     val retrofitModule = module {
         fun apiInstance(dataStore: DataStorePreferences): Retrofit {
             val client = OkHttpClient.Builder().addInterceptor(HeaderInterceptor(dataStore))
-//            if (BuildConfig.DEBUG) {
-            client.addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
-//            }
+            if (BuildConfig.DEBUG) {
+                client.addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
+            }
             return Retrofit.Builder().baseUrl(BuildConfig.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create()).client(client.build()).build()
         }
@@ -71,5 +73,6 @@ object Module {
         single<ScheduleRepository> { ScheduleRepositoryImpl(get()) }
         single<UserRepository> { UserRepositoryImpl(get(), get()) }
         single<EducationRepository> { EducationRepositoryImpl(get()) }
+        single<ConsultationRepository> { ConsultationRepositoryImpl(get()) }
     }
 }
