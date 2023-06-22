@@ -24,6 +24,8 @@ import com.muhammhassan.reminderobat.ui.component.ButtonAddDrug
 import com.muhammhassan.reminderobat.ui.view.add.drug.AddDrugView
 import com.muhammhassan.reminderobat.ui.view.add.schedule.AddReminderView
 import com.muhammhassan.reminderobat.ui.view.add.stock.AddStockView
+import com.muhammhassan.reminderobat.ui.view.consultation.ConsultationView
+import com.muhammhassan.reminderobat.ui.view.consultation.ConsultationViewModel
 import com.muhammhassan.reminderobat.ui.view.detail.history.DetailHistoryView
 import com.muhammhassan.reminderobat.ui.view.detail.schedule.DetailScheduleView
 import com.muhammhassan.reminderobat.ui.view.education.DetailEducationView
@@ -66,12 +68,13 @@ fun MainView(
                 val date by viewModel.date.collectAsState()
                 val data by viewModel.data.collectAsState()
 
+                onNavBarChangeColor.invoke(MaterialTheme.colors.primaryVariant)
                 HomeView(onItemClick = { id ->
                     navController.navigate(Screen.DetailSchedule.createRoute(id))
                 }, date = date, data = data, onEducationClicked = {
                     navController.navigate(Screen.Education.route)
                 }, onConsultationClicked = {
-
+                    navController.navigate(Screen.Consultation.route)
                 })
             }
 
@@ -147,16 +150,12 @@ fun MainView(
                 val data by viewModel.uiState.collectAsState()
                 val dialogData by viewModel.dialogData.collectAsState()
                 val isDialogShow by viewModel.isDialogShow.collectAsState()
-                EducationView(
-                    onNavUp = { navController.navigateUp() },
+                EducationView(onNavUp = { navController.navigateUp() },
                     data = data,
                     onItemClicked = { item ->
                         navController.navigate(
                             Screen.DetailEducation.createRoute(
-                                item.id,
-                                item.title,
-                                item.image,
-                                item.content
+                                item.id, item.title, item.image, item.content
                             )
                         )
                     },
@@ -170,24 +169,17 @@ fun MainView(
                 )
             }
 
-            composable(
-                route = Screen.DetailEducation.route,
-                arguments = listOf(
-                    navArgument(ArgsName.id) {
-                        type = NavType.StringType
-                    },
-                    navArgument(ArgsName.imageUrl) {
-                        type = NavType.StringType
-                        nullable = true
-                    },
-                    navArgument(ArgsName.title) {
-                        type = NavType.StringType
-                    },
-                    navArgument(ArgsName.content) {
-                        type = NavType.StringType
-                    }
-                )
-            ) {
+            composable(route = Screen.DetailEducation.route,
+                arguments = listOf(navArgument(ArgsName.id) {
+                    type = NavType.StringType
+                }, navArgument(ArgsName.imageUrl) {
+                    type = NavType.StringType
+                    nullable = true
+                }, navArgument(ArgsName.title) {
+                    type = NavType.StringType
+                }, navArgument(ArgsName.content) {
+                    type = NavType.StringType
+                })) {
                 onNavBarChangeColor.invoke(Color.Black)
                 val id = it.arguments?.getString(ArgsName.id) ?: ""
                 val imageUrl = it.arguments?.getString(ArgsName.imageUrl)
@@ -199,6 +191,30 @@ fun MainView(
                         navController.navigateUp()
                     },
                     data = Articles(id = id, image = imageUrl, content = content, title = title),
+                )
+            }
+
+            composable(route = Screen.Consultation.route) {
+                val viewModel = koinViewModel<ConsultationViewModel>()
+                val uiState by viewModel.uiState.collectAsState()
+                val message = viewModel.messageList
+                val dialogData by viewModel.dialogData.collectAsState()
+                val isDialogShow by viewModel.isDialogShow.collectAsState()
+                val userEmail by viewModel.userEmail.collectAsState()
+                val draft by viewModel.message.collectAsState()
+
+
+                onNavBarChangeColor.invoke(Color.Black)
+                ConsultationView(
+                    data = message,
+                    onNavUp = { navController.navigateUp() },
+                    onMessageChange ={},
+                    dialogData = dialogData,
+                    isDialogShow = isDialogShow,
+                    userEmail = userEmail,
+                    onSendClicked = viewModel::onMessageSend,
+                    draft = draft,
+                    uiState = uiState
                 )
             }
         }
