@@ -15,7 +15,6 @@ import com.muhammhassan.reminderobat.domain.model.UiState
 import com.muhammhassan.reminderobat.domain.usecase.ConsultationUseCase
 import com.muhammhassan.reminderobat.ui.component.ButtonType
 import com.muhammhassan.reminderobat.utils.DialogData
-import com.muhammhassan.reminderobat.utils.Utils.parseUTCTime
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
