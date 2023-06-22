@@ -18,6 +18,8 @@ sealed class Screen(val route: String){
     object DetailEducation: Screen("education/{${ArgsName.id}}?title={${ArgsName.title}}&image={${ArgsName.imageUrl}}&content={${ArgsName.content}}"){
         fun createRoute(id: String, title: String, image: String?, content: String) = "education/${id}?title=${title}&image=${image}&content=${content}"
     }
+
+    object Consultation: Screen("consultation")
 }
 
 object ArgsName{
