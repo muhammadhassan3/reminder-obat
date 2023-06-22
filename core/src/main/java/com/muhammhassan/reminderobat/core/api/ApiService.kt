@@ -2,7 +2,6 @@ package com.muhammhassan.reminderobat.core.api
 
 import com.muhammhassan.reminderobat.core.api.response.Article
 import com.muhammhassan.reminderobat.core.api.response.BaseResponse
-import com.muhammhassan.reminderobat.core.api.response.LoginResponse
 import retrofit2.Response
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
@@ -16,4 +15,7 @@ interface ApiService {
 
     @GET("education")
     suspend fun getEducation(): Response<BaseResponse<List<Article>>>
+    @FormUrlEncoded
+    @POST("/chat")
+    suspend fun sendMessage(@Field("message")message: String): Response<BaseResponse<String>>
 }
