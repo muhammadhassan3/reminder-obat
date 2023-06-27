@@ -1,6 +1,5 @@
 package com.muhammhassan.reminderobat.ui.view.consultation
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -10,7 +9,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
@@ -34,11 +32,13 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import com.muhammhassan.reminderobat.domain.model.ChatModel
 import com.muhammhassan.reminderobat.domain.model.UiState
 import com.muhammhassan.reminderobat.ui.component.ButtonBack
+import com.muhammhassan.reminderobat.ui.component.DialogContent
 import com.muhammhassan.reminderobat.ui.theme.Black40
 import com.muhammhassan.reminderobat.ui.theme.ReminderObatTheme
 import com.muhammhassan.reminderobat.utils.DialogData
@@ -59,6 +59,17 @@ fun ConsultationView(
     modifier: Modifier = Modifier
 ) {
     val scrollState = rememberLazyListState()
+
+    if (isDialogShow) {
+        Dialog(onDismissRequest = dialogData.onNeutralAction) {
+            DialogContent(
+                message = dialogData.message,
+                title = dialogData.title,
+                buttonType = dialogData.buttonType,
+                onNeutralClicked = dialogData.onNeutralAction
+            )
+        }
+    }
 
     Surface(color = Color.White) {
         ConstraintLayout(modifier = modifier.fillMaxSize()) {
@@ -115,7 +126,8 @@ fun ConsultationView(
                 }
             }
 
-            OutlinedTextField(value = draft,
+            OutlinedTextField(
+                value = draft,
                 onValueChange = onMessageChange,
                 modifier = Modifier.constrainAs(textField) {
                     start.linkTo(parent.start, 16.dp)
@@ -126,7 +138,8 @@ fun ConsultationView(
                 },
                 shape = RoundedCornerShape(16.dp),
                 placeholder = { Text("Ketikkan pesanmu disini") },
-            enabled = uiState != UiState.Loading)
+                enabled = uiState != UiState.Loading
+            )
             IconButton(onClick = onSendClicked,
                 modifier = Modifier
                     .clip(CircleShape)
@@ -136,11 +149,15 @@ fun ConsultationView(
                         bottom.linkTo(parent.bottom, 16.dp)
                         top.linkTo(textField.top)
                     }) {
-                Crossfade(targetState = (uiState is UiState.Loading)) {isShow ->
+                Crossfade(targetState = (uiState is UiState.Loading)) { isShow ->
                     if (isShow) {
                         CircularProgressIndicator(color = Color.White)
                     } else {
-                        Icon(imageVector = Octicons.PaperAirplane24, contentDescription = "Kirim pesan", tint = Color.White)
+                        Icon(
+                            imageVector = Octicons.PaperAirplane24,
+                            contentDescription = "Kirim pesan",
+                            tint = Color.White
+                        )
                     }
                 }
             }
@@ -263,7 +280,8 @@ fun SenderBubblePreview() {
 fun ConsultationPreview() {
     ReminderObatTheme {
         Surface(color = MaterialTheme.colors.primaryVariant) {
-            ConsultationView(onNavUp = {},
+            ConsultationView(
+                onNavUp = {},
                 onMessageChange = {},
                 draft = "",
                 userEmail = "test@email.com",
