@@ -21,9 +21,12 @@ import com.muhammhassan.reminderobat.domain.model.DrugsData
 import com.muhammhassan.reminderobat.navigation.ArgsName
 import com.muhammhassan.reminderobat.navigation.Screen
 import com.muhammhassan.reminderobat.ui.component.ButtonAddDrug
+import com.muhammhassan.reminderobat.ui.component.ButtonType
 import com.muhammhassan.reminderobat.ui.view.add.drug.AddDrugView
 import com.muhammhassan.reminderobat.ui.view.add.schedule.AddReminderView
 import com.muhammhassan.reminderobat.ui.view.add.stock.AddStockView
+import com.muhammhassan.reminderobat.ui.view.auth.profile.ProfileView
+import com.muhammhassan.reminderobat.ui.view.auth.profile.ProfileViewModel
 import com.muhammhassan.reminderobat.ui.view.consultation.ConsultationView
 import com.muhammhassan.reminderobat.ui.view.consultation.ConsultationViewModel
 import com.muhammhassan.reminderobat.ui.view.detail.history.DetailHistoryView
@@ -34,13 +37,16 @@ import com.muhammhassan.reminderobat.ui.view.education.EducationViewModel
 import com.muhammhassan.reminderobat.ui.view.home.HomeView
 import com.muhammhassan.reminderobat.ui.view.home.HomeViewModel
 import com.muhammhassan.reminderobat.ui.view.progress.ProgressView
+import com.muhammhassan.reminderobat.utils.DialogData
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun MainView(
+    onNavBarChangeColor: (color: Color) -> Unit,
+    openLoginPage: () -> Unit,
     modifier: Modifier = Modifier,
-    navController: NavHostController = rememberNavController(),
-    onNavBarChangeColor: (color: Color) -> Unit = {}
+    navController: NavHostController = rememberNavController()
+
 ) {
     val backStackEntry by navController.currentBackStackEntryAsState()
     val route = backStackEntry?.destination?.route
@@ -75,6 +81,8 @@ fun MainView(
                     navController.navigate(Screen.Education.route)
                 }, onConsultationClicked = {
                     navController.navigate(Screen.Consultation.route)
+                }, onProfileClicked = {
+                    navController.navigate(Screen.Profile.route)
                 })
             }
 
@@ -169,8 +177,8 @@ fun MainView(
                 )
             }
 
-            composable(route = Screen.DetailEducation.route,
-                arguments = listOf(navArgument(ArgsName.id) {
+            composable(
+                route = Screen.DetailEducation.route, arguments = listOf(navArgument(ArgsName.id) {
                     type = NavType.StringType
                 }, navArgument(ArgsName.imageUrl) {
                     type = NavType.StringType
@@ -179,7 +187,8 @@ fun MainView(
                     type = NavType.StringType
                 }, navArgument(ArgsName.content) {
                     type = NavType.StringType
-                })) {
+                })
+            ) {
                 onNavBarChangeColor.invoke(Color.Black)
                 val id = it.arguments?.getString(ArgsName.id) ?: ""
                 val imageUrl = it.arguments?.getString(ArgsName.imageUrl)
@@ -205,16 +214,37 @@ fun MainView(
 
 
                 onNavBarChangeColor.invoke(Color.Black)
-                ConsultationView(
-                    data = message,
+                ConsultationView(data = message,
                     onNavUp = { navController.navigateUp() },
-                    onMessageChange ={},
+                    onMessageChange = {},
                     dialogData = dialogData,
                     isDialogShow = isDialogShow,
                     userEmail = userEmail,
                     onSendClicked = viewModel::onMessageSend,
                     draft = draft,
                     uiState = uiState
+                )
+            }
+
+            composable(route = Screen.Profile.route) {
+                val viewModel = koinViewModel<ProfileViewModel>()
+                val name by viewModel.username.collectAsState()
+                val email by viewModel.email.collectAsState()
+                val isDialogShow by viewModel.isDialogShow.collectAsState()
+                val dialogData by viewModel.dialogData.collectAsState()
+                ProfileView(
+                    userName = name, userEmail = email, onLogOutClick = {
+                        viewModel.setDialog(
+                            DialogData(title = "Konfirmasi",
+                                message = "Apakah kamu yakin akan keluar?",
+                                buttonType = ButtonType.YES_NO,
+                                onConfirmAction = {
+                                    viewModel.logout {
+                                        openLoginPage.invoke()
+                                    }
+                                }, onCancelAction = viewModel::hideDialog)
+                        )
+                    }, isDialogShow = isDialogShow, dialogData = dialogData
                 )
             }
         }
