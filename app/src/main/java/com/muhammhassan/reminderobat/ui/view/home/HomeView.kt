@@ -16,14 +16,17 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontStyle
@@ -50,28 +53,37 @@ fun HomeView(
     data: List<GroupedDrugItem>,
     onConsultationClicked: () -> Unit,
     onEducationClicked: () -> Unit,
+    onProfileClicked: () -> Unit,
     modifier: Modifier = Modifier
 ) {
 
     val scrollState = rememberLazyListState()
 
     ConstraintLayout(modifier = modifier.fillMaxSize()) {
-        val (consultation, education, title, subTitle, alarmList) = createRefs()
+        val (consultation, education, title, subTitle, alarmList, profile) = createRefs()
         val dividerGuideline = createGuidelineFromStart(0.5f)
         Text(
             modifier = Modifier.constrainAs(title) {
                 top.linkTo(parent.top, 16.dp)
-                start.linkTo(parent.start)
-                end.linkTo(parent.end)
+                start.linkTo(parent.start, 16.dp)
+                end.linkTo(profile.start, 8.dp)
+                width = Dimension.fillToConstraints
             }, text = "Halo, Selamat datang", style = MaterialTheme.typography.h1
         )
         Text(
             text = date, Modifier.constrainAs(subTitle) {
                 top.linkTo(title.bottom)
-                start.linkTo(parent.start)
-                end.linkTo(parent.end)
+                start.linkTo(parent.start, 16.dp)
+                end.linkTo(profile.start, 8.dp)
+                width = Dimension.fillToConstraints
             }, style = MaterialTheme.typography.body1
         )
+        IconButton(onClick = onProfileClicked, modifier = Modifier.constrainAs(profile){
+            top.linkTo(parent.top, 16.dp)
+            end.linkTo(parent.end, 16.dp)
+        }.clip(CircleShape).background(Color.White)) {
+            Icon(imageVector = Octicons.Person24, contentDescription = "Halaman Profilku", tint = Color.Black)
+        }
         MenuItem(
             icon = Octicons.CommentDiscussion24,
             title = "Konsultasi",
@@ -204,7 +216,8 @@ fun HomePreview() {
             date = "2 April 2022",
             data = emptyList(),
             onConsultationClicked = {},
-            onEducationClicked = {}
+            onEducationClicked = {},
+            onProfileClicked = {}
         )
     }
 }
