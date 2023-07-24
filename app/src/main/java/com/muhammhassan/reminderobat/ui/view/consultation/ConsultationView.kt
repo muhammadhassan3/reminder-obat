@@ -13,15 +13,14 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Card
+import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -107,7 +106,6 @@ fun ConsultationView(
                         receivedShape = RoundedCornerShape(0.dp, 10.dp, 10.dp, 10.dp)
                         senderShape = RoundedCornerShape(10.dp, 0.dp, 10.dp, 10.dp)
                     }
-
                     if (data[i].sender == userEmail) {
                         item(key = data[i].id) {
                             SenderBubble(
@@ -148,7 +146,7 @@ fun ConsultationView(
                         end.linkTo(parent.end, 16.dp)
                         bottom.linkTo(parent.bottom, 16.dp)
                         top.linkTo(textField.top)
-                    }) {
+                    }, enabled = uiState !is UiState.Loading) {
                 Crossfade(targetState = (uiState is UiState.Loading)) { isShow ->
                     if (isShow) {
                         CircularProgressIndicator(color = Color.White)
@@ -185,7 +183,7 @@ fun SenderBubble(
                 bottom.linkTo(parent.bottom)
             },
             shape = shape,
-            colors = CardDefaults.cardColors(containerColor = Color.White),
+            backgroundColor = Color.White,
             border = BorderStroke(1.dp, color = Color.LightGray)
         ) {
             Row(
@@ -210,7 +208,7 @@ fun ReceivedBubble(
                 bottom.linkTo(parent.bottom)
             },
             shape = shape,
-            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colors.primaryVariant)
+            backgroundColor = MaterialTheme.colors.primaryVariant
         ) {
             Row(
                 modifier.padding(16.dp)
@@ -235,7 +233,7 @@ fun DateMarker(date: String, modifier: Modifier = Modifier) {
             end.linkTo(parent.end)
             top.linkTo(parent.top)
             bottom.linkTo(parent.bottom)
-        }, colors = CardDefaults.cardColors(containerColor = Black40)) {
+        }, backgroundColor = Black40) {
             Column(modifier = Modifier.padding(8.dp)) {
                 Text(text = date, fontSize = 12.sp)
             }
