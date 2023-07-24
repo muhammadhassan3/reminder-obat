@@ -70,7 +70,7 @@ class ConsultationViewModel(private val useCase: ConsultationUseCase): ViewModel
     init {
         if(authuser != null){
             _userEmail.value = authuser.email!!
-            database.reference.child("chat").child("aaaaa").addChildEventListener(eventListener)
+            database.reference.child("chat").child(authuser.uid).addChildEventListener(eventListener)
         }else{
             _dialogData.value = DialogData(
                 title = "Pemberitahuan",
@@ -91,6 +91,10 @@ class ConsultationViewModel(private val useCase: ConsultationUseCase): ViewModel
             }
         }
         _message.value = ""
+    }
+
+    fun setDraft(value: String){
+        _message.value = value
     }
 
     override fun onCleared() {

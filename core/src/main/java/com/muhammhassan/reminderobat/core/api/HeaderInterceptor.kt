@@ -15,7 +15,7 @@ class HeaderInterceptor(private val dataStore: DataStorePreferences): Intercepto
             request.addHeader("platform", "android")
             request.addHeader("version", Build.VERSION.SDK_INT.toString())
             token?.let{
-                request.addHeader("Authorization", it)
+                request.addHeader("Authorization", "Bearer $it")
             }
         }
         return chain.proceed(request.build())
