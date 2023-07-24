@@ -23,7 +23,6 @@ import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -37,6 +36,7 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.muhammhassan.reminderobat.core.utils.Constant
 import com.muhammhassan.reminderobat.ui.component.ButtonType
 import com.muhammhassan.reminderobat.ui.component.DialogContent
@@ -49,8 +49,8 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun ReminderDetailView(modifier: Modifier = Modifier, onFinished: () -> Unit, id: Int) {
     val viewModel: ReminderDetailViewModel = koinViewModel()
-    val data by viewModel.data.collectAsState()
-    val isDialogshow by viewModel.isDialogShow.collectAsState()
+    val data by viewModel.data.collectAsStateWithLifecycle()
+    val isDialogshow by viewModel.isDialogShow.collectAsStateWithLifecycle()
     val context = LocalContext.current
 
     val dialog = remember {

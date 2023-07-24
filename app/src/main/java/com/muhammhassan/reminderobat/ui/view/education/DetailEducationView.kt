@@ -17,16 +17,12 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.window.Dialog
-import androidx.compose.ui.window.DialogProperties
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import coil.compose.AsyncImage
 import com.muhammhassan.reminderobat.domain.model.Articles
 import com.muhammhassan.reminderobat.ui.component.ButtonBack
-import com.muhammhassan.reminderobat.ui.component.DialogContent
 import com.muhammhassan.reminderobat.ui.theme.ReminderObatTheme
-import com.muhammhassan.reminderobat.utils.DialogData
 import compose.icons.Octicons
 import compose.icons.octicons.Image24
 import compose.icons.octicons.X24

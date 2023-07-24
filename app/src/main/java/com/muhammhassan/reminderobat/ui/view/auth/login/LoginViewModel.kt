@@ -1,7 +1,6 @@
 package com.muhammhassan.reminderobat.ui.view.auth.login
 
 import android.content.Context
-import androidx.compose.runtime.MutableState
 import androidx.core.util.PatternsCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -11,11 +10,9 @@ import com.muhammhassan.reminderobat.domain.model.UiState
 import com.muhammhassan.reminderobat.domain.usecase.LoginUseCase
 import com.muhammhassan.reminderobat.ui.component.ButtonType
 import com.muhammhassan.reminderobat.utils.DialogData
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import timber.log.Timber
 
 class LoginViewModel(private val useCase: LoginUseCase, context: Context): ViewModel() {
     private val _uiState: MutableStateFlow<UiState<Any>?> = MutableStateFlow(null)

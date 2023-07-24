@@ -1,9 +1,7 @@
 package com.muhammhassan.reminderobat.domain.model
 
 import java.text.DecimalFormat
-import java.text.SimpleDateFormat
 import java.util.Calendar
-import java.util.Date
 
 data class ChatModel(
     var id: String? = null,

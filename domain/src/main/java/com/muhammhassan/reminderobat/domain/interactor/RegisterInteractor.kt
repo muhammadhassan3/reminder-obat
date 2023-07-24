@@ -1,6 +1,5 @@
 package com.muhammhassan.reminderobat.domain.interactor
 
-import com.muhammhassan.reminderobat.core.api.ApiResponse
 import com.muhammhassan.reminderobat.core.repository.UserRepository
 import com.muhammhassan.reminderobat.domain.model.UiState
 import com.muhammhassan.reminderobat.domain.usecase.RegisterUseCase

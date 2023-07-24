@@ -41,7 +41,6 @@ import com.muhammhassan.reminderobat.utils.DialogData
 import compose.icons.Octicons
 import compose.icons.octicons.Eye24
 import compose.icons.octicons.EyeClosed24
-import timber.log.Timber
 
 @Composable
 fun RegisterView(
