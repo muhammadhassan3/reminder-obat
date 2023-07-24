@@ -23,7 +23,6 @@ import androidx.compose.material.OutlinedButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -39,6 +38,7 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.muhammhassan.reminderobat.R
 import com.muhammhassan.reminderobat.domain.model.DrugsData
 import com.muhammhassan.reminderobat.ui.component.ButtonBack
@@ -59,9 +59,9 @@ fun AddReminderView(
     val viewModel: AddReminderViewModel = koinViewModel()
     val context = LocalContext.current
     val scrollState = rememberScrollState()
-    val totalReminder by viewModel.totalReminder.collectAsState()
-    val startDate by viewModel.startDate.collectAsState()
-    val endDate by viewModel.endDate.collectAsState()
+    val totalReminder by viewModel.totalReminder.collectAsStateWithLifecycle()
+    val startDate by viewModel.startDate.collectAsStateWithLifecycle()
+    val endDate by viewModel.endDate.collectAsStateWithLifecycle()
     val isDialogShow = remember { mutableStateOf(false) }
 
     LaunchedEffect(key1 = true) {

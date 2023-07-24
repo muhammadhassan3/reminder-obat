@@ -5,10 +5,10 @@ import androidx.compose.material.FabPosition
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -71,8 +71,8 @@ fun MainView(
 
             composable(Screen.Home.route) {
                 val viewModel: HomeViewModel = koinViewModel()
-                val date by viewModel.date.collectAsState()
-                val data by viewModel.data.collectAsState()
+                val date by viewModel.date.collectAsStateWithLifecycle()
+                val data by viewModel.data.collectAsStateWithLifecycle()
 
                 onNavBarChangeColor.invoke(MaterialTheme.colors.primaryVariant)
                 HomeView(onItemClick = { id ->
@@ -155,9 +155,9 @@ fun MainView(
             ) {
                 onNavBarChangeColor.invoke(MaterialTheme.colors.primaryVariant)
                 val viewModel = koinViewModel<EducationViewModel>()
-                val data by viewModel.uiState.collectAsState()
-                val dialogData by viewModel.dialogData.collectAsState()
-                val isDialogShow by viewModel.isDialogShow.collectAsState()
+                val data by viewModel.uiState.collectAsStateWithLifecycle()
+                val dialogData by viewModel.dialogData.collectAsStateWithLifecycle()
+                val isDialogShow by viewModel.isDialogShow.collectAsStateWithLifecycle()
                 EducationView(onNavUp = { navController.navigateUp() },
                     data = data,
                     onItemClicked = { item ->
@@ -205,18 +205,18 @@ fun MainView(
 
             composable(route = Screen.Consultation.route) {
                 val viewModel = koinViewModel<ConsultationViewModel>()
-                val uiState by viewModel.uiState.collectAsState()
+                val uiState by viewModel.uiState.collectAsStateWithLifecycle()
                 val message = viewModel.messageList
-                val dialogData by viewModel.dialogData.collectAsState()
-                val isDialogShow by viewModel.isDialogShow.collectAsState()
-                val userEmail by viewModel.userEmail.collectAsState()
-                val draft by viewModel.message.collectAsState()
+                val dialogData by viewModel.dialogData.collectAsStateWithLifecycle()
+                val isDialogShow by viewModel.isDialogShow.collectAsStateWithLifecycle()
+                val userEmail by viewModel.userEmail.collectAsStateWithLifecycle()
+                val draft by viewModel.message.collectAsStateWithLifecycle()
 
 
                 onNavBarChangeColor.invoke(Color.Black)
                 ConsultationView(data = message,
                     onNavUp = { navController.navigateUp() },
-                    onMessageChange = {},
+                    onMessageChange = viewModel::setDraft,
                     dialogData = dialogData,
                     isDialogShow = isDialogShow,
                     userEmail = userEmail,
@@ -228,10 +228,10 @@ fun MainView(
 
             composable(route = Screen.Profile.route) {
                 val viewModel = koinViewModel<ProfileViewModel>()
-                val name by viewModel.username.collectAsState()
-                val email by viewModel.email.collectAsState()
-                val isDialogShow by viewModel.isDialogShow.collectAsState()
-                val dialogData by viewModel.dialogData.collectAsState()
+                val name by viewModel.username.collectAsStateWithLifecycle()
+                val email by viewModel.email.collectAsStateWithLifecycle()
+                val isDialogShow by viewModel.isDialogShow.collectAsStateWithLifecycle()
+                val dialogData by viewModel.dialogData.collectAsStateWithLifecycle()
                 ProfileView(
                     userName = name, userEmail = email, onLogOutClick = {
                         viewModel.setDialog(

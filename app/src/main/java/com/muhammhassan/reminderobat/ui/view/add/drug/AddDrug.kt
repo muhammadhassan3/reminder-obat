@@ -5,9 +5,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
+import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.Card
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.RadioButton
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -16,6 +20,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.muhammhassan.reminderobat.R
 import com.muhammhassan.reminderobat.core.utils.Constant
 import com.muhammhassan.reminderobat.domain.model.DrugsData
@@ -30,10 +35,10 @@ fun AddDrugView(
     onNextPressed: (data: DrugsData) -> Unit
 ) {
     val viewModel: AddDrugViewModel = koinViewModel()
-    val title by viewModel.title.collectAsState()
-    val weight by viewModel.weight.collectAsState()
-    val type by viewModel.type.collectAsState()
-    val afterEat by viewModel.afterEat.collectAsState()
+    val title by viewModel.title.collectAsStateWithLifecycle()
+    val weight by viewModel.weight.collectAsStateWithLifecycle()
+    val type by viewModel.type.collectAsStateWithLifecycle()
+    val afterEat by viewModel.afterEat.collectAsStateWithLifecycle()
 
     ConstraintLayout(modifier = modifier.fillMaxSize().padding(16.dp)) {
         val (btnNavUp, tvTitle, subtitle, content, btnNext) = createRefs()

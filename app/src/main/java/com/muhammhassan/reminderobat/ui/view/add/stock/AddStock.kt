@@ -11,7 +11,6 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -22,6 +21,7 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.muhammhassan.reminderobat.domain.model.DrugsData
 import com.muhammhassan.reminderobat.ui.component.ButtonBack
 import com.muhammhassan.reminderobat.ui.component.ButtonType
@@ -37,9 +37,9 @@ fun AddStockView(
     data: DrugsData
 ) {
     val viewModel: AddStockViewModel = koinViewModel()
-    val condition by viewModel.condition.collectAsState()
-    val stock by viewModel.stock.collectAsState()
-    val showDialog by viewModel.showDialog.collectAsState()
+    val condition by viewModel.condition.collectAsStateWithLifecycle()
+    val stock by viewModel.stock.collectAsStateWithLifecycle()
+    val showDialog by viewModel.showDialog.collectAsStateWithLifecycle()
 
     val context = LocalContext.current
 

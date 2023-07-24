@@ -3,13 +3,13 @@ package com.muhammhassan.reminderobat.ui.view.auth
 import android.widget.Toast
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -28,6 +28,7 @@ fun AuthView(
     navigateToMainActivity: () -> Unit,
     containerDialogShow: Boolean,
     containerDialogData: DialogData,
+    navigateToEmailForm: () -> Unit,
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController()
 ) {
@@ -37,8 +38,7 @@ fun AuthView(
     if (containerDialogShow) {
         Dialog(
             properties = DialogProperties(
-                dismissOnBackPress = false,
-                dismissOnClickOutside = false
+                dismissOnBackPress = false, dismissOnClickOutside = false
             ), content = {
                 DialogContent(
                     message = containerDialogData.message,
@@ -57,12 +57,12 @@ fun AuthView(
     ) {
         composable(route = Screen.Login.route) {
             val viewModel = koinViewModel<LoginViewModel>()
-            val email by viewModel.email.collectAsState()
-            val password by viewModel.password.collectAsState()
-            val isDialogShow by viewModel.isDialogShow.collectAsState()
-            val dialogData by viewModel.dialogData.collectAsState()
+            val email by viewModel.email.collectAsStateWithLifecycle()
+            val password by viewModel.password.collectAsStateWithLifecycle()
+            val isDialogShow by viewModel.isDialogShow.collectAsStateWithLifecycle()
+            val dialogData by viewModel.dialogData.collectAsStateWithLifecycle()
 
-            val data by viewModel.uiState.collectAsState()
+            val data by viewModel.uiState.collectAsStateWithLifecycle()
 
             LoginView(
                 onEmailChanged = viewModel::setEmail,
@@ -79,7 +79,8 @@ fun AuthView(
                 data = data,
                 isDialogShow = isDialogShow,
                 onSuccessResponse = navigateToMainActivity,
-                onErrorResponse = viewModel::setErrorMessage
+                onErrorResponse = viewModel::setErrorMessage,
+                onResetPasswordClicked = navigateToEmailForm
             )
         }
 
@@ -87,14 +88,14 @@ fun AuthView(
             route = Screen.Register.route
         ) {
             val viewModel = koinViewModel<RegisterViewModel>()
-            val name by viewModel.name.collectAsState()
-            val email by viewModel.email.collectAsState()
-            val password by viewModel.password.collectAsState()
-            val confirmPassword by viewModel.confirmPassword.collectAsState()
-            val dialog by viewModel.dialogData.collectAsState()
-            val isDialogShow by viewModel.isDialogShow.collectAsState()
+            val name by viewModel.name.collectAsStateWithLifecycle()
+            val email by viewModel.email.collectAsStateWithLifecycle()
+            val password by viewModel.password.collectAsStateWithLifecycle()
+            val confirmPassword by viewModel.confirmPassword.collectAsStateWithLifecycle()
+            val dialog by viewModel.dialogData.collectAsStateWithLifecycle()
+            val isDialogShow by viewModel.isDialogShow.collectAsStateWithLifecycle()
 
-            val data by viewModel.uiState.collectAsState()
+            val data by viewModel.uiState.collectAsStateWithLifecycle()
             RegisterView(onNavUp = { navController.navigateUp() },
                 onNameChanged = viewModel::setName,
                 onEmailChanged = viewModel::setEmail,
