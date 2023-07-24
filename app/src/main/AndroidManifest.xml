@@ -26,6 +26,13 @@
         <activity
             android:name=".ui.view.main.MainActivity"
             android:exported="false"
+            android:theme="@style/Theme.ReminderObat"
+            android:windowSoftInputMode="adjustResize"/>
+        <activity android:name=".ui.view.auth.reset.UseEmailActivity"
+            android:theme="@style/Theme.ReminderObat"/>
+        <activity android:name=".ui.view.auth.otp.OtpPageActivity"
+            android:theme="@style/Theme.ReminderObat"/>
+        <activity android:name=".ui.view.auth.reset.password.ChangePasswordActivity"
             android:theme="@style/Theme.ReminderObat"/>
         <activity
             android:name=".ui.view.alarm.ReminderDetailActivity"
