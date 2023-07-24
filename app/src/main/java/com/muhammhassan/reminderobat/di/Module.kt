@@ -6,8 +6,11 @@ import com.muhammhassan.reminderobat.ui.view.add.stock.AddStockViewModel
 import com.muhammhassan.reminderobat.ui.view.alarm.ReminderDetailViewModel
 import com.muhammhassan.reminderobat.ui.view.auth.AuthViewModel
 import com.muhammhassan.reminderobat.ui.view.auth.login.LoginViewModel
+import com.muhammhassan.reminderobat.ui.view.auth.otp.OtpPageViewModel
 import com.muhammhassan.reminderobat.ui.view.auth.profile.ProfileViewModel
 import com.muhammhassan.reminderobat.ui.view.auth.register.RegisterViewModel
+import com.muhammhassan.reminderobat.ui.view.auth.reset.UseEmailViewModel
+import com.muhammhassan.reminderobat.ui.view.auth.reset.password.ChangePasswordViewModel
 import com.muhammhassan.reminderobat.ui.view.consultation.ConsultationViewModel
 import com.muhammhassan.reminderobat.ui.view.detail.history.DetailHistoryViewModel
 import com.muhammhassan.reminderobat.ui.view.detail.schedule.DetailScheduleViewModel
@@ -34,5 +37,8 @@ object Module {
         viewModel { EducationViewModel(get()) }
         viewModel { ConsultationViewModel(get()) }
         viewModel { ProfileViewModel() }
+        viewModel { UseEmailViewModel(get()) }
+        viewModel { OtpPageViewModel(get()) }
+        viewModel {ChangePasswordViewModel(get())}
     }
 }

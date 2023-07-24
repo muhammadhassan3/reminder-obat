@@ -1,11 +1,12 @@
 package com.muhammhassan.reminderobat.core.utils
 
-import okhttp3.ResponseBody
 import okio.IOException
 import org.json.JSONObject
 import retrofit2.Response
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
 
 object Utils {
 

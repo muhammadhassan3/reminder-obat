@@ -57,6 +57,7 @@ fun LoginView(
     dialogData: DialogData,
     onSuccessResponse: () -> Unit,
     onErrorResponse: (String) -> Unit,
+    onResetPasswordClicked: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val isPasswordShow = remember {
@@ -179,7 +180,7 @@ fun LoginView(
                                 end.linkTo(parent.end)
                             }
                             .clickable {
-
+                                onResetPasswordClicked.invoke()
                             })
                 }
             }
@@ -229,7 +230,8 @@ fun LoginPreview() {
                 isDialogShow = false,
                 data = null,
                 onErrorResponse = {},
-                onSuccessResponse = {}
+                onSuccessResponse = {},
+                onResetPasswordClicked = {}
             )
         }
     }

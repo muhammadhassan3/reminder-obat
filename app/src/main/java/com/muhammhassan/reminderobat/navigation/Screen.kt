@@ -28,5 +28,6 @@ object ArgsName{
     const val title = "title"
     const val imageUrl = "image"
     const val content = "content"
+    const val token = "token"
 }
 
