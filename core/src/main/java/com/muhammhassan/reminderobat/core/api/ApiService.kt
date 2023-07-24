@@ -2,6 +2,7 @@ package com.muhammhassan.reminderobat.core.api
 
 import com.muhammhassan.reminderobat.core.api.response.Article
 import com.muhammhassan.reminderobat.core.api.response.BaseResponse
+import com.muhammhassan.reminderobat.core.api.response.ResetTokenResponse
 import retrofit2.Response
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
@@ -18,4 +19,20 @@ interface ApiService {
     @FormUrlEncoded
     @POST("/chat")
     suspend fun sendMessage(@Field("message")message: String): Response<BaseResponse<String>>
+
+    @FormUrlEncoded
+    @POST("/reset")
+    suspend fun getResetToken(@Field("email") email: String): Response<BaseResponse<ResetTokenResponse>>
+
+    @FormUrlEncoded
+    @POST("/reset/verify")
+    suspend fun verifyResetToken(@Field("token") verifyToken: String, @Field("otp") otp: String): Response<BaseResponse<ResetTokenResponse>>
+
+    @FormUrlEncoded
+    @POST("/reset/resend")
+    suspend fun resendOTP(@Field("resendToken") resendToken: String): Response<BaseResponse<ResetTokenResponse>>
+
+    @FormUrlEncoded
+    @POST("/reset/password")
+    suspend fun resetPassword(@Field("token") verifyToken: String, @Field("password") password: String): Response<BaseResponse<String>>
 }
