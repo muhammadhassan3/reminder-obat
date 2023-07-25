@@ -4,7 +4,9 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Card
@@ -40,19 +42,23 @@ fun AddDrugView(
     val type by viewModel.type.collectAsStateWithLifecycle()
     val afterEat by viewModel.afterEat.collectAsStateWithLifecycle()
 
-    ConstraintLayout(modifier = modifier.fillMaxSize().padding(16.dp)) {
+    val scrolLState = rememberScrollState()
+
+    ConstraintLayout(modifier = modifier
+        .fillMaxSize()
+        .verticalScroll(scrolLState)) {
         val (btnNavUp, tvTitle, subtitle, content, btnNext) = createRefs()
         ButtonBack(modifier = Modifier.constrainAs(btnNavUp) {
-            top.linkTo(parent.top)
-            start.linkTo(parent.start)
+            top.linkTo(parent.top, 16.dp)
+            start.linkTo(parent.start,16.dp)
         }) {
             onBackPressed.invoke()
         }
         Text(
             modifier = Modifier.constrainAs(tvTitle) {
                 top.linkTo(btnNavUp.bottom)
-                start.linkTo(parent.start)
-                end.linkTo(parent.end)
+                start.linkTo(parent.start, 16.dp)
+                end.linkTo(parent.end, 16.dp)
             }, text = "Masukkan Obatmu", style = MaterialTheme.typography.h1
         )
         Text(
@@ -64,8 +70,8 @@ fun AddDrugView(
         )
         Card(modifier = Modifier.constrainAs(content) {
             top.linkTo(subtitle.bottom, 16.dp)
-            start.linkTo(parent.start)
-            end.linkTo(parent.end)
+            start.linkTo(parent.start, 16.dp)
+            end.linkTo(parent.end, 16.dp)
             width = Dimension.fillToConstraints
         }, shape = RoundedCornerShape(16.dp), backgroundColor = Color.White) {
             ConstraintLayout(
@@ -143,9 +149,16 @@ fun AddDrugView(
         Button(
             modifier = Modifier
                 .constrainAs(btnNext) {
-                    bottom.linkTo(parent.bottom)
-                    start.linkTo(parent.start)
-                    end.linkTo(parent.end)
+                    linkTo(
+                        start = parent.start,
+                        top = content.bottom,
+                        end = parent.end,
+                        bottom = parent.bottom,
+                        startMargin = 16.dp,
+                        endMargin = 16.dp,
+                        bottomMargin = 16.dp,
+                        verticalBias = 1f
+                    )
                     width = Dimension.fillToConstraints
                     height = Dimension.value(45.dp)
                 },
