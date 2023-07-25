@@ -1,5 +1,6 @@
 package com.muhammhassan.reminderobat.ui.view.main
 
+import android.os.Build
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.FabPosition
 import androidx.compose.material.MaterialTheme
@@ -39,6 +40,7 @@ import com.muhammhassan.reminderobat.ui.view.home.HomeViewModel
 import com.muhammhassan.reminderobat.ui.view.progress.ProgressView
 import com.muhammhassan.reminderobat.utils.DialogData
 import org.koin.androidx.compose.koinViewModel
+import timber.log.Timber
 
 @Composable
 fun MainView(
@@ -46,7 +48,6 @@ fun MainView(
     openLoginPage: () -> Unit,
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController()
-
 ) {
     val backStackEntry by navController.currentBackStackEntryAsState()
     val route = backStackEntry?.destination?.route
@@ -106,14 +107,24 @@ fun MainView(
                 })
             }
 
-            composable(Screen.AddReminder.route) {
-                val data =
+            composable(Screen.AddReminder.route,) {
+
+                val data = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    Timber.e(navController.previousBackStackEntry?.arguments.toString())
+                    navController.previousBackStackEntry?.arguments?.getParcelable(
+                        ArgsName.data,
+                        DrugsData::class.java
+                    )
+                        ?: throw IllegalArgumentException("Data null")
+                } else {
                     navController.previousBackStackEntry?.arguments?.getParcelable(ArgsName.data)
-                        ?: DrugsData()
+                        ?: throw IllegalArgumentException("Data null")
+                }
+
+                Timber.e(data.toString())
                 AddReminderView(onBackPressed = {
                     navController.navigateUp()
                 }, onNextPressed = { finalData ->
-
                     navController.currentBackStackEntry?.arguments?.putParcelable(
                         ArgsName.data, finalData
                     )
@@ -122,9 +133,16 @@ fun MainView(
             }
 
             composable(Screen.AddStock.route) {
-                val data =
+                val data = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    navController.previousBackStackEntry?.arguments?.getParcelable(
+                        ArgsName.data,
+                        DrugsData::class.java
+                    )
+                        ?: throw IllegalArgumentException("Data null")
+                } else {
                     navController.previousBackStackEntry?.arguments?.getParcelable(ArgsName.data)
-                        ?: DrugsData()
+                        ?: throw IllegalArgumentException("Data null")
+                }
                 AddStockView(onBackPressed = {
                     navController.navigateUp()
                 }, onDataSaved = {
@@ -158,7 +176,8 @@ fun MainView(
                 val data by viewModel.uiState.collectAsStateWithLifecycle()
                 val dialogData by viewModel.dialogData.collectAsStateWithLifecycle()
                 val isDialogShow by viewModel.isDialogShow.collectAsStateWithLifecycle()
-                EducationView(onNavUp = { navController.navigateUp() },
+                EducationView(
+                    onNavUp = { navController.navigateUp() },
                     data = data,
                     onItemClicked = { item ->
                         navController.navigate(
@@ -214,7 +233,8 @@ fun MainView(
 
 
                 onNavBarChangeColor.invoke(Color.Black)
-                ConsultationView(data = message,
+                ConsultationView(
+                    data = message,
                     onNavUp = { navController.navigateUp() },
                     onMessageChange = viewModel::setDraft,
                     dialogData = dialogData,
@@ -242,7 +262,8 @@ fun MainView(
                                     viewModel.logout {
                                         openLoginPage.invoke()
                                     }
-                                }, onCancelAction = viewModel::hideDialog)
+                                }, onCancelAction = viewModel::hideDialog
+                            )
                         )
                     }, isDialogShow = isDialogShow, dialogData = dialogData
                 )
