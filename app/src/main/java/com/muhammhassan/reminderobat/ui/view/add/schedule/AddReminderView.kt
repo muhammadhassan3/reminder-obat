@@ -20,6 +20,7 @@ import androidx.compose.material.Button
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedButton
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -32,6 +33,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
@@ -46,6 +48,7 @@ import com.muhammhassan.reminderobat.ui.component.ButtonType
 import com.muhammhassan.reminderobat.ui.component.DaySelector
 import com.muhammhassan.reminderobat.ui.component.DialogContent
 import com.muhammhassan.reminderobat.ui.component.TimeList
+import com.muhammhassan.reminderobat.ui.theme.ReminderObatTheme
 import org.koin.androidx.compose.koinViewModel
 import java.util.Calendar
 
@@ -82,7 +85,9 @@ fun AddReminderView(
         }
     }
 
-    ConstraintLayout(modifier = modifier.fillMaxSize().padding(16.dp)) {
+    ConstraintLayout(modifier = modifier
+        .fillMaxSize()
+        .padding(16.dp)) {
         val (btnNavUp, btnNext, title, subtitle, content) = createRefs()
         ButtonBack(modifier = Modifier.constrainAs(btnNavUp) {
             top.linkTo(parent.top)
@@ -117,7 +122,8 @@ fun AddReminderView(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp)
-                    .verticalScroll(scrollState
+                    .verticalScroll(
+                        scrollState
                     )
             ) {
                 val (tagTotalReminder, btnMin, btnPlus, tvTotalReminder, tagDays, daysList, tagStartDate, tvStartDate, tagEndDate, tvEndDate, tagScheduleList, scheduleList) = createRefs()
