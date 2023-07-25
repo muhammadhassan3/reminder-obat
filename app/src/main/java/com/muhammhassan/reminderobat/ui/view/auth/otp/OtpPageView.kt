@@ -176,9 +176,9 @@ fun OtpPageView(
                     end.linkTo(parent.end, 16.dp)
                     top.linkTo(message.top)
                     bottom.linkTo(message.bottom)
-                    height = Dimension.value(10.dp)
+                    height = Dimension.value(5.dp)
                     width = Dimension.wrapContent
-                }, color = Color.White)
+                }, color = Color.White, strokeWidth = 2.dp)
             }else if (remainResendTime > 0) {
                 Text(
                     text = Utils.getTimeFormatFromInt(remainResendTime),
