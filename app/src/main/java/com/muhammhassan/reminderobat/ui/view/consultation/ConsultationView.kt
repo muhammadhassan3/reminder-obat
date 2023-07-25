@@ -22,6 +22,9 @@ import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -146,7 +149,9 @@ fun ConsultationView(
                         end.linkTo(parent.end, 16.dp)
                         bottom.linkTo(parent.bottom, 16.dp)
                         top.linkTo(textField.top)
-                    }, enabled = uiState !is UiState.Loading) {
+                    },
+                enabled = uiState !is UiState.Loading
+            ) {
                 Crossfade(targetState = (uiState is UiState.Loading)) { isShow ->
                     if (isShow) {
                         CircularProgressIndicator(color = Color.White)
@@ -187,7 +192,7 @@ fun SenderBubble(
             border = BorderStroke(1.dp, color = Color.LightGray)
         ) {
             Row(
-                modifier.padding(16.dp)
+                modifier.padding(horizontal = 16.dp, vertical = 8.dp)
             ) {
                 Text(text = message)
             }
@@ -206,9 +211,7 @@ fun ReceivedBubble(
                 start.linkTo(parent.start)
                 top.linkTo(parent.top)
                 bottom.linkTo(parent.bottom)
-            },
-            shape = shape,
-            backgroundColor = MaterialTheme.colors.primaryVariant
+            }, shape = shape, backgroundColor = MaterialTheme.colors.primaryVariant
         ) {
             Row(
                 modifier.padding(16.dp)
@@ -233,7 +236,7 @@ fun DateMarker(date: String, modifier: Modifier = Modifier) {
             end.linkTo(parent.end)
             top.linkTo(parent.top)
             bottom.linkTo(parent.bottom)
-        }, backgroundColor = Black40) {
+        }, backgroundColor = Color.LightGray, border = BorderStroke(0.dp, Color.White)) {
             Column(modifier = Modifier.padding(8.dp)) {
                 Text(text = date, fontSize = 12.sp)
             }
@@ -278,8 +281,7 @@ fun SenderBubblePreview() {
 fun ConsultationPreview() {
     ReminderObatTheme {
         Surface(color = MaterialTheme.colors.primaryVariant) {
-            ConsultationView(
-                onNavUp = {},
+            ConsultationView(onNavUp = {},
                 onMessageChange = {},
                 draft = "",
                 userEmail = "test@email.com",
