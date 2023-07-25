@@ -167,7 +167,7 @@ fun ArticlesItem(
                         bottom.linkTo(parent.bottom)
                         width = Dimension.value(65.dp)
                         height = Dimension.value(65.dp)
-                    })
+                    }.padding(12.dp),)
             }
             Text(
                 text = item.title,
