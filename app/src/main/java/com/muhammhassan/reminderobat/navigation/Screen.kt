@@ -1,10 +1,11 @@
 package com.muhammhassan.reminderobat.navigation
 
+import android.net.Uri
+import com.google.gson.Gson
+import com.muhammhassan.reminderobat.domain.model.DrugsData
+
 sealed class Screen(val route: String){
     object Home: Screen("home")
-    object AddDrugs: Screen("add_drugs")
-    object AddReminder: Screen("add_reminder/{${ArgsName.data}}")
-    object AddStock: Screen("add_stock")
     object DetailSchedule: Screen("home/{${ArgsName.id}}"){
         fun createRoute(id: Long) = "home/$id"
     }

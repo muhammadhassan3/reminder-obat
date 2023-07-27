@@ -46,6 +46,7 @@ import timber.log.Timber
 fun MainView(
     onNavBarChangeColor: (color: Color) -> Unit,
     openLoginPage: () -> Unit,
+    navigateToAddDrugs: () -> Unit,
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController()
 ) {
@@ -56,7 +57,7 @@ fun MainView(
         floatingActionButton = {
             if (route == Screen.Home.route) {
                 ButtonAddDrug(modifier = Modifier, onAddButtonClicked = {
-                    navController.navigate(Screen.AddDrugs.route)
+                    navigateToAddDrugs.invoke()
                 }, onProgressButtonClicked = {
                     navController.navigate(Screen.Progress.route)
                 })
@@ -96,59 +97,6 @@ fun MainView(
                 DetailScheduleView(onNavigateUp = { navController.navigateUp() }, id = id)
             }
 
-            composable(Screen.AddDrugs.route) {
-                AddDrugView(onNextPressed = { data ->
-                    navController.currentBackStackEntry?.arguments?.putParcelable(
-                        ArgsName.data, data
-                    )
-                    navController.navigate(Screen.AddReminder.route)
-                }, onBackPressed = {
-                    navController.navigateUp()
-                })
-            }
-
-            composable(Screen.AddReminder.route,) {
-
-                val data = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                    Timber.e(navController.previousBackStackEntry?.arguments.toString())
-                    navController.previousBackStackEntry?.arguments?.getParcelable(
-                        ArgsName.data,
-                        DrugsData::class.java
-                    )
-                        ?: throw IllegalArgumentException("Data null")
-                } else {
-                    navController.previousBackStackEntry?.arguments?.getParcelable(ArgsName.data)
-                        ?: throw IllegalArgumentException("Data null")
-                }
-
-                Timber.e(data.toString())
-                AddReminderView(onBackPressed = {
-                    navController.navigateUp()
-                }, onNextPressed = { finalData ->
-                    navController.currentBackStackEntry?.arguments?.putParcelable(
-                        ArgsName.data, finalData
-                    )
-                    navController.navigate(Screen.AddStock.route)
-                }, data = data)
-            }
-
-            composable(Screen.AddStock.route) {
-                val data = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                    navController.previousBackStackEntry?.arguments?.getParcelable(
-                        ArgsName.data,
-                        DrugsData::class.java
-                    )
-                        ?: throw IllegalArgumentException("Data null")
-                } else {
-                    navController.previousBackStackEntry?.arguments?.getParcelable(ArgsName.data)
-                        ?: throw IllegalArgumentException("Data null")
-                }
-                AddStockView(onBackPressed = {
-                    navController.navigateUp()
-                }, onDataSaved = {
-                    navController.popBackStack(Screen.Home.route, inclusive = false)
-                }, data = data)
-            }
             composable(Screen.Progress.route) {
                 ProgressView(onNavigateUp = {
                     navController.navigateUp()

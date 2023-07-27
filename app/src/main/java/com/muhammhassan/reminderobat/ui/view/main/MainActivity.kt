@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import com.muhammhassan.reminderobat.ui.theme.ReminderObatTheme
+import com.muhammhassan.reminderobat.ui.view.add.drug.AddDrugActivity
 import com.muhammhassan.reminderobat.ui.view.auth.AuthActivity
 
 class MainActivity : ComponentActivity() {
@@ -26,7 +27,7 @@ class MainActivity : ComponentActivity() {
                         setNavColor(color)
                     }, openLoginPage = {
                         navigateToLogin()
-                    })
+                    }, navigateToAddDrugs = ::navigateToAddDrugs)
                 }
             }
         }
@@ -40,5 +41,9 @@ class MainActivity : ComponentActivity() {
     private fun navigateToLogin(){
         startActivity(Intent(this, AuthActivity::class.java))
         finish()
+    }
+
+    private fun navigateToAddDrugs(){
+        startActivity(Intent(this, AddDrugActivity::class.java))
     }
 }
