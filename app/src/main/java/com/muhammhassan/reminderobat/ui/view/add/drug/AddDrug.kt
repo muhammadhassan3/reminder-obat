@@ -42,11 +42,11 @@ fun AddDrugView(
     val type by viewModel.type.collectAsStateWithLifecycle()
     val afterEat by viewModel.afterEat.collectAsStateWithLifecycle()
 
-    val scrolLState = rememberScrollState()
+    val scrollState = rememberScrollState()
 
     ConstraintLayout(modifier = modifier
         .fillMaxSize()
-        .verticalScroll(scrolLState)) {
+        .verticalScroll(scrollState)) {
         val (btnNavUp, tvTitle, subtitle, content, btnNext) = createRefs()
         ButtonBack(modifier = Modifier.constrainAs(btnNavUp) {
             top.linkTo(parent.top, 16.dp)
