@@ -34,6 +34,12 @@
             android:theme="@style/Theme.ReminderObat"/>
         <activity android:name=".ui.view.auth.reset.password.ChangePasswordActivity"
             android:theme="@style/Theme.ReminderObat"/>
+        <activity android:name=".ui.view.add.schedule.AddReminderActivity"
+            android:theme="@style/Theme.ReminderObat"/>
+        <activity android:name=".ui.view.add.drug.AddDrugActivity"
+            android:theme="@style/Theme.ReminderObat"/>
+        <activity android:name=".ui.view.add.stock.AddStockActivity"
+            android:theme="@style/Theme.ReminderObat"/>
         <activity
             android:name=".ui.view.alarm.ReminderDetailActivity"
             android:excludeFromRecents="true"
