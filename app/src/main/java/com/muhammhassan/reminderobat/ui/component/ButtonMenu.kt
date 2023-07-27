@@ -97,7 +97,7 @@ fun ButtonAddDrug(
             }, colors = ButtonDefaults.outlinedButtonColors(
                 contentColor = Color.White
             )) {
-            Crossfade(targetState = isButtonShowed.value) { isShow ->
+            Crossfade(targetState = isButtonShowed.value, label = "menu") { isShow ->
                 if (isShow) {
                     Icon(
                         imageVector = Icons.Default.Close,
