@@ -17,18 +17,16 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
+
+        buildConfigField "String", "BASE_URL", '"https://www.patuhi.com/"'
     }
 
     buildTypes {
         release {
-            buildConfigField "String", "BASE_URL", '"https://patuhi.com/"'
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
 
-        debug{
-            buildConfigField "String", "BASE_URL", '"https://patuhi.com/"'
-        }
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_18
