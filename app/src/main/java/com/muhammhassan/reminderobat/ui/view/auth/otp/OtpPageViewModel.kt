@@ -36,8 +36,6 @@ class OtpPageViewModel(private val useCase: OtpPageUseCase) : ViewModel() {
 
     fun setToken(token: ResetTokenModel) {
         _tokenState.value = UiState.Success(token)
-
-        val date = Calendar.getInstance()
         timer = object : CountDownTimer(90*1000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 _time.value = (millisUntilFinished / 1000).toInt()
