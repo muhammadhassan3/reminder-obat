@@ -12,6 +12,7 @@ import com.google.firebase.ktx.Firebase
 import com.google.gson.Gson
 import com.muhammhassan.reminderobat.domain.model.ChatModel
 import com.muhammhassan.reminderobat.domain.model.UiState
+import com.muhammhassan.reminderobat.domain.model.UserModel
 import com.muhammhassan.reminderobat.domain.usecase.ConsultationUseCase
 import com.muhammhassan.reminderobat.ui.component.ButtonType
 import com.muhammhassan.reminderobat.utils.DialogData
@@ -43,11 +44,25 @@ class ConsultationViewModel(private val useCase: ConsultationUseCase): ViewModel
 
     private val eventListener = object: ChildEventListener{
         override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
-            val gson = Gson()
-            val json = gson.toJson(snapshot.value)
-            val data = gson.fromJson(json, ChatModel::class.java)
-            data.id = snapshot.key
-            messageList.add(data)
+            val data = snapshot.value as Map<*, *>
+            val chatId = snapshot.key
+            val message = data["message"] as String
+            val timeStamp = data["timestamp"] as Long
+            val sender = data["sender"] as Map<*, *>
+            val senderName = sender["name"] as String
+            val senderEmail = sender["email"] as String
+
+            messageList.add(
+                ChatModel(
+                    id = chatId,
+                    sender = UserModel(
+                        name = senderName,
+                        email = senderEmail
+                    ),
+                    message = message,
+                    timestamp = timeStamp
+                )
+            )
         }
 
         override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
