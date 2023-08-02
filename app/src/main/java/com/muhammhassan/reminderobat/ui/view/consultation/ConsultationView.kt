@@ -109,7 +109,7 @@ fun ConsultationView(
                         receivedShape = RoundedCornerShape(0.dp, 10.dp, 10.dp, 10.dp)
                         senderShape = RoundedCornerShape(10.dp, 0.dp, 10.dp, 10.dp)
                     }
-                    if (data[i].sender == userEmail) {
+                    if (data[i].sender.email == userEmail) {
                         item(key = data[i].id) {
                             SenderBubble(
                                 time = data[i].getTime(), message = data[i].message, senderShape
@@ -152,7 +152,7 @@ fun ConsultationView(
                     },
                 enabled = uiState !is UiState.Loading
             ) {
-                Crossfade(targetState = (uiState is UiState.Loading)) { isShow ->
+                Crossfade(targetState = (uiState is UiState.Loading), label = "") { isShow ->
                     if (isShow) {
                         CircularProgressIndicator(color = Color.White)
                     } else {
