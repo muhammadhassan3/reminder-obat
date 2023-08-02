@@ -138,42 +138,14 @@ fun ArticlesItem(
         ConstraintLayout(
             modifier
                 .fillMaxWidth()
-                .padding(8.dp)
+                .padding(16.dp)
         ) {
-            val (image, tvTitle, tvSummary) = createRefs()
-            if (item.image != null) {
-                AsyncImage(
-                    model = item.image,
-                    contentDescription = item.title,
-                    error = rememberVectorPainter(
-                        image = Octicons.X24
-                    ),
-                    modifier = Modifier.constrainAs(image) {
-                        start.linkTo(parent.start)
-                        top.linkTo(parent.top)
-                        bottom.linkTo(parent.bottom)
-                        width = Dimension.value(65.dp)
-                        height = Dimension.value(65.dp)
-                    },
-                    placeholder = rememberVectorPainter(image = Octicons.Image24)
-                )
-            } else {
-                Icon(
-                    imageVector = Octicons.X24,
-                    contentDescription = "No image found",
-                    modifier = Modifier.constrainAs(image) {
-                        start.linkTo(parent.start)
-                        top.linkTo(parent.top)
-                        bottom.linkTo(parent.bottom)
-                        width = Dimension.value(65.dp)
-                        height = Dimension.value(65.dp)
-                    }.padding(12.dp),)
-            }
+            val (tvTitle, tvSummary) = createRefs()
             Text(
                 text = item.title,
                 modifier = Modifier.constrainAs(tvTitle) {
-                    start.linkTo(image.end, 8.dp)
-                    top.linkTo(image.top)
+                    start.linkTo(parent.start)
+                    top.linkTo(parent.top)
                     end.linkTo(parent.end)
                     width = Dimension.fillToConstraints
                 },
@@ -186,30 +158,17 @@ fun ArticlesItem(
                 text = item.content,
                 modifier = Modifier.constrainAs(tvSummary) {
                     top.linkTo(tvTitle.bottom, 4.dp)
-                    start.linkTo(image.end, 8.dp)
-                    end.linkTo(parent.end, 8.dp)
-                    bottom.linkTo(image.bottom)
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                    bottom.linkTo(parent.bottom)
                     width = Dimension.fillToConstraints
-                    height = Dimension.fillToConstraints
+                    height = Dimension.preferredWrapContent
                 },
                 style = MaterialTheme.typography.body1,
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis
             )
         }
-    }
-}
-
-@Preview
-@Composable
-fun ArticleItemPreview() {
-    ReminderObatTheme {
-        ArticlesItem(item = Articles(
-            id = "",
-            title = "Title",
-            content = "lajh fashdf asdfh lskdajf halsdiufhu sdkjf ahlsd fh asldja sjn daljfd asdljf alfjna slirufh",
-            ""
-        ), onItemClicked = {})
     }
 }
 
