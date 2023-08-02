@@ -7,14 +7,14 @@ data class ChatModel(
     var id: String? = null,
     val message: String,
     var timestamp: Long,
-    val sender: String,
+    val sender: UserModel,
 ) {
 
     fun getTime(): String {
         val date = Calendar.getInstance().also{
             it.timeInMillis = timestamp
         }
-        val decFormat = DecimalFormat("##")
+        val decFormat = DecimalFormat("00")
         return decFormat.format(date[Calendar.HOUR_OF_DAY]) + ":" + decFormat.format(date[Calendar.MINUTE])
     }
 
