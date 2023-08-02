@@ -19,3 +19,9 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+-keepattributes *Annotation*
+# in order to provide the most meaningful crash reports, add the following line:
+-keepattributes SourceFile,LineNumberTable
+# If you are using custom exceptions, add this line so that custom exception types are skipped during obfuscation:
+-keep public class * extends java.lang.Exception
