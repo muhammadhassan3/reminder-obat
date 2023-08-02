@@ -31,7 +31,7 @@ object Module {
         viewModel { ProgressViewModel(get()) }
         viewModel { DetailHistoryViewModel(get()) }
         viewModel { DetailScheduleViewModel(get()) }
-        viewModel { LoginViewModel(get(), androidContext()) }
+        viewModel { LoginViewModel(get()) }
         viewModel { RegisterViewModel(get()) }
         viewModel { AuthViewModel(get()) }
         viewModel { EducationViewModel(get()) }
