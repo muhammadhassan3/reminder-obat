@@ -22,6 +22,9 @@ class RegisterViewModel(private val useCase: RegisterUseCase) : ViewModel() {
     private val _name = MutableStateFlow("")
     val name = _name.asStateFlow()
 
+    private val _phoneNumber = MutableStateFlow("")
+    val phoneNumber = _phoneNumber.asStateFlow()
+
     private val _password = MutableStateFlow("")
     val password = _password.asStateFlow()
 
@@ -40,6 +43,10 @@ class RegisterViewModel(private val useCase: RegisterUseCase) : ViewModel() {
 
     fun setName(value: String) {
         _name.value = value
+    }
+
+    fun setPhoneNumber(value: String){
+        _phoneNumber.value = value
     }
 
     fun setPassword(value: String) {
@@ -99,7 +106,17 @@ class RegisterViewModel(private val useCase: RegisterUseCase) : ViewModel() {
                 return@launch
             }
 
-            useCase.register(name.value, email.value, password.value).collect {
+            val phoneNumberFormatted = if (phoneNumber.value.startsWith("0")) {
+                phoneNumber.value.replace("0", "+62")
+            } else if (phoneNumber.value.startsWith("62")) {
+                phoneNumber.value.replace("62", "+62")
+            } else if (phoneNumber.value.startsWith("+62")) {
+                phoneNumber.value
+            } else {
+                "+62${phoneNumber.value}"
+            }
+
+            useCase.register(name.value, email.value, password.value,phoneNumberFormatted).collect {
                 _uiState.value = it
             }
         }

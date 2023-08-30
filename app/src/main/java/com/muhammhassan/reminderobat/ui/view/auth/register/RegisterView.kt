@@ -1,9 +1,13 @@
 package com.muhammhassan.reminderobat.ui.view.auth.register
 
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Button
 import androidx.compose.material.Card
 import androidx.compose.material.CircularProgressIndicator
@@ -59,6 +63,8 @@ fun RegisterView(
     dialogData: DialogData,
     onErrorResponse: (message: String) -> Unit,
     onSuccessResponse: (message: String) -> Unit,
+    phoneNumber: String,
+    onPhoneNumberChanged: (value: String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val isLoading = remember {
@@ -142,7 +148,7 @@ fun RegisterView(
                         .padding(16.dp)
                         .fillMaxWidth()
                 ) {
-                    val (edtName, edtEmail, edtPassword, edtConfirmpassword, edtConfirmPassword) = createRefs()
+                    val (edtName, edtEmail, edtPassword, edtPhoneNumber, edtConfirmPassword) = createRefs()
                     InputField(
                         title = "Nama",
                         onTextChanged = onNameChanged,
@@ -167,13 +173,36 @@ fun RegisterView(
                         singleLine = true,
                         inputType = KeyboardType.Email
                     )
+                    OutlinedTextField(value = phoneNumber,
+                        onValueChange = onPhoneNumberChanged,
+                        modifier = Modifier.constrainAs(edtPhoneNumber){
+                                                                       start.linkTo(parent.start)
+                            end.linkTo(parent.end)
+                            top.linkTo(edtEmail.bottom, 8.dp)
+                            width = Dimension.fillToConstraints
+                        },
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
+                        singleLine = true,
+                        label = {
+                            Text(text = "Nomor Telepon")
+                        },
+                        placeholder = {
+                            Text(text = "Contoh: 8123456789")
+                        },
+                        leadingIcon = {
+                            Row(modifier = Modifier) {
+                                Spacer(modifier = Modifier.width(8.dp))
+                                Text(text = "+62")
+                                Spacer(modifier = Modifier.width(8.dp))
+                            }
+                        }, )
 
                     OutlinedTextField(value = password,
                         onValueChange = onPasswordChanged,
                         modifier = Modifier.constrainAs(edtPassword) {
                             start.linkTo(parent.start)
                             end.linkTo(parent.end)
-                            top.linkTo(edtEmail.bottom, 8.dp)
+                            top.linkTo(edtPhoneNumber.bottom, 8.dp)
                             width = Dimension.fillToConstraints
                         },
                         singleLine = true,
@@ -254,7 +283,9 @@ fun RegisterPreview() {
                 isDialogShow = false,
                 onErrorResponse = {},
                 dialogData = DialogData("Title", "Message", ButtonType.NEUTRAL),
-                onSuccessResponse = {}
+                onSuccessResponse = {},
+                phoneNumber = "",
+                onPhoneNumberChanged = {}
             )
         }
     }
@@ -280,7 +311,9 @@ fun RegisterPreviewWithDialog() {
                 isDialogShow = true,
                 onErrorResponse = {},
                 dialogData = DialogData("Title", "Message", ButtonType.NEUTRAL),
-                onSuccessResponse = {}
+                onSuccessResponse = {},
+                phoneNumber = "",
+                onPhoneNumberChanged = {}
             )
         }
     }
