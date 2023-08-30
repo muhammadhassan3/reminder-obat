@@ -9,7 +9,6 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
-import com.google.gson.Gson
 import com.muhammhassan.reminderobat.domain.model.ChatModel
 import com.muhammhassan.reminderobat.domain.model.UiState
 import com.muhammhassan.reminderobat.domain.model.UserModel
@@ -21,7 +20,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
-class ConsultationViewModel(private val useCase: ConsultationUseCase): ViewModel() {
+class ConsultationViewModel(private val useCase: ConsultationUseCase) : ViewModel() {
     private val _uiState = MutableStateFlow<UiState<String>>(UiState.Success(""))
     val uiState = _uiState.asStateFlow()
 
@@ -42,7 +41,7 @@ class ConsultationViewModel(private val useCase: ConsultationUseCase): ViewModel
     private val database = Firebase.database
     private val authuser = Firebase.auth.currentUser
 
-    private val eventListener = object: ChildEventListener{
+    private val eventListener = object : ChildEventListener {
         override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
             val data = snapshot.value as Map<*, *>
             val chatId = snapshot.key
@@ -82,11 +81,13 @@ class ConsultationViewModel(private val useCase: ConsultationUseCase): ViewModel
         }
 
     }
+
     init {
-        if(authuser != null){
+        if (authuser != null) {
             _userEmail.value = authuser.email!!
-            database.reference.child("chat").child(authuser.uid).addChildEventListener(eventListener)
-        }else{
+            database.reference.child("chat").child(authuser.uid)
+                .addChildEventListener(eventListener)
+        } else {
             _dialogData.value = DialogData(
                 title = "Pemberitahuan",
                 message = "Gagal memuat data user, silahkan coba kembali",
@@ -99,16 +100,18 @@ class ConsultationViewModel(private val useCase: ConsultationUseCase): ViewModel
         }
     }
 
-    fun onMessageSend(){
-        viewModelScope.launch {
-            useCase.sendMessage(message.value).collect{
-                _uiState.value = it
+    fun onMessageSend() {
+        if (message.value.trim() != "") {
+            viewModelScope.launch {
+                useCase.sendMessage(message.value.trim()).collect {
+                    _uiState.value = it
+                }
             }
+            _message.value = ""
         }
-        _message.value = ""
     }
 
-    fun setDraft(value: String){
+    fun setDraft(value: String) {
         _message.value = value
     }
 
