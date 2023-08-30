@@ -70,7 +70,6 @@ class AddStockViewModel(private val useCase: AddStockUseCase): ViewModel() {
                     if(finishedData.startDate!!.before(Calendar.getInstance().time)){ // Check if start date is before today
                         savedData.scheduleList.forEach { model ->
                             scheduleHelper.scheduleReminder(model)
-                            Timber.i("Schedule added with id ${model.scheduleId}")
                         }
                     }else{
                         scheduleHelper.scheduleStartReminder(savedData.drugsId.toInt(), finishedData.startDate!!)
