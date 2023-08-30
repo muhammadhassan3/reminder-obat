@@ -1,9 +1,14 @@
 package com.muhammhassan.reminderobat.ui.view.auth
 
+import android.Manifest
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
@@ -19,6 +24,17 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class AuthActivity : ComponentActivity() {
 
     private val viewModel by viewModel<AuthViewModel>()
+
+    private val notifPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) {
+            if (!it) {
+                Toast.makeText(
+                    this,
+                    "Silahkan aktifkan fitur notifikasi pada pengaturan",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,6 +56,9 @@ class AuthActivity : ComponentActivity() {
                         navigateToEmailForm = { navigateToEmailForm() })
                 }
             }
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            notifPermissionLauncher.launch(NOTIF_PERMISSION)
         }
 
         viewModel.getUser {
@@ -64,5 +83,10 @@ class AuthActivity : ComponentActivity() {
 
     private fun navigateToEmailForm() {
         startActivity(Intent(this, UseEmailActivity::class.java))
+    }
+
+    companion object {
+        @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+        private const val NOTIF_PERMISSION = Manifest.permission.POST_NOTIFICATIONS
     }
 }
