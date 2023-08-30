@@ -2,6 +2,7 @@ package com.muhammhassan.reminderobat.ui.view.education
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -11,7 +12,6 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -21,7 +21,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -31,16 +30,12 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
-import coil.compose.AsyncImage
 import com.muhammhassan.reminderobat.domain.model.Articles
 import com.muhammhassan.reminderobat.domain.model.UiState
 import com.muhammhassan.reminderobat.ui.component.ButtonBack
 import com.muhammhassan.reminderobat.ui.component.DialogContent
 import com.muhammhassan.reminderobat.ui.theme.ReminderObatTheme
 import com.muhammhassan.reminderobat.utils.DialogData
-import compose.icons.Octicons
-import compose.icons.octicons.Image24
-import compose.icons.octicons.X24
 
 @Composable
 fun EducationView(
@@ -115,7 +110,7 @@ fun EducationView(
                 bottom.linkTo(parent.bottom, 16.dp)
                 width = Dimension.fillToConstraints
                 height = Dimension.fillToConstraints
-            }, state = scrollState) {
+            }, state = scrollState, verticalArrangement = Arrangement.spacedBy(4.dp)) {
                 items(contentData, key = { it.id }) {
                     ArticlesItem(
                         item = it, onItemClicked = onItemClicked
