@@ -3,6 +3,7 @@ package com.muhammhassan.reminderobat.core.api
 import com.muhammhassan.reminderobat.core.api.response.Article
 import com.muhammhassan.reminderobat.core.api.response.BaseResponse
 import com.muhammhassan.reminderobat.core.api.response.ResetTokenResponse
+import com.muhammhassan.reminderobat.core.api.response.UserResponse
 import retrofit2.Response
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
@@ -12,13 +13,25 @@ import retrofit2.http.POST
 interface ApiService {
     @FormUrlEncoded
     @POST("register")
-    suspend fun register(@Field("name") name: String,@Field("email") email: String,@Field("password") password: String): Response<BaseResponse<Nothing>>
+    suspend fun register(
+        @Field("name") name: String,
+        @Field("email") email: String,
+        @Field("password") password: String,
+        @Field("phone") phoneNumber: String
+    ): Response<BaseResponse<Nothing>>
+
+    @FormUrlEncoded
+    @POST("login")
+    suspend fun login(
+        @Field("phoneNumber") phoneNumber: String
+    ): Response<BaseResponse<UserResponse>>
 
     @GET("education")
     suspend fun getEducation(): Response<BaseResponse<List<Article>>>
+
     @FormUrlEncoded
     @POST("/chat")
-    suspend fun sendMessage(@Field("message")message: String): Response<BaseResponse<String>>
+    suspend fun sendMessage(@Field("message") message: String): Response<BaseResponse<String>>
 
     @FormUrlEncoded
     @POST("/reset")
@@ -26,7 +39,10 @@ interface ApiService {
 
     @FormUrlEncoded
     @POST("/reset/verify")
-    suspend fun verifyResetToken(@Field("token") verifyToken: String, @Field("otp") otp: String): Response<BaseResponse<ResetTokenResponse>>
+    suspend fun verifyResetToken(
+        @Field("token") verifyToken: String,
+        @Field("otp") otp: String
+    ): Response<BaseResponse<ResetTokenResponse>>
 
     @FormUrlEncoded
     @POST("/reset/resend")
@@ -34,5 +50,8 @@ interface ApiService {
 
     @FormUrlEncoded
     @POST("/reset/password")
-    suspend fun resetPassword(@Field("token") verifyToken: String, @Field("password") password: String): Response<BaseResponse<String>>
+    suspend fun resetPassword(
+        @Field("token") verifyToken: String,
+        @Field("password") password: String
+    ): Response<BaseResponse<String>>
 }
