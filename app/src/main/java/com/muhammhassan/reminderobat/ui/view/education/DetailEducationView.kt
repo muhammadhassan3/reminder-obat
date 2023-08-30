@@ -57,7 +57,7 @@ fun DetailEducationView(
                         width = Dimension.fillToConstraints
                         height = Dimension.value(200.dp)
                     },
-                    contentScale = ContentScale.Fit,
+                    contentScale = ContentScale.Crop,
                     placeholder = rememberVectorPainter(image = Octicons.Image24)
                 )
             }
