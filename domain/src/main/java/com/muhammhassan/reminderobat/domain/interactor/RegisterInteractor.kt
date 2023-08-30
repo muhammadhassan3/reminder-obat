@@ -11,9 +11,10 @@ class RegisterInteractor(private val repository: UserRepository): RegisterUseCas
     override fun register(
         name: String,
         email: String,
-        password: String
+        password: String,
+        phoneNumber: String
     ): Flow<UiState<String>> {
-        return repository.register(name, email, password).map{
+        return repository.register(name, email, password, phoneNumber).map{
             it.mapToUi{ message ->
                 message
             }
