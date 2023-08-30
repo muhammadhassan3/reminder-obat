@@ -17,11 +17,13 @@ import com.muhammhassan.reminderobat.ui.view.add.stock.AddStockActivity
 
 class AddReminderActivity : ComponentActivity() {
 
-    private val launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result ->
-        if(result.resultCode == RESULT_OK){
-            finish()
+    private val launcher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == RESULT_OK) {
+                setResult(RESULT_OK)
+                finish()
+            }
         }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,8 +35,7 @@ class AddReminderActivity : ComponentActivity() {
         setContent {
             ReminderObatTheme {
                 Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colors.background
+                    modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background
                 ) {
                     AddReminderView(onBackPressed = { finish() }, onNextPressed = {
                         val intent = Intent(this@AddReminderActivity, AddStockActivity::class.java)
