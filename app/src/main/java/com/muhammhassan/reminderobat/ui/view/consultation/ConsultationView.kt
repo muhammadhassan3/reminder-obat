@@ -23,8 +23,6 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -41,7 +39,6 @@ import com.muhammhassan.reminderobat.domain.model.ChatModel
 import com.muhammhassan.reminderobat.domain.model.UiState
 import com.muhammhassan.reminderobat.ui.component.ButtonBack
 import com.muhammhassan.reminderobat.ui.component.DialogContent
-import com.muhammhassan.reminderobat.ui.theme.Black40
 import com.muhammhassan.reminderobat.ui.theme.ReminderObatTheme
 import com.muhammhassan.reminderobat.utils.DialogData
 import compose.icons.Octicons
@@ -73,6 +70,10 @@ fun ConsultationView(
         }
     }
 
+    LaunchedEffect(key1 = data.size, block = {
+        if (data.isNotEmpty()) scrollState.scrollToItem(data.lastIndex)
+    })
+
     Surface(color = Color.White) {
         ConstraintLayout(modifier = modifier.fillMaxSize()) {
             val (btnBack, title, textField, btnSend, list) = createRefs()
@@ -88,14 +89,18 @@ fun ConsultationView(
                 width = Dimension.fillToConstraints
             }, overflow = TextOverflow.Ellipsis, fontWeight = FontWeight.Bold)
             LazyColumn(
-                modifier = Modifier.constrainAs(list) {
-                    start.linkTo(parent.start, 16.dp)
-                    end.linkTo(parent.end, 16.dp)
-                    top.linkTo(btnBack.bottom, 8.dp)
-                    bottom.linkTo(textField.top)
-                    height = Dimension.fillToConstraints
-                    width = Dimension.fillToConstraints
-                }, state = scrollState, verticalArrangement = Arrangement.spacedBy(8.dp)
+                modifier = Modifier
+                    .constrainAs(list) {
+                        start.linkTo(parent.start, 16.dp)
+                        end.linkTo(parent.end, 16.dp)
+                        top.linkTo(btnBack.bottom, 8.dp)
+                        bottom.linkTo(textField.top)
+                        height = Dimension.fillToConstraints
+                        width = Dimension.fillToConstraints
+                    }
+                    .padding(bottom = 16.dp),
+                state = scrollState,
+                verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 for (i in data.indices) {
                     var senderShape = RoundedCornerShape(10.dp)
@@ -141,7 +146,8 @@ fun ConsultationView(
                 placeholder = { Text("Ketikkan pesanmu disini") },
                 enabled = uiState != UiState.Loading
             )
-            IconButton(onClick = onSendClicked,
+            IconButton(
+                onClick = onSendClicked,
                 modifier = Modifier
                     .clip(CircleShape)
                     .background(MaterialTheme.colors.primary)
@@ -281,7 +287,8 @@ fun SenderBubblePreview() {
 fun ConsultationPreview() {
     ReminderObatTheme {
         Surface(color = MaterialTheme.colors.primaryVariant) {
-            ConsultationView(onNavUp = {},
+            ConsultationView(
+                onNavUp = {},
                 onMessageChange = {},
                 draft = "",
                 userEmail = "test@email.com",
