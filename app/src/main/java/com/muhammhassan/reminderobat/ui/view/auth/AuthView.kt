@@ -61,6 +61,7 @@ fun AuthView(
             val password by viewModel.password.collectAsStateWithLifecycle()
             val isDialogShow by viewModel.isDialogShow.collectAsStateWithLifecycle()
             val dialogData by viewModel.dialogData.collectAsStateWithLifecycle()
+            val phoneNumber by viewModel.phoneNumber.collectAsStateWithLifecycle()
 
             val data by viewModel.uiState.collectAsStateWithLifecycle()
 
@@ -69,9 +70,7 @@ fun AuthView(
                 email = email,
                 password = password,
                 onPasswordChanged = viewModel::setPassword,
-                onSaveClicked = {
-                    viewModel.login()
-                },
+                onSaveClicked = viewModel::login,
                 onRegisterClicked = {
                     navController.navigate(Screen.Register.route)
                 },
@@ -80,7 +79,9 @@ fun AuthView(
                 isDialogShow = isDialogShow,
                 onSuccessResponse = navigateToMainActivity,
                 onErrorResponse = viewModel::setErrorMessage,
-                onResetPasswordClicked = navigateToEmailForm
+                onResetPasswordClicked = navigateToEmailForm,
+                onPhoneNumberChanged = viewModel::setPhoneNumber,
+                phoneNumber = phoneNumber
             )
         }
 
@@ -90,6 +91,7 @@ fun AuthView(
             val viewModel = koinViewModel<RegisterViewModel>()
             val name by viewModel.name.collectAsStateWithLifecycle()
             val email by viewModel.email.collectAsStateWithLifecycle()
+            val phoneNumber by viewModel.phoneNumber.collectAsStateWithLifecycle()
             val password by viewModel.password.collectAsStateWithLifecycle()
             val confirmPassword by viewModel.confirmPassword.collectAsStateWithLifecycle()
             val dialog by viewModel.dialogData.collectAsStateWithLifecycle()
@@ -113,7 +115,10 @@ fun AuthView(
                 onSuccessResponse = {
                     navController.navigateUp()
                     Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
-                })
+                },
+                phoneNumber = phoneNumber,
+                onPhoneNumberChanged = viewModel::setPhoneNumber
+            )
         }
     }
 }
