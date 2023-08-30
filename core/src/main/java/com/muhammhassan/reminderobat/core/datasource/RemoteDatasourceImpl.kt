@@ -4,6 +4,7 @@ import com.muhammhassan.reminderobat.core.api.ApiResponse
 import com.muhammhassan.reminderobat.core.api.ApiService
 import com.muhammhassan.reminderobat.core.api.response.Article
 import com.muhammhassan.reminderobat.core.api.response.ResetTokenResponse
+import com.muhammhassan.reminderobat.core.api.response.UserResponse
 import com.muhammhassan.reminderobat.core.utils.Utils.parseError
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
@@ -12,16 +13,35 @@ import kotlinx.coroutines.flow.flow
 class RemoteDatasourceImpl(private val api: ApiService) : RemoteDatasource {
 
     override fun register(
-        name: String, email: String, password: String
+        name: String,
+        email: String,
+        password: String,
+        phoneNumber: String
     ): Flow<ApiResponse<String>> = flow {
         emit(ApiResponse.Loading)
-        val response = api.register(name, email, password)
+        val response = api.register(name, email, password, phoneNumber)
         val body = response.body()
         if (response.isSuccessful) {
             body?.message?.let {
                 emit(ApiResponse.Success(it))
             }
         } else {
+            emit(ApiResponse.Error(response.parseError()))
+        }
+    }.catch {
+        it.printStackTrace()
+        emit(ApiResponse.Error("Jaringan yang kamu gunakan bermasalah, silahkan coba lagi dalam beberapa saat.."))
+    }
+
+    override fun login(phoneNumber: String): Flow<ApiResponse<UserResponse>>  = flow<ApiResponse<UserResponse>> {
+        emit(ApiResponse.Loading)
+        val response = api.login(phoneNumber)
+        val body = response.body()
+        if(response.isSuccessful){
+            body?.data?.let {
+                emit(ApiResponse.Success(it))
+            }
+        }else{
             emit(ApiResponse.Error(response.parseError()))
         }
     }.catch {
