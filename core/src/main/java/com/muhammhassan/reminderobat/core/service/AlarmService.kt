@@ -48,7 +48,7 @@ class AlarmService: Service() {
         val uri = Uri.parse("reminderobat://alarm?id=$id")
 
         val alarmIntent = Intent(Intent.ACTION_VIEW, uri)
-        val pendingIntent = PendingIntent.getActivity(this,0, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+        val pendingIntent = PendingIntent.getActivity(this,0, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
 
         try{
             mediaPlayer.setDataSource(applicationContext, Uri.parse(ringtone.toString()))
